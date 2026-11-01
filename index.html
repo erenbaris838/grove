@@ -1,0 +1,1327 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Grove</title>
+<meta name="description" content="Grove: a focus timer with stopwatch and Pomodoro. Every hour of focus grows a tree.">
+<meta name="theme-color" content="#F1F4F2">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/svg+xml" href="icons/icon.svg">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Grove">
+<link rel="preload" href="fonts/instrument-sans-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/azeret-mono-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<style>body{margin:0;padding:0}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
+<style>
+@font-face { font-family: "Azeret Mono"; font-style: normal; font-weight: 100 900; font-display: swap; src: url("fonts/azeret-mono-latin-wght-normal.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Azeret Mono"; font-style: normal; font-weight: 100 900; font-display: swap; src: url("fonts/azeret-mono-latin-ext-wght-normal.woff2") format("woff2"); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: "Instrument Sans"; font-style: normal; font-weight: 400 700; font-display: swap; src: url("fonts/instrument-sans-latin-wght-normal.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Instrument Sans"; font-style: normal; font-weight: 400 700; font-display: swap; src: url("fonts/instrument-sans-latin-ext-wght-normal.woff2") format("woff2"); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+
+/* Layout: header with tabs + tools; left = active timer (stopwatch or pomodoro), right = garden: the hourly tree growing under a theme-aware sky, today's forest, last 7 days */
+:root {
+  --bg: #F1F4F2; --surface: #E6EBE8; --panel: #E9EEEA; --line: #D1D8D4; --fg: #121715; --muted: #64706A;
+  --go: #1E6B57; --go-fg: #F3FAF6; --stop: #B8432E; --stop-fg: #FFF6F3; --calm: #3B78A8;
+  --leaf: #3F8F5A; --leaf2: #2E7048; --trunk: #7A5236; --ground: #CBD7C6; --blossom: #EF9FB5; --fruit: #E8892C; --sky: #DCEBE2;
+  --font-digits: "Azeret Mono", ui-monospace, "Cascadia Mono", Consolas, Menlo, monospace;
+  --font-ui: "Instrument Sans", "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-skin]):not([data-theme="light"]) {
+    --bg: #0D1110; --surface: #161C1A; --panel: #131917; --line: #262E2B; --fg: #E6ECE9; --muted: #86928C;
+    --go: #52C19E; --go-fg: #06140F; --stop: #EE7A63; --stop-fg: #1C0905; --calm: #6FA8D8;
+    --leaf: #4FA86C; --leaf2: #3A8A57; --trunk: #8A6244; --ground: #1F2A24; --blossom: #E58FA8; --fruit: #F0A04B; --sky: #17221D;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"]:not([data-skin]),
+:root[data-skin="gece"] {
+  --bg: #0D1110; --surface: #161C1A; --panel: #131917; --line: #262E2B; --fg: #E6ECE9; --muted: #86928C;
+  --go: #52C19E; --go-fg: #06140F; --stop: #EE7A63; --stop-fg: #1C0905; --calm: #6FA8D8;
+  --leaf: #4FA86C; --leaf2: #3A8A57; --trunk: #8A6244; --ground: #1F2A24; --blossom: #E58FA8; --fruit: #F0A04B; --sky: #17221D;
+  color-scheme: dark;
+}
+:root[data-skin="gunduz"] { color-scheme: light; }
+:root[data-skin="orman"] {
+  --bg: #0E1913; --surface: #16251C; --panel: #132119; --line: #24382B; --fg: #E3EFE5; --muted: #8AA592;
+  --go: #8CCB7E; --go-fg: #0A1A0E; --stop: #E8956B; --stop-fg: #22100A; --calm: #7DB8C9;
+  --leaf: #5DAA62; --leaf2: #3F8A4B; --trunk: #9A7050; --ground: #1D3226; --blossom: #EFA2B5; --fruit: #F2B04E; --sky: #15291D;
+  color-scheme: dark;
+}
+:root[data-skin="okyanus"] {
+  --bg: #EDF3F7; --surface: #DFE9F0; --panel: #E3ECF2; --line: #C8D6E1; --fg: #0F1C26; --muted: #5A6D7B;
+  --go: #1D6FA3; --go-fg: #F2F8FC; --stop: #C2513A; --stop-fg: #FFF5F2; --calm: #2E8C83;
+  --leaf: #3E9A78; --leaf2: #2B7A5E; --trunk: #7A5A40; --ground: #C6D9DF; --blossom: #F0A6BD; --fruit: #EB8F34; --sky: #D3E6F1;
+  color-scheme: light;
+}
+:root[data-skin="lavanta"] {
+  --bg: #F4F1F8; --surface: #E9E3F1; --panel: #ECE7F3; --line: #D7CEE4; --fg: #1C1626; --muted: #6D6380;
+  --go: #6447AA; --go-fg: #F7F4FC; --stop: #BC4468; --stop-fg: #FFF4F7; --calm: #3F7FA6;
+  --leaf: #4E9A6E; --leaf2: #3A7D57; --trunk: #7D5A44; --ground: #D9D1E3; --blossom: #E99BC0; --fruit: #E9913A; --sky: #E6DEF2;
+  color-scheme: light;
+}
+:root[data-skin="gunbatimi"] {
+  --bg: #1A1320; --surface: #251B2C; --panel: #211828; --line: #382A41; --fg: #F3E9EF; --muted: #A894A7;
+  --go: #F0A35E; --go-fg: #26150A; --stop: #E8687A; --stop-fg: #25080D; --calm: #9C8CE0;
+  --leaf: #6FB07A; --leaf2: #4E9160; --trunk: #A0765A; --ground: #2E2235; --blossom: #F4A9C0; --fruit: #F5B65A; --sky: #2C1D30;
+  color-scheme: dark;
+}
+
+html { height: 100%; box-sizing: border-box; }
+*, *::before, *::after { box-sizing: inherit; }
+body {
+  height: 100%;
+  background: var(--bg); color: var(--fg);
+  font-family: var(--font-ui); font-size: 15px;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color .35s, color .35s;
+}
+button { font-family: inherit; color: inherit; }
+button:focus-visible, summary:focus-visible, input:focus-visible { outline: 3px solid var(--fg); outline-offset: 3px; }
+
+.app {
+  height: 100%; max-width: 1240px; margin: 0 auto;
+  display: grid; grid-template-rows: auto minmax(0, 1fr) auto; gap: 14px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 14px;
+}
+
+/* ---------- header ---------- */
+.top { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.brand { display: flex; align-items: center; gap: 9px; font-weight: 600; font-size: 1.12rem; letter-spacing: .01em; white-space: nowrap; }
+.brand svg { width: 26px; height: 26px; }
+.tabs { display: inline-flex; padding: 4px; gap: 2px; background: var(--surface); border-radius: 999px; }
+.tab {
+  border: 0; background: transparent; cursor: pointer;
+  font-size: .95rem; font-weight: 600; padding: 9px 18px; border-radius: 999px; color: var(--muted);
+  transition: background-color .2s, color .2s;
+}
+.tab[aria-selected="true"] { background: var(--bg); color: var(--fg); box-shadow: 0 1px 2px rgb(0 0 0 / .12); }
+.tools { display: flex; gap: 8px; align-items: center; }
+.icon-btn {
+  width: 40px; height: 40px; display: grid; place-items: center;
+  border: 1px solid var(--line); border-radius: 12px; background: transparent; cursor: pointer;
+}
+.icon-btn:hover { background: var(--surface); }
+.icon-btn svg { width: 18px; height: 18px; }
+.install-btn { height: 40px; padding: 0 14px; border-radius: 12px; border: 0; background: var(--go); color: var(--go-fg); font-weight: 600; cursor: pointer; }
+.theme-wrap { position: relative; }
+.theme-menu {
+  position: absolute; right: 0; top: calc(100% + 8px); z-index: 20;
+  width: 290px; padding: 14px; border-radius: 16px;
+  background: var(--bg); border: 1px solid var(--line);
+  box-shadow: 0 18px 40px -12px rgb(0 0 0 / .35);
+}
+.menu-title { margin: 0 0 10px; font-size: .74rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+.skins { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.skin {
+  display: flex; flex-direction: column; align-items: center; gap: 7px;
+  padding: 10px 4px 8px; border-radius: 12px; border: 1.5px solid var(--line); background: transparent; cursor: pointer;
+  font-size: .8rem; font-weight: 600;
+}
+.skin:hover { background: var(--surface); }
+.skin[aria-checked="true"] { border-color: var(--fg); }
+.swatch { width: 38px; height: 38px; border-radius: 50%; position: relative; overflow: hidden; box-shadow: inset 0 0 0 1px rgb(127 127 127 / .35); }
+.swatch i { position: absolute; display: block; }
+.swatch .a { right: 0; top: 0; width: 50%; height: 100%; }
+.swatch .b { right: 0; bottom: 0; width: 50%; height: 50%; }
+
+/* ---------- body ---------- */
+.body { min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) minmax(280px, 340px); gap: 22px; }
+.main { min-height: 0; min-width: 0; container-type: inline-size; display: flex; flex-direction: column; }
+.view { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 14px; }
+
+/* stopwatch */
+.stage { flex: 1; min-height: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: clamp(12px, 2.6vh, 28px); padding-block: 6px; }
+.status { display: inline-flex; align-items: center; gap: 8px; font-size: .76rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.dot { width: 8px; height: 8px; border-radius: 50%; background: var(--line); }
+.running .dot { background: var(--go); animation: pulse 1.6s ease-in-out infinite; }
+.paused .dot { background: var(--stop); }
+@keyframes pulse { 50% { opacity: .35; } }
+.readout {
+  font-family: var(--font-digits); font-weight: 280;
+  font-size: clamp(3rem, min(23cqw, 26vh), 13rem);
+  line-height: 1; letter-spacing: -.04em; font-variant-numeric: tabular-nums; white-space: nowrap; user-select: none;
+}
+.readout.long { font-size: clamp(2.4rem, min(17cqw, 20vh), 10rem); }
+.readout .frac { font-size: .5em; color: var(--muted); letter-spacing: -.02em; margin-left: .04em; }
+.paused .readout .whole { color: var(--muted); }
+.ticks { width: min(100%, 680px); height: 18px; display: flex; align-items: flex-end; justify-content: space-between; }
+.ticks i { display: block; width: 2px; height: 8px; border-radius: 1px; background: var(--line); }
+.ticks i:nth-child(5n + 1) { height: 16px; }
+.ticks i.on { background: var(--muted); }
+.ticks i.now { background: var(--go); }
+.paused .ticks i.now { background: var(--stop); }
+
+.controls { display: flex; gap: 12px; width: min(100%, 500px); justify-content: center; }
+.btn {
+  flex: 1 1 0; min-width: 0; max-width: 220px; height: clamp(58px, 8.5vh, 76px);
+  border-radius: 999px; border: 1.5px solid transparent; cursor: pointer;
+  font-size: 1.15rem; font-weight: 600; letter-spacing: .01em;
+  transition: background-color .15s, color .15s, transform .08s;
+}
+.btn:active, .btn.pressed { transform: scale(.97); }
+.btn-go { background: var(--go); color: var(--go-fg); }
+.btn-stop { background: var(--stop); color: var(--stop-fg); }
+.btn-sec { background: transparent; border-color: var(--line); }
+.btn-sec:hover:not(:disabled) { background: var(--surface); }
+.btn:disabled { opacity: .4; cursor: default; }
+
+.laps { width: min(100%, 600px); align-self: center; display: flex; flex-direction: column; max-height: clamp(120px, 30vh, 340px); min-height: 0; }
+.sec-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 0 4px 8px; font-size: .74rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.sec-head.flush { padding: 0 0 8px; }
+.link-btn { border: 0; background: transparent; cursor: pointer; font-size: .85rem; font-weight: 600; padding: 6px 8px; border-radius: 8px; letter-spacing: 0; text-transform: none; color: var(--fg); }
+.link-btn:hover { background: var(--surface); }
+.lap-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) 1fr 1fr; gap: 8px; align-items: center; }
+.laps-cols { padding: 0 4px 6px; border-bottom: 1px solid var(--line); font-size: .75rem; color: var(--muted); }
+.laps-cols span:not(:first-child), .lap-list .t { text-align: right; }
+.lap-list { list-style: none; margin: 0; padding: 0; overflow-y: auto; min-height: 0; }
+.lap-list li { padding: 10px 4px; border-bottom: 1px solid var(--line); }
+.lap-list .n { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; color: var(--muted); font-size: .92rem; }
+.lap-list .t { font-family: var(--font-digits); font-variant-numeric: tabular-nums; font-size: 1rem; }
+.lap-list .total, .lap-list li.current .t { color: var(--muted); }
+.lap-list li.best .lap { color: var(--go); font-weight: 500; }
+.lap-list li.worst .lap { color: var(--stop); font-weight: 500; }
+.tag { font-size: .7rem; font-weight: 600; padding: 2px 7px; border-radius: 999px; }
+.tag.best { color: var(--go); background: color-mix(in srgb, var(--go) 15%, transparent); }
+.tag.worst { color: var(--stop); background: color-mix(in srgb, var(--stop) 15%, transparent); }
+.lap-list li.fresh { animation: fresh .7s ease-out; }
+@keyframes fresh { from { background: var(--surface); } to { background: transparent; } }
+.empty { margin: 0; padding: 12px 4px; color: var(--muted); font-size: .9rem; text-align: center; line-height: 1.45; }
+
+/* pomodoro */
+.pomo { flex: 1; min-height: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: clamp(12px, 2.4vh, 26px); }
+.modes { display: inline-flex; gap: 6px; flex-wrap: wrap; justify-content: center; }
+.mode { border: 1.5px solid var(--line); background: transparent; cursor: pointer; padding: 8px 16px; border-radius: 999px; font-size: .92rem; font-weight: 600; color: var(--muted); }
+.mode:hover { background: var(--surface); }
+.mode[aria-checked="true"] { color: var(--fg); border-color: var(--fg); }
+.ring { position: relative; width: min(100%, 46vh, 380px); aspect-ratio: 1; max-width: 100%; }
+.ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.ring .track { fill: none; stroke: var(--surface); stroke-width: 9; }
+.ring .prog { fill: none; stroke: var(--go); stroke-width: 9; stroke-linecap: round; transition: stroke .3s; }
+.pomo[data-mode="short"] .ring .prog, .pomo[data-mode="long"] .ring .prog { stroke: var(--calm); }
+.ring-center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; }
+.pomo-time { font-family: var(--font-digits); font-weight: 280; font-size: clamp(2.6rem, min(13cqw, 10vh), 5.6rem); letter-spacing: -.04em; line-height: 1; font-variant-numeric: tabular-nums; }
+.pomo-label { font-size: .78rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.cycle { display: flex; align-items: center; gap: 12px; color: var(--muted); font-size: .9rem; }
+.cdots { display: inline-flex; gap: 6px; }
+.cdots i { width: 10px; height: 10px; border-radius: 50%; border: 1.5px solid var(--muted); display: block; }
+.cdots i.on { background: var(--go); border-color: var(--go); }
+.settings { width: min(100%, 460px); border-top: 1px solid var(--line); padding-top: 4px; }
+.settings summary { cursor: pointer; list-style: none; text-align: center; padding: 8px; font-size: .88rem; font-weight: 600; color: var(--muted); border-radius: 8px; }
+.settings summary::-webkit-details-marker { display: none; }
+.settings summary:hover { color: var(--fg); }
+.set-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; padding: 8px 0 4px; }
+.stepper { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 10px 6px; border: 1px solid var(--line); border-radius: 14px; }
+.stepper .lbl { font-size: .78rem; color: var(--muted); font-weight: 600; }
+.stepper .row { display: flex; align-items: center; gap: 6px; }
+.stepper button { width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--line); background: transparent; cursor: pointer; font-size: 1.05rem; line-height: 1; }
+.stepper button:hover { background: var(--surface); }
+.stepper output { font-family: var(--font-digits); font-size: 1.05rem; min-width: 2.4ch; text-align: center; }
+.checks { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; padding: 10px 4px 4px; width: fit-content; margin: 0 auto; }
+.check { display: inline-flex; align-items: center; gap: 9px; font-size: .88rem; color: var(--muted); cursor: pointer; }
+.check input { accent-color: var(--go); width: 16px; height: 16px; margin: 0; }
+
+/* ---------- garden ---------- */
+.garden {
+  min-height: 0; overflow-y: auto;
+  background: var(--panel); border: 1px solid var(--line); border-radius: 20px;
+  padding: 16px; display: flex; flex-direction: column; gap: 10px;
+}
+.grow {
+  position: relative; border-radius: 14px; aspect-ratio: 1 / .86; max-height: min(300px, 33vh); width: 100%;
+  background: linear-gradient(180deg, var(--sky), transparent 88%);
+  overflow: hidden;
+}
+.grow svg { width: 100%; height: 100%; display: block; }
+.stage-chip {
+  position: absolute; left: 10px; top: 10px;
+  font-size: .72rem; font-weight: 600; letter-spacing: .06em; padding: 4px 9px; border-radius: 999px;
+  background: color-mix(in srgb, var(--bg) 75%, transparent); color: var(--fg);
+}
+.bar { height: 6px; border-radius: 3px; background: var(--surface); overflow: hidden; }
+.bar i { display: block; height: 100%; width: 0; background: var(--leaf); border-radius: 3px; transition: width .6s ease; }
+.grow-text { display: flex; justify-content: space-between; gap: 8px; margin-top: 7px; font-size: .84rem; color: var(--muted); }
+.grow-text b { color: var(--fg); font-weight: 600; font-family: var(--font-digits); font-size: .82rem; }
+.today { margin: 0; font-size: .92rem; line-height: 1.45; }
+.today b { font-weight: 600; }
+.forest {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(58px, 1fr)); gap: 2px 4px;
+  padding: 4px 8px 2px; border-radius: 14px;
+  background: linear-gradient(180deg, transparent 55%, color-mix(in srgb, var(--ground) 70%, transparent));
+}
+.forest svg { width: 100%; aspect-ratio: 1; display: block; }
+.forest .pop { animation: pop .8s cubic-bezier(.3,1.6,.5,1); transform-origin: 50% 95%; }
+@keyframes pop { from { transform: scale(0); } to { transform: scale(1); } }
+.week { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; align-items: end; }
+.wcol { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.wcount { font-family: var(--font-digits); font-size: .72rem; color: var(--muted); min-height: 1em; }
+.wbar { width: 100%; max-width: 22px; height: 40px; border-radius: 6px; background: var(--surface); display: flex; align-items: flex-end; overflow: hidden; }
+.wbar i { display: block; width: 100%; background: var(--leaf2); border-radius: 6px; transition: height .5s ease; }
+.wcol.is-today .wbar i { background: var(--go); }
+.wday { font-size: .72rem; color: var(--muted); }
+.wcol.is-today .wday { color: var(--fg); font-weight: 600; }
+
+/* tree + sky classes (colors follow the theme) */
+.gr { fill: var(--ground); }
+.tr { fill: var(--trunk); }
+.trs { fill: none; stroke: var(--trunk); stroke-linecap: round; }
+.grass { fill: none; stroke: var(--leaf2); stroke-width: 2; stroke-linecap: round; }
+.lf { fill: var(--leaf); }
+.lf2 { fill: var(--leaf2); }
+.bl { fill: var(--blossom); }
+.bl2 { fill: color-mix(in srgb, var(--blossom) 62%, #ffffff); }
+.ol { fill: color-mix(in srgb, var(--leaf) 50%, #a3ad8f); }
+.ol2 { fill: color-mix(in srgb, var(--leaf2) 55%, #7d8b6c); }
+.au { fill: color-mix(in srgb, var(--fruit) 80%, #d9452b); }
+.au2 { fill: color-mix(in srgb, var(--fruit) 50%, #b5301d); }
+.fr { fill: var(--fruit); }
+.olv { fill: #3d3550; }
+.fl { fill: #ffffff; opacity: .85; }
+.sun { fill: color-mix(in srgb, var(--fruit) 55%, #ffd75e); }
+.cloud { fill: #ffffff; opacity: .7; animation: drift 26s ease-in-out infinite; }
+.moon { fill: color-mix(in srgb, var(--fg) 85%, #ffd75e); }
+.star { fill: var(--fg); animation: tw 3.2s ease-in-out infinite; }
+@keyframes drift { 50% { transform: translateX(18px); } }
+@keyframes tw { 0%, 100% { opacity: .7; } 50% { opacity: .15; } }
+.sway { transform-box: view-box; transform-origin: 100px 186px; animation: sway 5.5s ease-in-out infinite; }
+@keyframes sway { 0%, 100% { transform: rotate(-1.4deg); } 50% { transform: rotate(1.4deg); } }
+.leafp { position: absolute; left: 50%; top: 42%; width: 11px; height: 7px; border-radius: 7px 0; pointer-events: none; animation: burst 1.7s cubic-bezier(.2,.7,.4,1) forwards; }
+@keyframes burst {
+  0% { transform: translate(-50%, 0) rotate(0) scale(.3); opacity: 0; }
+  15% { opacity: 1; }
+  100% { transform: translate(var(--x), var(--y)) rotate(var(--r)) scale(1); opacity: 0; }
+}
+
+/* ---------- footer, toast, about ---------- */
+.keys { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 16px; font-size: .78rem; color: var(--muted); }
+kbd { font-family: var(--font-digits); font-size: .72rem; padding: 2px 6px; margin-right: 4px; border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 5px; color: var(--fg); background: var(--bg); }
+.toast {
+  position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); z-index: 30;
+  transform: translate(-50%, 20px); opacity: 0; pointer-events: none;
+  max-width: calc(100% - 32px); padding: 12px 18px; border-radius: 999px;
+  background: var(--fg); color: var(--bg); font-weight: 600; font-size: .92rem;
+  transition: opacity .25s, transform .25s;
+}
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+.overlay { position: fixed; inset: 0; z-index: 40; background: rgb(0 0 0 / .45); display: grid; place-items: center; padding: 16px; }
+.sheet { width: min(100%, 430px); background: var(--bg); color: var(--fg); border: 1px solid var(--line); border-radius: 20px; padding: 24px; box-shadow: 0 30px 60px -20px rgb(0 0 0 / .5); }
+.sheet-head { display: flex; align-items: center; gap: 12px; }
+.sheet-head svg { width: 44px; height: 44px; }
+.sheet h2 { margin: 0; font-size: 1.5rem; }
+.sheet .ver { margin: 2px 0 0; color: var(--muted); font-size: .85rem; }
+.sheet p { line-height: 1.55; margin: 14px 0 0; }
+.sheet .menu-title { margin-top: 20px; margin-bottom: 0; }
+.sheet-actions { display: flex; justify-content: space-between; gap: 10px; margin-top: 22px; flex-wrap: wrap; }
+.btn-small { border: 1px solid var(--line); background: transparent; padding: 10px 16px; border-radius: 999px; font-weight: 600; cursor: pointer; }
+.btn-small:hover { background: var(--surface); }
+.btn-small.danger { color: var(--stop); border-color: color-mix(in srgb, var(--stop) 45%, transparent); }
+
+.menu-gap { margin-top: 16px; }
+.langs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.lang { padding: 9px 6px; border-radius: 12px; border: 1.5px solid var(--line); background: transparent; cursor: pointer; font-size: .85rem; font-weight: 600; }
+.lang:hover { background: var(--surface); }
+.lang[aria-checked="true"] { border-color: var(--fg); }
+
+@media (pointer: coarse) { .keys { display: none; } }
+@media (max-width: 900px) {
+  html, body, .app { height: auto; }
+  .app { min-height: 100%; grid-template-rows: auto auto auto; }
+  .body { grid-template-columns: minmax(0, 1fr); }
+  .main { min-height: min(640px, 82vh); }
+  .garden { overflow: visible; }
+  .grow { max-height: 280px; }
+}
+@media (max-width: 520px) {
+  .brand { flex: 1; }
+  .tabs { order: 3; width: 100%; }
+  .tab { flex: 1; }
+  .tools { gap: 6px; }
+  .icon-btn { width: 38px; height: 38px; }
+  .set-grid { gap: 6px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+</style>
+</head>
+<body>
+
+<div class="app" id="app">
+  <header class="top">
+    <div class="brand">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="13" fill="none" stroke="var(--go)" stroke-width="2.6"></circle><path d="M16 23v-8" stroke="var(--trunk)" stroke-width="2.4" stroke-linecap="round"></path><path d="M16 16c-1-4-4-5.5-7-5 0 3.4 2.6 5.6 7 5z" fill="var(--leaf)"></path><path d="M16 14.5c.6-4.2 3.6-6.2 7-6-.2 3.8-3 6.2-7 6z" fill="var(--leaf2)"></path></svg>
+      Grove
+    </div>
+    <nav class="tabs" role="tablist" data-i18n-aria="aTabs" aria-label="Tabs">
+      <button class="tab" role="tab" id="tab-sw" data-tab="sw" aria-selected="true" type="button" data-i18n="tabSw">Stopwatch</button>
+      <button class="tab" role="tab" id="tab-pomo" data-tab="pomo" aria-selected="false" type="button" data-i18n="tabPomo">Pomodoro</button>
+    </nav>
+    <div class="tools">
+      <button id="installBtn" class="install-btn" type="button" hidden data-i18n="install">Install</button>
+      <button id="modeBtn" class="icon-btn" type="button" data-i18n-title="tMode" title="Light / dark (T)">
+        <svg id="modeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+      </button>
+      <div class="theme-wrap" id="themeWrap">
+        <button id="themeBtn" class="icon-btn" type="button" data-i18n-title="tThemes" data-i18n-aria="tThemes" title="Theme and language" aria-label="Theme and language" aria-haspopup="true" aria-expanded="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18c1.1 0 1.8-.8 1.8-1.8 0-.5-.2-.9-.5-1.2-.3-.3-.5-.7-.5-1.2 0-1 .8-1.8 1.8-1.8H17a4 4 0 0 0 4-4C21 6.6 17 3 12 3z"></path><circle cx="7.5" cy="11" r="1.2" fill="currentColor"></circle><circle cx="10.5" cy="7" r="1.2" fill="currentColor"></circle><circle cx="15" cy="7.5" r="1.2" fill="currentColor"></circle></svg>
+        </button>
+        <div class="theme-menu" id="themeMenu" hidden>
+          <p class="menu-title" data-i18n="menuTheme">Choose a theme</p>
+          <div class="skins" id="skins" role="radiogroup"></div>
+          <p class="menu-title menu-gap" data-i18n="menuLang">Language</p>
+          <div class="langs" role="radiogroup">
+            <button class="lang" role="radio" data-lang="en" type="button">English</button>
+            <button class="lang" role="radio" data-lang="tr" type="button">Türkçe</button>
+          </div>
+        </div>
+      </div>
+      <button id="aboutBtn" class="icon-btn" type="button" data-i18n-title="about" data-i18n-aria="about" title="About" aria-label="About">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v5"></path><circle cx="12" cy="7.8" r="1" fill="currentColor"></circle></svg>
+      </button>
+      <button id="fsBtn" class="icon-btn" type="button">
+        <svg id="fsIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"></path></svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="body">
+    <main class="main">
+      <section class="view" id="view-sw" role="tabpanel" aria-labelledby="tab-sw">
+        <div class="stage" id="swStage">
+          <div class="status"><span class="dot"></span><span id="swStatus">Ready</span></div>
+          <div class="readout" id="readout" role="timer" data-i18n-aria="aElapsed" aria-label="Elapsed time"><span class="whole" id="swMain">00:00</span><span class="frac" id="swFrac">.00</span></div>
+          <div class="ticks" id="ticks" aria-hidden="true"></div>
+          <div class="controls">
+            <button id="swSec" class="btn btn-sec" type="button" disabled>Lap</button>
+            <button id="swMainBtn" class="btn btn-go" type="button">Start</button>
+          </div>
+        </div>
+        <div class="laps">
+          <div class="sec-head"><span id="lapsTitle">Laps</span><button id="copyBtn" class="link-btn" type="button" hidden data-i18n="copy">Copy</button></div>
+          <div class="laps-cols lap-grid" id="lapsCols" hidden><span data-i18n="colLap">Lap</span><span data-i18n="colSplit">Lap time</span><span data-i18n="colTotal">Total</span></div>
+          <ol class="lap-list" id="lapList"></ol>
+          <p class="empty" id="lapEmpty" data-i18n-html="lapEmpty">Press <b>Lap</b> while the stopwatch runs to record a split.</p>
+        </div>
+      </section>
+
+      <section class="view" id="view-pomo" role="tabpanel" aria-labelledby="tab-pomo" hidden>
+        <div class="pomo" id="pomo" data-mode="focus">
+          <div class="modes" role="radiogroup" data-i18n-aria="aPomoMode" aria-label="Pomodoro mode">
+            <button class="mode" role="radio" data-mode="focus" type="button" data-i18n="mFocus">Focus</button>
+            <button class="mode" role="radio" data-mode="short" type="button" data-i18n="mShort">Short break</button>
+            <button class="mode" role="radio" data-mode="long" type="button" data-i18n="mLong">Long break</button>
+          </div>
+          <div class="ring">
+            <svg viewBox="0 0 220 220" aria-hidden="true"><circle class="track" cx="110" cy="110" r="100"></circle><circle class="prog" id="ringProg" cx="110" cy="110" r="100"></circle></svg>
+            <div class="ring-center">
+              <div class="pomo-time" id="pomoTime" role="timer">25:00</div>
+              <div class="pomo-label" id="pomoLabel">Focus</div>
+            </div>
+          </div>
+          <div class="controls">
+            <button id="pomoReset" class="btn btn-sec" type="button" data-i18n="reset">Reset</button>
+            <button id="pomoMain" class="btn btn-go" type="button">Start</button>
+            <button id="pomoSkip" class="btn btn-sec" type="button" data-i18n="skip">Skip</button>
+          </div>
+          <div class="cycle"><span class="cdots" id="cdots" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span id="pomoCount">0 pomodoros today</span></div>
+          <details class="settings" id="settings">
+            <summary data-i18n="settings">Settings</summary>
+            <div class="set-grid">
+              <div class="stepper" data-key="focus"><span class="lbl" data-i18n="mFocus">Focus</span><div class="row"><button type="button" data-d="-1" data-i18n-aria="aLess" aria-label="Less">−</button><output id="set-focus">25</output><button type="button" data-d="1" data-i18n-aria="aMore" aria-label="More">+</button></div><span class="lbl" data-i18n="minutes">minutes</span></div>
+              <div class="stepper" data-key="short"><span class="lbl" data-i18n="mShort">Short break</span><div class="row"><button type="button" data-d="-1" data-i18n-aria="aLess" aria-label="Less">−</button><output id="set-short">5</output><button type="button" data-d="1" data-i18n-aria="aMore" aria-label="More">+</button></div><span class="lbl" data-i18n="minutes">minutes</span></div>
+              <div class="stepper" data-key="long"><span class="lbl" data-i18n="mLong">Long break</span><div class="row"><button type="button" data-d="-1" data-i18n-aria="aLess" aria-label="Less">−</button><output id="set-long">15</output><button type="button" data-d="1" data-i18n-aria="aMore" aria-label="More">+</button></div><span class="lbl" data-i18n="minutes">minutes</span></div>
+            </div>
+            <div class="checks">
+              <label class="check"><input type="checkbox" id="soundChk" checked> <span data-i18n="optSound">Play a sound when time is up</span></label>
+              <label class="check"><input type="checkbox" id="autoChk"> <span data-i18n="optAuto">Start the next session automatically</span></label>
+              <label class="check" id="notifyRow"><input type="checkbox" id="notifyChk"> <span data-i18n="optNotify">Notify me when the window is in the background</span></label>
+            </div>
+          </details>
+        </div>
+      </section>
+    </main>
+
+    <aside class="garden" data-i18n-aria="aGarden" aria-label="Garden">
+      <div>
+        <div class="sec-head flush"><span data-i18n="growing">Growing tree</span><button id="demoBtn" class="link-btn" type="button" data-i18n="watch">Watch it grow</button></div>
+        <div class="grow" id="grow">
+          <svg id="growSvg" viewBox="12 12 176 182" role="img" data-i18n-aria="growing" aria-label="Growing tree"></svg>
+          <span class="stage-chip" id="stageChip">Seed</span>
+        </div>
+      </div>
+      <div>
+        <div class="bar"><i id="growBar"></i></div>
+        <div class="grow-text"><span id="growName">Oak</span><b id="growText">0 / 60 min</b></div>
+      </div>
+      <p class="today" id="todayText"></p>
+      <div>
+        <div class="sec-head flush"><span data-i18n="forest">Today's forest</span><span id="treeCount">0 trees</span></div>
+        <div class="forest" id="forest"></div>
+        <p class="empty" id="forestEmpty" data-i18n="forestEmpty">Every 60 minutes of work grows a tree.</p>
+      </div>
+      <div>
+        <div class="sec-head flush"><span data-i18n="last7">Last 7 days</span><span id="weekTotal">0 trees</span></div>
+        <div class="week" id="week"></div>
+      </div>
+    </aside>
+  </div>
+
+  <footer class="keys">
+    <span><kbd data-i18n="kSpace">Space</kbd><span data-i18n="kStart">start / stop</span></span>
+    <span><kbd>L</kbd><span data-i18n="kLap">lap</span></span>
+    <span><kbd>R</kbd><span data-i18n="kReset">reset</span></span>
+    <span><kbd>1</kbd><kbd>2</kbd><span data-i18n="kTabs">tabs</span></span>
+    <span><kbd>T</kbd><span data-i18n="kTheme">light / dark</span></span>
+    <span id="fsKey"><kbd>F</kbd><span data-i18n="kFs">full screen</span></span>
+  </footer>
+</div>
+
+<div class="overlay" id="about" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="aboutTitle">
+    <div class="sheet-head">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="13" fill="none" stroke="var(--go)" stroke-width="2.6"></circle><path d="M16 23v-8" stroke="var(--trunk)" stroke-width="2.4" stroke-linecap="round"></path><path d="M16 16c-1-4-4-5.5-7-5 0 3.4 2.6 5.6 7 5z" fill="var(--leaf)"></path><path d="M16 14.5c.6-4.2 3.6-6.2 7-6-.2 3.8-3 6.2-7 6z" fill="var(--leaf2)"></path></svg>
+      <div><h2 id="aboutTitle">Grove</h2><p class="ver" data-i18n="aboutVer">Focus timer · Version 1.1.0</p></div>
+    </div>
+    <p data-i18n="aboutText">Work with a stopwatch or Pomodoro.</p>
+    <p class="menu-title" data-i18n="privacy">Privacy</p>
+    <p data-i18n="privacyText">Grove collects no personal data.</p>
+    <div class="sheet-actions">
+      <button id="wipeBtn" class="btn-small danger" type="button">Delete all data</button>
+      <button id="aboutClose" class="btn-small" type="button" data-i18n="close">Close</button>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function () {
+  'use strict';
+  var HOUR = 3600000;
+  var KEY = 'grove-v1', OLD_KEYS = ['filiz-v1', 'barisin-saati-v2'];
+
+  // ---------- strings ----------
+  function pl(one, many) { return function (n) { return n === 1 ? one.replace('{n}', n) : many.replace('{n}', n); }; }
+  var T = {
+    en: {
+      aTabs: 'Tabs', tabSw: 'Stopwatch', tabPomo: 'Pomodoro', install: 'Install',
+      tMode: 'Light / dark (T)', toLight: 'Switch to light theme', toDark: 'Switch to dark theme',
+      tThemes: 'Theme and language', menuTheme: 'Choose a theme', menuLang: 'Language', about: 'About',
+      fs: 'Full screen (F)', fsExit: 'Exit full screen (F)',
+      ready: 'Ready', running: 'Running', paused: 'Paused',
+      start: 'Start', stop: 'Stop', resume: 'Resume', reset: 'Reset', pause: 'Pause', skip: 'Skip', lap: 'Lap',
+      laps: 'Laps', copy: 'Copy', copied: 'Copied', copyFail: 'Couldn’t copy',
+      colLap: 'Lap', colSplit: 'Lap time', colTotal: 'Total', lapN: 'Lap {n}',
+      lapEmpty: 'Press <b>Lap</b> while the stopwatch runs to record a split.',
+      fastest: 'fastest', slowest: 'slowest', aElapsed: 'Elapsed time',
+      aPomoMode: 'Pomodoro mode', mFocus: 'Focus', mShort: 'Short break', mLong: 'Long break', focusLabel: 'Focus',
+      pomoCount: pl('1 pomodoro today', '{n} pomodoros today'),
+      settings: 'Settings', minutes: 'minutes', aLess: 'Less', aMore: 'More',
+      optSound: 'Play a sound when time is up', optAuto: 'Start the next session automatically', optNotify: 'Notify me when the window is in the background',
+      aGarden: 'Garden', growing: 'Growing tree', watch: 'Watch it grow', forest: 'Today’s forest', last7: 'Last 7 days', today: 'Today',
+      trees: pl('1 tree', '{n} trees'),
+      forestEmpty: 'Every 60 minutes of work grows a tree. Time counts while the stopwatch or a Pomodoro focus session is running.',
+      kSpace: 'Space', kStart: 'start / stop', kLap: 'lap', kReset: 'reset', kTabs: 'tabs', kTheme: 'light / dark', kFs: 'full screen',
+      aboutVer: 'Focus timer · Version 1.1.0',
+      aboutText: 'Work with the stopwatch or a Pomodoro. Every hour of focus grows a tree, and over the day you gather a small forest.',
+      privacy: 'Privacy',
+      privacyText: 'Grove collects no personal data. Your sessions, trees and settings stay on this device and are never sent anywhere.',
+      wipe: 'Delete all data', wipeSure: 'Are you sure? Press again', close: 'Close',
+      sGrowing: 'growing', sWaiting: 'waiting', sPreview: 'preview',
+      growText: '{m} / 60 min',
+      worked: 'You’ve focused for <b>{d}</b> today', workedPomo: ' · <b>{n}</b> pomodoros', keepGoing: ' Keep going and your tree will keep growing.',
+      workingStart: 'You’re working. The seed has started to sprout.',
+      notStarted: 'You haven’t started today. Start the stopwatch or a Pomodoro and the seed will sprout.',
+      dur: function (h, m) { return h ? h + ' h ' + m + ' min' : m + ' min'; },
+      tFocusDone: 'Focus session done. Take a short break.', tLongBreak: 'Great, 4 pomodoros done. Take a long break.', tBreakDone: 'Break’s over. Focus when you’re ready.',
+      tNewTree: pl('A new tree has grown! 1 tree today.', 'A new tree has grown! {n} trees today.'),
+      tAway: pl('1 tree grew while you were away.', '{n} trees grew while you were away.'),
+      tNotifyDenied: 'Notifications weren’t allowed. You can turn them on in your browser settings.', tInstalled: 'Grove is installed.',
+      treeTip: 'Tree {i} · {name}', weekTip: '{date}: {trees}, {dur}',
+      stages: ['Seed', 'Sprout', 'Sapling', 'Young tree', 'Tree'],
+      variants: { mese: 'Oak', kiraz: 'Cherry', cam: 'Pine', portakal: 'Orange', zeytin: 'Olive', akcaagac: 'Maple' },
+      skins: { gunduz: 'Day', gece: 'Night', orman: 'Forest', okyanus: 'Ocean', lavanta: 'Lavender', gunbatimi: 'Sunset' }
+    },
+    tr: {
+      aTabs: 'Sekmeler', tabSw: 'Kronometre', tabPomo: 'Pomodoro', install: 'Yükle',
+      tMode: 'Açık / koyu (T)', toLight: 'Açık temaya geç', toDark: 'Koyu temaya geç',
+      tThemes: 'Tema ve dil', menuTheme: 'Tema seç', menuLang: 'Dil', about: 'Hakkında',
+      fs: 'Tam ekran (F)', fsExit: 'Tam ekrandan çık (F)',
+      ready: 'Hazır', running: 'Çalışıyor', paused: 'Duraklatıldı',
+      start: 'Başlat', stop: 'Durdur', resume: 'Devam', reset: 'Sıfırla', pause: 'Duraklat', skip: 'Atla', lap: 'Tur',
+      laps: 'Turlar', copy: 'Kopyala', copied: 'Kopyalandı', copyFail: 'Kopyalanamadı',
+      colLap: 'Tur', colSplit: 'Tur süresi', colTotal: 'Toplam', lapN: 'Tur {n}',
+      lapEmpty: 'Kronometre çalışırken <b>Tur</b>’a basarak ara süre kaydedin.',
+      fastest: 'en hızlı', slowest: 'en yavaş', aElapsed: 'Geçen süre',
+      aPomoMode: 'Pomodoro modu', mFocus: 'Odak', mShort: 'Kısa mola', mLong: 'Uzun mola', focusLabel: 'Odaklan',
+      pomoCount: pl('Bugün {n} pomodoro', 'Bugün {n} pomodoro'),
+      settings: 'Ayarlar', minutes: 'dakika', aLess: 'Azalt', aMore: 'Artır',
+      optSound: 'Süre bitince ses çal', optAuto: 'Sonraki oturumu otomatik başlat', optNotify: 'Pencere arkadayken bildirim göster',
+      aGarden: 'Bahçe', growing: 'Büyüyen ağaç', watch: 'Büyümeyi izle', forest: 'Bugünkü ormanın', last7: 'Son 7 gün', today: 'Bugün',
+      trees: pl('{n} ağaç', '{n} ağaç'),
+      forestEmpty: 'Her 60 dakikalık çalışma bir ağaç büyütür. Kronometre ya da Pomodoro odak süresi çalışırken sayılır.',
+      kSpace: 'Boşluk', kStart: 'başlat / durdur', kLap: 'tur', kReset: 'sıfırla', kTabs: 'sekme', kTheme: 'açık / koyu', kFs: 'tam ekran',
+      aboutVer: 'Odak saati · Sürüm 1.1.0',
+      aboutText: 'Kronometre ya da Pomodoro ile çalış. Her saatlik odaklanman bir ağaç büyütür, gün boyunca küçük bir orman toplarsın.',
+      privacy: 'Gizlilik',
+      privacyText: 'Grove hiçbir kişisel veri toplamaz. Süreler, ağaçlar ve ayarlar yalnızca bu cihazda saklanır ve hiçbir yere gönderilmez.',
+      wipe: 'Tüm verileri sil', wipeSure: 'Emin misin? Tekrar bas', close: 'Kapat',
+      sGrowing: 'büyüyor', sWaiting: 'bekliyor', sPreview: 'önizleme',
+      growText: '{m} / 60 dk',
+      worked: 'Bugün <b>{d}</b> odaklandın', workedPomo: ' · <b>{n}</b> pomodoro', keepGoing: ' Devam edince ağacın büyümeyi sürdürür.',
+      workingStart: 'Çalışıyorsun, tohum filizlenmeye başladı.',
+      notStarted: 'Bugün henüz başlamadın. Kronometreyi ya da Pomodoro’yu başlat, tohum filizlensin.',
+      dur: function (h, m) { return h ? h + ' sa ' + m + ' dk' : m + ' dk'; },
+      tFocusDone: 'Odak bitti. Biraz mola ver.', tLongBreak: 'Harika, 4 pomodoro bitti. Uzun bir mola ver.', tBreakDone: 'Mola bitti. Hazır olunca odaklan.',
+      tNewTree: pl('Yeni bir ağaç büyüdü! Bugün {n} ağacın var.', 'Yeni bir ağaç büyüdü! Bugün {n} ağacın var.'),
+      tAway: pl('Sen yokken {n} ağaç büyüdü.', 'Sen yokken {n} ağaç büyüdü.'),
+      tNotifyDenied: 'Bildirim izni verilmedi. Tarayıcı ayarlarından açabilirsin.', tInstalled: 'Grove yüklendi.',
+      treeTip: '{i}. ağaç · {name}', weekTip: '{date}: {trees}, {dur}',
+      stages: ['Tohum', 'Filiz', 'Fidan', 'Genç ağaç', 'Ağaç'],
+      variants: { mese: 'Meşe', kiraz: 'Kiraz', cam: 'Çam', portakal: 'Portakal', zeytin: 'Zeytin', akcaagac: 'Akçaağaç' },
+      skins: { gunduz: 'Gündüz', gece: 'Gece', orman: 'Orman', okyanus: 'Okyanus', lavanta: 'Lavanta', gunbatimi: 'Gün Batımı' }
+    }
+  };
+  var L = 'en';
+  function t(k, a) {
+    var v = (T[L] && T[L][k] !== undefined) ? T[L][k] : T.en[k];
+    if (typeof v === 'function') return v(a);
+    if (a && typeof v === 'string') v = v.replace(/\{(\w+)\}/g, function (_, x) { return a[x] !== undefined ? a[x] : ''; });
+    return v;
+  }
+  function locale() { return L === 'tr' ? 'tr-TR' : 'en-US'; }
+
+  var SKINS = [
+    { id: 'gunduz', dark: false, c: ['#F1F4F2', '#1E6B57', '#3F8F5A'] },
+    { id: 'gece', dark: true, c: ['#0D1110', '#52C19E', '#4FA86C'] },
+    { id: 'orman', dark: true, c: ['#0E1913', '#8CCB7E', '#E8956B'] },
+    { id: 'okyanus', dark: false, c: ['#EDF3F7', '#1D6FA3', '#3E9A78'] },
+    { id: 'lavanta', dark: false, c: ['#F4F1F8', '#6447AA', '#E99BC0'] },
+    { id: 'gunbatimi', dark: true, c: ['#1A1320', '#F0A35E', '#E8687A'] }
+  ];
+  var VARIANTS = ['mese', 'kiraz', 'cam', 'portakal', 'zeytin', 'akcaagac'];
+  var STAGE_AT = [0.05, 0.2, 0.45, 0.8, 1.01];
+  var MODE_KEY = { focus: 'mFocus', short: 'mShort', long: 'mLong' };
+
+  function $(id) { return document.getElementById(id); }
+  function qsa(s) { return Array.prototype.slice.call(document.querySelectorAll(s)); }
+  function p2(n) { return n < 10 ? '0' + n : '' + n; }
+  function todayKey(d) { d = d || new Date(); return d.getFullYear() + '-' + p2(d.getMonth() + 1) + '-' + p2(d.getDate()); }
+  function clamp(v, a, b) { return Math.min(b, Math.max(a, Math.round(v))); }
+  function num(v, d) { return typeof v === 'number' && isFinite(v) ? v : d; }
+
+  var S = {
+    tab: 'sw', skin: null, lang: null, lastSeen: 0,
+    sw: { running: false, startAt: 0, acc: 0, laps: [] },
+    pomo: { mode: 'focus', running: false, endAt: 0, remaining: 25 * 60000, cycle: 0 },
+    settings: { focus: 25, short: 5, long: 15, sound: true, auto: false, notify: false },
+    work: { date: todayKey(), ms: 0, trees: [], pomos: 0 },
+    history: []
+  };
+  var wiping = false;
+
+  // ---------- storage ----------
+  function load() {
+    var o = null;
+    try {
+      o = JSON.parse(localStorage.getItem(KEY) || 'null');
+      for (var i = 0; !o && i < OLD_KEYS.length; i++) o = JSON.parse(localStorage.getItem(OLD_KEYS[i]) || 'null');
+    } catch (e) {}
+    if (!o || typeof o !== 'object') return;
+    if (o.tab === 'pomo') S.tab = 'pomo';
+    if (typeof o.skin === 'string') S.skin = o.skin;
+    if (o.lang === 'en' || o.lang === 'tr') S.lang = o.lang;
+    S.lastSeen = num(o.lastSeen, 0);
+    if (o.settings) {
+      S.settings.focus = clamp(num(o.settings.focus, 25), 1, 120);
+      S.settings.short = clamp(num(o.settings.short, 5), 1, 60);
+      S.settings.long = clamp(num(o.settings.long, 15), 1, 90);
+      S.settings.sound = o.settings.sound !== false;
+      S.settings.auto = !!o.settings.auto;
+      S.settings.notify = !!o.settings.notify;
+    }
+    if (o.sw && Array.isArray(o.sw.laps)) {
+      S.sw = { running: !!o.sw.running, startAt: num(o.sw.startAt, 0), acc: Math.max(0, num(o.sw.acc, 0)),
+        laps: o.sw.laps.filter(function (n) { return typeof n === 'number' && n >= 0; }) };
+    }
+    if (o.pomo && MODE_KEY[o.pomo.mode]) {
+      S.pomo = { mode: o.pomo.mode, running: !!o.pomo.running, endAt: num(o.pomo.endAt, 0),
+        remaining: Math.max(0, num(o.pomo.remaining, dur(o.pomo.mode))), cycle: Math.max(0, num(o.pomo.cycle, 0)) };
+    }
+    if (o.work && typeof o.work.date === 'string') {
+      S.work = { date: o.work.date, ms: Math.max(0, num(o.work.ms, 0)),
+        trees: Array.isArray(o.work.trees) ? o.work.trees.filter(function (x) { return x && typeof x.v === 'string'; }) : [],
+        pomos: Math.max(0, num(o.work.pomos, 0)) };
+    }
+    if (Array.isArray(o.history)) S.history = o.history.filter(function (h) { return h && typeof h.date === 'string'; }).slice(0, 30);
+  }
+  function save() {
+    if (wiping) return;
+    S.lastSeen = Date.now();
+    try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {}
+  }
+
+  // ---------- formatting ----------
+  function parts(ms) {
+    ms = Math.max(0, Math.floor(ms));
+    var cs = Math.floor(ms / 10) % 100, s = Math.floor(ms / 1000) % 60, m = Math.floor(ms / 60000) % 60, h = Math.floor(ms / HOUR);
+    return { main: h ? h + ':' + p2(m) + ':' + p2(s) : p2(m) + ':' + p2(s), frac: '.' + p2(cs), s: s, h: h };
+  }
+  function fmt(ms) { var p = parts(ms); return p.main + p.frac; }
+  function fmtClock(ms) { var x = Math.ceil(Math.max(0, ms) / 1000); var h = Math.floor(x / 3600), m = Math.floor(x / 60) % 60, s = x % 60; return h ? h + ':' + p2(m) + ':' + p2(s) : p2(m) + ':' + p2(s); }
+  function fmtDur(ms) { var m = Math.floor(ms / 60000), h = Math.floor(m / 60); return T[L].dur(h, m % 60); }
+
+  // ---------- toast, sound, notifications ----------
+  var toastT = 0;
+  function toast(msg) {
+    var el = $('toast'); el.textContent = msg; el.classList.add('show');
+    clearTimeout(toastT); toastT = setTimeout(function () { el.classList.remove('show'); }, 3400);
+  }
+  var actx = null;
+  function ensureAudio() {
+    try {
+      if (!actx) { var AC = window.AudioContext || window.webkitAudioContext; if (AC) actx = new AC(); }
+      if (actx && actx.state === 'suspended') actx.resume();
+    } catch (e) {}
+  }
+  function chime(soft) {
+    if (!S.settings.sound || !actx) return;
+    try {
+      var now = actx.currentTime, notes = soft ? [659, 988] : [784, 988, 1319];
+      notes.forEach(function (f, i) {
+        var o = i * 0.28, osc = actx.createOscillator(), g = actx.createGain();
+        osc.type = 'sine'; osc.frequency.value = f;
+        g.gain.setValueAtTime(0.0001, now + o);
+        g.gain.exponentialRampToValueAtTime(soft ? 0.14 : 0.22, now + o + 0.02);
+        g.gain.exponentialRampToValueAtTime(0.0001, now + o + 0.8);
+        osc.connect(g); g.connect(actx.destination); osc.start(now + o); osc.stop(now + o + 0.85);
+      });
+    } catch (e) {}
+  }
+  var swReg = null;
+  var canNotify = 'Notification' in window;
+  if (!canNotify) $('notifyRow').hidden = true;
+  function notify(body) {
+    if (!S.settings.notify || !canNotify || Notification.permission !== 'granted' || !document.hidden) return;
+    try {
+      if (swReg && swReg.showNotification) swReg.showNotification('Grove', { body: body, icon: 'icons/icon-192.png', tag: 'grove' });
+      else new Notification('Grove', { body: body });
+    } catch (e) {}
+  }
+
+  // ---------- language ----------
+  function defaultLang() {
+    var langs = (navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || 'en']);
+    return String(langs[0] || 'en').toLowerCase().indexOf('tr') === 0 ? 'tr' : 'en';
+  }
+  function applyLang() {
+    L = S.lang || defaultLang();
+    document.documentElement.setAttribute('lang', L);
+    qsa('[data-i18n]').forEach(function (el) { el.textContent = t(el.getAttribute('data-i18n')); });
+    qsa('[data-i18n-html]').forEach(function (el) { el.innerHTML = t(el.getAttribute('data-i18n-html')); });
+    qsa('[data-i18n-aria]').forEach(function (el) { el.setAttribute('aria-label', t(el.getAttribute('data-i18n-aria'))); });
+    qsa('[data-i18n-title]').forEach(function (el) { el.setAttribute('title', t(el.getAttribute('data-i18n-title'))); });
+    qsa('.lang').forEach(function (b) { b.setAttribute('aria-checked', b.getAttribute('data-lang') === L ? 'true' : 'false'); });
+    qsa('.skin').forEach(function (b) { b.lastChild.textContent = T[L].skins[b.getAttribute('data-skin')]; });
+    $('wipeBtn').textContent = t('wipe');
+    updateFsLabel(); updateModeLabel();
+  }
+  function setLang(l) {
+    S.lang = l; applyLang();
+    renderSwControls(); renderLaps(); renderPomo(); shownTrees = -1; renderForest(); shownWeek = ''; renderWeek(); renderGrow();
+    save();
+  }
+  qsa('.lang').forEach(function (b) { b.addEventListener('click', function () { setLang(b.getAttribute('data-lang')); }); });
+
+  // ---------- themes ----------
+  function skinById(id) { for (var i = 0; i < SKINS.length; i++) if (SKINS[i].id === id) return SKINS[i]; return null; }
+  function defaultSkin() {
+    var dt = document.documentElement.getAttribute('data-theme');
+    if (dt === 'dark') return 'gece';
+    if (dt === 'light') return 'gunduz';
+    try { return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'gece' : 'gunduz'; } catch (e) { return 'gunduz'; }
+  }
+  var SUN = '<circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path>';
+  var MOON = '<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path>';
+  var isDark = false;
+  function updateModeLabel() { $('modeBtn').setAttribute('aria-label', isDark ? t('toLight') : t('toDark')); }
+  function applySkin() {
+    var sk = skinById(S.skin) || skinById(defaultSkin());
+    S.skin = sk.id; isDark = sk.dark;
+    document.documentElement.setAttribute('data-skin', sk.id);
+    var meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute('content', sk.c[0]);
+    $('modeIcon').innerHTML = sk.dark ? SUN : MOON;
+    updateModeLabel();
+    qsa('.skin').forEach(function (b) { b.setAttribute('aria-checked', b.getAttribute('data-skin') === sk.id ? 'true' : 'false'); });
+    shownKey = ''; renderGrow();
+  }
+  function setSkin(id) { S.skin = id; applySkin(); save(); }
+  function toggleLightDark() { var sk = skinById(S.skin); setSkin(sk && sk.dark ? 'gunduz' : 'gece'); }
+  SKINS.forEach(function (sk) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'skin'; b.setAttribute('role', 'radio'); b.setAttribute('data-skin', sk.id);
+    b.innerHTML = '<span class="swatch" style="background:' + sk.c[0] + '"><i class="a" style="background:' + sk.c[1] + '"></i><i class="b" style="background:' + sk.c[2] + '"></i></span>';
+    b.appendChild(document.createTextNode(''));
+    b.addEventListener('click', function () { setSkin(sk.id); });
+    $('skins').appendChild(b);
+  });
+  function openMenu(open) { $('themeMenu').hidden = !open; $('themeBtn').setAttribute('aria-expanded', open ? 'true' : 'false'); }
+  $('themeBtn').addEventListener('click', function () { openMenu($('themeMenu').hidden); });
+  $('modeBtn').addEventListener('click', toggleLightDark);
+  document.addEventListener('click', function (e) {
+    if (!$('themeMenu').hidden && !$('themeWrap').contains(e.target)) openMenu(false);
+  });
+
+  // ---------- about ----------
+  var wipeArmed = 0;
+  function openAbout(open) {
+    $('about').hidden = !open;
+    if (open) $('aboutClose').focus();
+    clearTimeout(wipeArmed); wipeArmed = 0; $('wipeBtn').textContent = t('wipe');
+  }
+  $('aboutBtn').addEventListener('click', function () { openAbout(true); });
+  $('aboutClose').addEventListener('click', function () { openAbout(false); });
+  $('about').addEventListener('click', function (e) { if (e.target === this) openAbout(false); });
+  $('wipeBtn').addEventListener('click', function () {
+    if (!wipeArmed) {
+      wipeArmed = setTimeout(function () { wipeArmed = 0; $('wipeBtn').textContent = t('wipe'); }, 4000);
+      $('wipeBtn').textContent = t('wipeSure');
+      return;
+    }
+    clearTimeout(wipeArmed);
+    wiping = true;
+    try { localStorage.removeItem(KEY); OLD_KEYS.forEach(function (k) { localStorage.removeItem(k); }); } catch (e) {}
+    location.reload();
+  });
+
+  // ---------- tabs ----------
+  function setTab(x) {
+    S.tab = x;
+    $('tab-sw').setAttribute('aria-selected', x === 'sw' ? 'true' : 'false');
+    $('tab-pomo').setAttribute('aria-selected', x === 'pomo' ? 'true' : 'false');
+    $('view-sw').hidden = x !== 'sw';
+    $('view-pomo').hidden = x !== 'pomo';
+    save();
+  }
+  $('tab-sw').addEventListener('click', function () { setTab('sw'); });
+  $('tab-pomo').addEventListener('click', function () { setTab('pomo'); });
+
+  // =====================================================
+  // Stopwatch
+  // =====================================================
+  var swStage = $('swStage'), readout = $('readout'), swMain = $('swMain'), swFrac = $('swFrac');
+  var ticks = [];
+  for (var i = 0; i < 60; i++) { var ti = document.createElement('i'); $('ticks').appendChild(ti); ticks.push(ti); }
+  function swElapsed() { return S.sw.running ? Math.max(0, S.sw.acc + (Date.now() - S.sw.startAt)) : S.sw.acc; }
+  function lastLap() { return S.sw.laps.length ? S.sw.laps[S.sw.laps.length - 1] : 0; }
+  var lastMain = '', lastFrac = '', lastSec = null, lastLong = null, curLapEl = null, curTotalEl = null;
+  function paintTicks(sec) { for (var i = 0; i < 60; i++) ticks[i].className = sec < 0 ? '' : (i < sec ? 'on' : (i === sec ? 'now' : '')); }
+  function paintSw() {
+    var x = swElapsed(), p = parts(x);
+    if (p.main !== lastMain) { swMain.textContent = p.main; lastMain = p.main; }
+    if (p.frac !== lastFrac) { swFrac.textContent = p.frac; lastFrac = p.frac; }
+    var long = p.h > 0; if (long !== lastLong) { readout.classList.toggle('long', long); lastLong = long; }
+    var sec = x > 0 ? p.s : -1; if (sec !== lastSec) { paintTicks(sec); lastSec = sec; }
+    if (curLapEl) { curLapEl.textContent = fmt(x - lastLap()); curTotalEl.textContent = fmt(x); }
+  }
+  function renderSwControls() {
+    var st = S.sw.running ? 'running' : (S.sw.acc > 0 ? 'paused' : 'idle');
+    swStage.className = 'stage ' + st;
+    var mb = $('swMainBtn'), sb = $('swSec');
+    if (st === 'running') { mb.textContent = t('stop'); mb.className = 'btn btn-stop'; sb.textContent = t('lap'); sb.disabled = false; $('swStatus').textContent = t('running'); }
+    else if (st === 'paused') { mb.textContent = t('resume'); mb.className = 'btn btn-go'; sb.textContent = t('reset'); sb.disabled = false; $('swStatus').textContent = t('paused'); }
+    else { mb.textContent = t('start'); mb.className = 'btn btn-go'; sb.textContent = t('lap'); sb.disabled = true; $('swStatus').textContent = t('ready'); }
+  }
+  function lapRow(cls, label, tags, a, b) {
+    var li = document.createElement('li'); li.className = 'lap-grid ' + cls;
+    var n = document.createElement('span'); n.className = 'n';
+    var nl = document.createElement('span'); nl.textContent = label; n.appendChild(nl);
+    tags.forEach(function (tg) { var s = document.createElement('span'); s.className = 'tag ' + tg[0]; s.textContent = tg[1]; n.appendChild(s); });
+    var x = document.createElement('span'); x.className = 't lap'; x.textContent = a;
+    var y = document.createElement('span'); y.className = 't total'; y.textContent = b;
+    li.appendChild(n); li.appendChild(x); li.appendChild(y); return li;
+  }
+  function renderLaps(fresh) {
+    var laps = S.sw.laps, list = $('lapList');
+    list.textContent = ''; curLapEl = curTotalEl = null;
+    var has = laps.length > 0;
+    $('lapEmpty').hidden = has; $('lapsCols').hidden = !has; $('copyBtn').hidden = !has;
+    $('lapsTitle').textContent = has ? t('laps') + ' · ' + laps.length : t('laps');
+    if (!has) return;
+    var d = laps.map(function (v, i) { return v - (i ? laps[i - 1] : 0); });
+    var best = -1, worst = -1;
+    if (d.length >= 2) {
+      best = 0; worst = 0;
+      d.forEach(function (v, i) { if (v < d[best]) best = i; if (v > d[worst]) worst = i; });
+      if (d[best] === d[worst]) best = worst = -1;
+    }
+    var cur = lapRow('current', t('lapN', { n: laps.length + 1 }), [], '', '');
+    curLapEl = cur.children[1]; curTotalEl = cur.children[2]; list.appendChild(cur);
+    for (var i = laps.length - 1; i >= 0; i--) {
+      var li = lapRow(i === best ? 'best' : (i === worst ? 'worst' : ''), t('lapN', { n: i + 1 }),
+        i === best ? [['best', t('fastest')]] : (i === worst ? [['worst', t('slowest')]] : []), fmt(d[i]), fmt(laps[i]));
+      if (i === fresh) li.className += ' fresh';
+      list.appendChild(li);
+    }
+    paintSw();
+  }
+  function swToggle() {
+    workTick();
+    if (S.sw.running) { S.sw.acc = swElapsed(); S.sw.running = false; }
+    else { S.sw.startAt = Date.now(); S.sw.running = true; }
+    save(); renderSwControls(); kick(); syncWake(); renderGrow();
+  }
+  function swLap() {
+    if (!S.sw.running) return;
+    var x = swElapsed(); if (x - lastLap() < 50) return;
+    S.sw.laps.push(x); save(); renderLaps(S.sw.laps.length - 1); $('lapList').scrollTop = 0;
+  }
+  function swReset() {
+    workTick();
+    S.sw = { running: false, startAt: 0, acc: 0, laps: [] };
+    save(); renderSwControls(); renderLaps(); paintSw(); syncWake(); renderGrow();
+  }
+  $('swMainBtn').addEventListener('click', swToggle);
+  $('swSec').addEventListener('click', function () { if (S.sw.running) swLap(); else swReset(); });
+  $('copyBtn').addEventListener('click', function () {
+    var Lp = S.sw.laps, lines = [t('colLap') + '\t' + t('colSplit') + '\t' + t('colTotal')];
+    Lp.forEach(function (v, i) { lines.push((i + 1) + '\t' + fmt(v - (i ? Lp[i - 1] : 0)) + '\t' + fmt(v)); });
+    var text = lines.join('\n'), btn = $('copyBtn');
+    function done(k) { btn.textContent = t(k); setTimeout(function () { btn.textContent = t('copy'); }, 1600); }
+    function fallback() {
+      var ta = document.createElement('textarea'); ta.value = text; ta.setAttribute('readonly', '');
+      ta.style.position = 'fixed'; ta.style.opacity = '0'; document.body.appendChild(ta); ta.select();
+      var ok = false; try { ok = document.execCommand('copy'); } catch (e) {}
+      document.body.removeChild(ta); done(ok ? 'copied' : 'copyFail');
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(function () { done('copied'); }, fallback);
+    else fallback();
+  });
+
+  // =====================================================
+  // Pomodoro
+  // =====================================================
+  var RING_C = 2 * Math.PI * 100;
+  $('ringProg').style.strokeDasharray = RING_C.toFixed(2);
+  function dur(m) { return (S.settings[m] || 25) * 60000; }
+  function pomoLeft() { return S.pomo.running ? Math.max(0, S.pomo.endAt - Date.now()) : S.pomo.remaining; }
+  var lastPomoText = '', pomoTimer = 0;
+  function paintPomo() {
+    var left = pomoLeft(), d = dur(S.pomo.mode);
+    var frac = Math.max(0, Math.min(1, left / d));
+    $('ringProg').style.strokeDashoffset = (RING_C * (1 - frac)).toFixed(2);
+    var txt = fmtClock(left);
+    if (txt !== lastPomoText) {
+      $('pomoTime').textContent = txt; lastPomoText = txt;
+      document.title = S.pomo.running ? txt + ' · ' + t(MODE_KEY[S.pomo.mode]) + ' — Grove' : 'Grove';
+    }
+  }
+  function renderPomo() {
+    var P = S.pomo;
+    $('pomo').setAttribute('data-mode', P.mode);
+    qsa('.mode').forEach(function (m) { m.setAttribute('aria-checked', m.getAttribute('data-mode') === P.mode ? 'true' : 'false'); });
+    var full = P.remaining >= dur(P.mode) && !P.running;
+    var mb = $('pomoMain');
+    if (P.running) { mb.textContent = t('pause'); mb.className = 'btn btn-stop'; }
+    else { mb.textContent = full ? t('start') : t('resume'); mb.className = 'btn btn-go'; }
+    $('pomoLabel').textContent = P.running || full ? (P.mode === 'focus' ? t('focusLabel') : t(MODE_KEY[P.mode])) : t('paused');
+    var dots = $('cdots').children, inCycle = P.cycle % 4;
+    for (var j = 0; j < 4; j++) dots[j].className = j < inCycle ? 'on' : '';
+    $('pomoCount').textContent = t('pomoCount', S.work.pomos);
+    ['focus', 'short', 'long'].forEach(function (k) { $('set-' + k).textContent = S.settings[k]; });
+    $('soundChk').checked = S.settings.sound;
+    $('autoChk').checked = S.settings.auto;
+    $('notifyChk').checked = S.settings.notify && canNotify && Notification.permission === 'granted';
+    lastPomoText = '';
+    paintPomo();
+  }
+  function schedulePomo() {
+    clearTimeout(pomoTimer);
+    if (S.pomo.running) pomoTimer = setTimeout(checkPomo, pomoLeft() + 60);
+  }
+  function startPomo() { var P = S.pomo; if (P.remaining <= 0) P.remaining = dur(P.mode); P.endAt = Date.now() + P.remaining; P.running = true; }
+  function setMode(m) {
+    workTick();
+    S.pomo.mode = m; S.pomo.running = false; S.pomo.remaining = dur(m);
+    save(); renderPomo(); schedulePomo(); syncWake(); renderGrow();
+  }
+  function pomoToggle() {
+    workTick();
+    if (S.pomo.running) { S.pomo.remaining = pomoLeft(); S.pomo.running = false; }
+    else startPomo();
+    save(); renderPomo(); schedulePomo(); kick(); syncWake(); renderGrow();
+  }
+  function pomoReset() { setMode(S.pomo.mode); }
+  function pomoSkip() {
+    if (S.pomo.mode === 'focus') setMode((S.pomo.cycle + 1) % 4 === 0 ? 'long' : 'short');
+    else setMode('focus');
+  }
+  function checkPomo(silent) {
+    if (!S.pomo.running || pomoLeft() > 0) return;
+    workTick();
+    var was = S.pomo.mode, msg;
+    S.pomo.running = false;
+    if (was === 'focus') {
+      S.pomo.cycle += 1; S.work.pomos += 1;
+      var next = S.pomo.cycle % 4 === 0 ? 'long' : 'short';
+      S.pomo.mode = next; S.pomo.remaining = dur(next);
+      msg = next === 'long' ? t('tLongBreak') : t('tFocusDone');
+    } else {
+      S.pomo.mode = 'focus'; S.pomo.remaining = dur('focus');
+      msg = t('tBreakDone');
+    }
+    if (S.settings.auto && silent !== true) startPomo();
+    if (silent !== true) { toast(msg); chime(); notify(msg); }
+    save(); renderPomo(); schedulePomo(); syncWake(); kick(); renderGrow();
+  }
+  $('pomoMain').addEventListener('click', pomoToggle);
+  $('pomoReset').addEventListener('click', pomoReset);
+  $('pomoSkip').addEventListener('click', pomoSkip);
+  qsa('.mode').forEach(function (b) { b.addEventListener('click', function () { setMode(b.getAttribute('data-mode')); }); });
+  qsa('.stepper').forEach(function (st) {
+    var k = st.getAttribute('data-key'), max = k === 'focus' ? 120 : (k === 'short' ? 60 : 90);
+    st.addEventListener('click', function (e) {
+      var b = e.target.closest('button'); if (!b) return;
+      S.settings[k] = clamp(S.settings[k] + Number(b.getAttribute('data-d')), 1, max);
+      if (S.pomo.mode === k && !S.pomo.running) S.pomo.remaining = dur(k);
+      save(); renderPomo();
+    });
+  });
+  $('soundChk').addEventListener('change', function () { S.settings.sound = this.checked; save(); if (this.checked) { ensureAudio(); chime(true); } });
+  $('autoChk').addEventListener('change', function () { S.settings.auto = this.checked; save(); });
+  $('notifyChk').addEventListener('change', function () {
+    var box = this;
+    if (!box.checked) { S.settings.notify = false; save(); return; }
+    try {
+      Notification.requestPermission().then(function (p) {
+        S.settings.notify = p === 'granted'; box.checked = S.settings.notify; save();
+        if (p !== 'granted') toast(t('tNotifyDenied'));
+      }).catch(function () { box.checked = false; });
+    } catch (e) { box.checked = false; }
+  });
+
+  // =====================================================
+  // Garden: one tree per hour of focus
+  // =====================================================
+  function isWorking() { return S.sw.running || (S.pomo.running && S.pomo.mode === 'focus'); }
+  function hashStr(s) { var h = 0; for (var i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0; return h; }
+  function variantFor(i) { return VARIANTS[(hashStr(S.work.date) + i) % VARIANTS.length]; }
+  function vName(id) { return T[L].variants[id] || T[L].variants.mese; }
+  function stageName(p) { for (var i = 0; i < STAGE_AT.length; i++) if (p < STAGE_AT[i]) return T[L].stages[i]; return T[L].stages[4]; }
+  function ss(a, b, x) { var k = Math.min(1, Math.max(0, (x - a) / (b - a))); return k * k * (3 - 2 * k); }
+  function f1(n) { return Math.round(n * 10) / 10; }
+
+  function drawSky() {
+    if (isDark) {
+      var st = [[40, 34, 1.3, 0], [70, 22, 1, 1.1], [118, 30, 1.2, .5], [52, 60, .9, 2], [138, 64, 1, 1.6], [30, 82, 1, .8]];
+      var s = '<path class="moon" d="M158 26a15 15 0 1 0 14 24 12 12 0 1 1-14-24z"></path>';
+      st.forEach(function (x) { s += '<circle class="star" cx="' + x[0] + '" cy="' + x[1] + '" r="' + x[2] + '" style="animation-delay:' + x[3] + 's"></circle>'; });
+      return s;
+    }
+    return '<circle class="sun" cx="158" cy="40" r="13"></circle>' +
+      '<g class="cloud"><ellipse cx="50" cy="44" rx="18" ry="7"></ellipse><ellipse cx="62" cy="40" rx="12" ry="8"></ellipse><ellipse cx="42" cy="41" rx="9" ry="6"></ellipse></g>' +
+      '<g class="cloud" style="animation-delay:-11s"><ellipse cx="118" cy="70" rx="13" ry="5"></ellipse><ellipse cx="126" cy="67" rx="8" ry="5.5"></ellipse></g>';
+  }
+
+  function drawTree(v, p, sway, mini) {
+    var base = 186, cx = 100, out = '';
+    var s = ss(0, 1, p), c = ss(0.1, 1, p);
+    var tall = v === 'cam' ? 104 : (v === 'zeytin' ? 66 : 86);
+    var H = 4 + tall * s, w = 2.4 + (v === 'zeytin' ? 12 : 9) * s, top = base - H;
+    out += '<ellipse class="gr" cx="100" cy="188" rx="' + f1(mini ? 50 : 34 + 42 * Math.max(0.25, s)) + '" ry="9"></ellipse>';
+    if (!mini) out += '<path class="grass" d="M62 188l-2-7M65 188l1-8M68 188l3-6M132 188l-2-6M135 188l1-8M138 188l3-7"></path>';
+    var g = '';
+    if (p < 0.06) {
+      var sd = 1 - ss(0.03, 0.06, p);
+      g += '<ellipse class="tr" cx="100" cy="184" rx="' + f1(5.5 * sd + 0.5) + '" ry="' + f1(3.6 * sd + 0.4) + '"></ellipse>';
+    }
+    if (p >= 0.02) {
+      g += '<path class="tr" d="M' + f1(cx - w / 2) + ' ' + base + ' L' + f1(cx - w * 0.3) + ' ' + f1(top + 2) + ' L' + f1(cx + w * 0.3) + ' ' + f1(top + 2) + ' L' + f1(cx + w / 2) + ' ' + base + ' Z"></path>';
+    }
+    var br = ss(0.35, 0.8, p);
+    if (br > 0 && v !== 'cam') {
+      var by = base - H * 0.5, bl = 24 * br;
+      g += '<path class="trs" stroke-width="' + f1(1.5 + 3 * br) + '" d="M' + cx + ' ' + f1(by) + ' l' + f1(-bl) + ' ' + f1(-bl * 0.85) + ' M' + cx + ' ' + f1(by - 9) + ' l' + f1(bl * 0.9) + ' ' + f1(-bl * 0.8) + '"></path>';
+    }
+    var sp = (1 - ss(0.16, 0.32, p)) * ss(0.02, 0.1, p);
+    if (sp > 0.02) {
+      var k = 0.5 + 0.5 * sp;
+      g += '<ellipse class="lf" cx="' + f1(cx - 7 * k) + '" cy="' + f1(top - 2 * k) + '" rx="' + f1(8 * k * sp) + '" ry="' + f1(3.6 * k * sp) + '" transform="rotate(-28 ' + f1(cx - 7 * k) + ' ' + f1(top - 2 * k) + ')"></ellipse>';
+      g += '<ellipse class="lf2" cx="' + f1(cx + 7 * k) + '" cy="' + f1(top - 4 * k) + '" rx="' + f1(8 * k * sp) + '" ry="' + f1(3.6 * k * sp) + '" transform="rotate(28 ' + f1(cx + 7 * k) + ' ' + f1(top - 4 * k) + ')"></ellipse>';
+    }
+    if (c > 0.01) {
+      if (v === 'cam') {
+        for (var q = 0; q < 4; q++) {
+          var apex = top - 30 * c + q * 21 * c, hw = (13 + 12 * q) * c, hb = 34 * c;
+          g += '<path class="' + (q % 2 ? 'lf' : 'lf2') + '" d="M' + cx + ' ' + f1(apex) + ' L' + f1(cx + hw) + ' ' + f1(apex + hb) + ' L' + f1(cx - hw) + ' ' + f1(apex + hb) + ' Z"></path>';
+        }
+      } else {
+        var blobs = [[0, -8, 28], [-26, -14, 24], [26, -14, 24], [-15, -38, 24], [15, -40, 23], [0, -56, 20], [-34, -32, 15], [34, -32, 15]];
+        var cls = { kiraz: ['bl', 'bl2'], zeytin: ['ol', 'ol2'], akcaagac: ['au', 'au2'] }[v] || ['lf', 'lf2'];
+        var sx = v === 'zeytin' ? 1.25 : 1, sy = v === 'zeytin' ? 0.72 : 1;
+        blobs.forEach(function (bb, i) {
+          var cc = ss(0.1 + i * 0.05, 0.75 + i * 0.03, p);
+          if (cc <= 0.01) return;
+          g += '<circle class="' + (i % 3 === 1 ? cls[1] : cls[0]) + '" cx="' + f1(cx + bb[0] * c * sx) + '" cy="' + f1(top + bb[1] * c * sy) + '" r="' + f1(bb[2] * cc * (v === 'zeytin' ? 0.9 : 1)) + '"></circle>';
+        });
+        var fs = ss(0.82, 1, p);
+        if (fs > 0.01 && (v === 'portakal' || v === 'kiraz' || v === 'zeytin')) {
+          var dots = [[-22, -18], [14, -30], [28, -8], [-8, -44], [-30, -36], [6, -6], [20, -52]];
+          var fc = v === 'portakal' ? 'fr' : (v === 'zeytin' ? 'olv' : 'fl'), fr = v === 'portakal' ? 4.2 : 3;
+          dots.forEach(function (d) {
+            g += '<circle class="' + fc + '" cx="' + f1(cx + d[0] * sx) + '" cy="' + f1(top + d[1] * sy) + '" r="' + f1(fr * fs) + '"></circle>';
+          });
+        }
+      }
+    }
+    return out + '<g' + (sway ? ' class="sway"' + (sway !== true ? ' style="animation-delay:-' + sway + 's"' : '') : '') + '>' + g + '</g>';
+  }
+
+  var demo = null, intro = null, shownP = -1, shownKey = '';
+  function renderGrow() {
+    var growing = variantFor(S.work.trees.length);
+    var realP = (S.work.ms % HOUR) / HOUR, p = realP, v = growing;
+    var now = performance.now();
+    if (demo) {
+      var dp = (now - demo.start) / 6000;
+      if (dp >= 1.3) { demo = null; intro = now; } else { p = Math.min(1, dp); v = demo.variant; }
+    }
+    if (!demo && intro) {
+      var ip = (now - intro) / 1400;
+      if (ip >= 1) intro = null; else p = realP * (1 - Math.pow(1 - ip, 3));
+    }
+    var key = v + (isDark ? 'd' : 'l');
+    if (Math.abs(p - shownP) > 0.0004 || key !== shownKey) {
+      $('growSvg').innerHTML = drawSky() + drawTree(v, p, true);
+      shownP = p; shownKey = key;
+    }
+    $('stageChip').textContent = stageName(p);
+    var mins = Math.floor((S.work.ms % HOUR) / 60000);
+    $('growBar').style.width = (realP * 100).toFixed(1) + '%';
+    $('growText').textContent = t('growText', { m: mins });
+    var working = isWorking();
+    $('growName').textContent = demo ? vName(demo.variant) + ' · ' + t('sPreview') : vName(growing) + (working ? ' · ' + t('sGrowing') : (S.work.ms % HOUR > 0 ? ' · ' + t('sWaiting') : ''));
+    $('todayText').innerHTML = S.work.ms >= 60000
+      ? t('worked', { d: fmtDur(S.work.ms) }) + (S.work.pomos ? t('workedPomo', { n: S.work.pomos }) : '') + '.' + (working ? '' : t('keepGoing'))
+      : (working ? t('workingStart') : t('notStarted'));
+    if (demo || intro) requestAnimationFrame(renderGrow);
+  }
+  function celebrate() {
+    var box = $('grow'), cols = ['--leaf', '--leaf2', '--blossom', '--fruit'];
+    for (var i = 0; i < 22; i++) {
+      var sp = document.createElement('span');
+      sp.className = 'leafp';
+      var ang = Math.random() * Math.PI * 2, dist = 50 + Math.random() * 90;
+      sp.style.setProperty('--x', f1(Math.cos(ang) * dist) + 'px');
+      sp.style.setProperty('--y', f1(Math.sin(ang) * dist * 0.7 + 30) + 'px');
+      sp.style.setProperty('--r', Math.round(Math.random() * 540 - 270) + 'deg');
+      sp.style.background = 'var(' + cols[i % cols.length] + ')';
+      sp.style.animationDelay = (Math.random() * 0.25).toFixed(2) + 's';
+      box.appendChild(sp);
+      setTimeout(function (n) { return function () { if (n.parentNode) n.parentNode.removeChild(n); }; }(sp), 2200);
+    }
+  }
+  var shownTrees = -1;
+  function renderForest(popIndex) {
+    var trees = S.work.trees, box = $('forest');
+    if (trees.length === shownTrees && popIndex == null) return;
+    shownTrees = trees.length;
+    box.textContent = '';
+    trees.forEach(function (tr, i) {
+      var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      svg.setAttribute('viewBox', '0 0 200 200');
+      var tm = tr.at ? new Date(tr.at) : null;
+      svg.innerHTML = '<title>' + t('treeTip', { i: i + 1, name: vName(tr.v) }) + (tm ? ' · ' + p2(tm.getHours()) + ':' + p2(tm.getMinutes()) : '') + '</title>' + drawTree(tr.v, 1, ((i * 0.73) % 5).toFixed(2), true);
+      if (i === popIndex) svg.setAttribute('class', 'pop');
+      box.appendChild(svg);
+    });
+    box.hidden = trees.length === 0;
+    $('forestEmpty').hidden = trees.length > 0;
+    $('treeCount').textContent = t('trees', trees.length);
+  }
+  var shownWeek = '';
+  function renderWeek() {
+    var days = [], max = HOUR, total = 0, now = new Date();
+    for (var i = 6; i >= 0; i--) {
+      var d = new Date(now.getFullYear(), now.getMonth(), now.getDate() - i), k = todayKey(d), ms = 0, tr = 0;
+      if (k === S.work.date) { ms = S.work.ms; tr = S.work.trees.length; }
+      else { for (var j = 0; j < S.history.length; j++) if (S.history[j].date === k) { ms = S.history[j].ms || 0; tr = S.history[j].trees || 0; break; } }
+      days.push({ d: d, ms: ms, tr: tr, today: i === 0 }); max = Math.max(max, ms); total += tr;
+    }
+    var sig = days.map(function (x) { return Math.floor(x.ms / 60000) + ':' + x.tr; }).join('|') + todayKey() + L;
+    if (sig === shownWeek) return; shownWeek = sig;
+    var box = $('week'); box.textContent = '';
+    days.forEach(function (x) {
+      var col = document.createElement('div');
+      col.className = 'wcol' + (x.today ? ' is-today' : '');
+      col.title = t('weekTip', { date: x.d.toLocaleDateString(locale(), { day: 'numeric', month: 'long' }), trees: t('trees', x.tr), dur: fmtDur(x.ms) });
+      col.innerHTML = '<span class="wcount">' + (x.tr || '') + '</span><span class="wbar"><i style="height:' + (x.ms ? Math.max(6, x.ms / max * 100) : 0).toFixed(1) + '%"></i></span><span class="wday"></span>';
+      col.lastChild.textContent = x.today ? t('today') : x.d.toLocaleDateString(locale(), { weekday: 'short' }).replace('.', '');
+      box.appendChild(col);
+    });
+    $('weekTotal').textContent = t('trees', total);
+  }
+  function rollDay() {
+    var k = todayKey();
+    if (S.work.date === k) return false;
+    if (S.work.ms > 0) S.history.unshift({ date: S.work.date, trees: S.work.trees.length, ms: S.work.ms, pomos: S.work.pomos });
+    S.history = S.history.slice(0, 30);
+    S.work = { date: k, ms: 0, trees: [], pomos: 0 };
+    S.pomo.cycle = 0;
+    renderForest(); renderWeek(); renderPomo();
+    return true;
+  }
+  function addWork(d, quiet) {
+    S.work.ms += d;
+    var should = Math.floor(S.work.ms / HOUR), grew = 0, n = Date.now();
+    while (S.work.trees.length < should) { S.work.trees.push({ v: variantFor(S.work.trees.length), at: n }); grew++; }
+    if (grew) {
+      renderForest(S.work.trees.length - 1);
+      if (!quiet) {
+        celebrate();
+        var msg = t('tNewTree', S.work.trees.length);
+        toast(msg); chime(true); notify(msg);
+        intro = performance.now();
+      }
+      save();
+    }
+    return grew;
+  }
+  var lastWork = Date.now(), lastSave = 0;
+  function workTick() {
+    var n = Date.now(), d = n - lastWork; lastWork = n;
+    rollDay();
+    if (d > 0 && d < 120000 && isWorking()) {
+      addWork(d);
+      if (n - lastSave > 5000) { save(); lastSave = n; }
+    }
+    renderGrow(); renderWeek();
+  }
+  // Credit time that passed while the app was closed but a timer kept running
+  function creditAway() {
+    var seen = S.lastSeen, now = Date.now();
+    if (!seen || now - seen < 2000) return;
+    var gap = now - seen, credit = 0;
+    if (S.sw.running) credit = gap;
+    if (S.pomo.running && S.pomo.mode === 'focus' && S.pomo.endAt > seen) credit = Math.max(credit, Math.min(gap, S.pomo.endAt - seen));
+    credit = Math.min(credit, 12 * HOUR);
+    if (credit < 1000) return;
+    var grew = addWork(credit, true);
+    if (grew) setTimeout(function () { toast(t('tAway', grew)); celebrate(); }, 900);
+  }
+  $('demoBtn').addEventListener('click', function () {
+    demo = { start: performance.now(), variant: VARIANTS[Math.floor(Math.random() * VARIANTS.length)] };
+    intro = null; renderGrow();
+    setTimeout(function () { if (demo) celebrate(); }, 6000);
+  });
+
+  // =====================================================
+  // loop, keyboard, fullscreen, wake lock, install
+  // =====================================================
+  var raf = 0;
+  function frame() {
+    paintSw(); paintPomo(); checkPomo();
+    raf = (S.sw.running || S.pomo.running) ? requestAnimationFrame(frame) : 0;
+  }
+  function kick() { if (!raf) frame(); else { paintSw(); paintPomo(); } }
+  setInterval(function () { workTick(); checkPomo(); }, 1000);
+
+  document.addEventListener('mousedown', function (e) { if (e.target.closest && e.target.closest('button')) e.preventDefault(); });
+  document.addEventListener('pointerdown', ensureAudio);
+  function flash(b) { b.classList.add('pressed'); setTimeout(function () { b.classList.remove('pressed'); }, 110); }
+  document.addEventListener('keydown', function (e) {
+    ensureAudio();
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    var tag = e.target && e.target.tagName, k = e.key, c = e.code;
+    if (k === 'Escape') { openMenu(false); if (!$('about').hidden) openAbout(false); return; }
+    if (!$('about').hidden) return;
+    if (tag === 'INPUT' || tag === 'TEXTAREA') return;
+    var onBtn = tag === 'BUTTON' || tag === 'SUMMARY';
+    if (e.repeat) { if (k === ' ') e.preventDefault(); return; }
+    if (k === ' ' || c === 'Space') {
+      if (onBtn) return; e.preventDefault();
+      if (S.tab === 'sw') { flash($('swMainBtn')); swToggle(); } else { flash($('pomoMain')); pomoToggle(); }
+    } else if (k === 'Enter') {
+      if (onBtn) return; e.preventDefault();
+      if (S.tab === 'sw' && S.sw.running) { flash($('swSec')); swLap(); }
+    } else if (c === 'KeyL' || k === 'l' || k === 'L') {
+      if (S.tab === 'sw' && S.sw.running) { flash($('swSec')); swLap(); }
+    } else if (c === 'KeyR' || k === 'r' || k === 'R') {
+      if (S.tab === 'sw') swReset(); else pomoReset();
+    } else if (k === '1') { setTab('sw'); }
+    else if (k === '2') { setTab('pomo'); }
+    else if (c === 'KeyT' || k === 't' || k === 'T') { toggleLightDark(); }
+    else if (c === 'KeyF' || k === 'f' || k === 'F') { toggleFs(); }
+  });
+
+  var fsOK = !!(document.fullscreenEnabled && document.documentElement.requestFullscreen);
+  if (!fsOK) { $('fsBtn').hidden = true; $('fsKey').hidden = true; }
+  function updateFsLabel() {
+    var on = !!document.fullscreenElement;
+    $('fsBtn').setAttribute('aria-label', on ? t('fsExit') : t('fs'));
+    $('fsBtn').setAttribute('title', on ? t('fsExit') : t('fs'));
+  }
+  function toggleFs() {
+    if (!fsOK) return;
+    var pr = document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen();
+    if (pr && pr.catch) pr.catch(function () {});
+  }
+  $('fsBtn').addEventListener('click', toggleFs);
+  document.addEventListener('fullscreenchange', function () {
+    updateFsLabel();
+    $('fsIcon').innerHTML = document.fullscreenElement ? '<path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"></path>' : '<path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"></path>';
+  });
+
+  var wl = null;
+  function syncWake() {
+    if (!('wakeLock' in navigator)) return;
+    var want = (S.sw.running || S.pomo.running) && document.visibilityState === 'visible';
+    if (want && !wl) navigator.wakeLock.request('screen').then(function (l) { wl = l; l.addEventListener('release', function () { wl = null; }); }).catch(function () { wl = null; });
+    else if (!want && wl) { wl.release().catch(function () {}); wl = null; }
+  }
+  document.addEventListener('visibilitychange', function () {
+    syncWake(); workTick(); checkPomo();
+    if (document.hidden) save();
+    if (S.sw.running || S.pomo.running) { cancelAnimationFrame(raf); raf = 0; kick(); }
+  });
+  window.addEventListener('pagehide', save);
+
+  var installEvt = null;
+  window.addEventListener('beforeinstallprompt', function (e) { e.preventDefault(); installEvt = e; $('installBtn').hidden = false; });
+  $('installBtn').addEventListener('click', function () {
+    if (!installEvt) return;
+    installEvt.prompt();
+    installEvt = null; $('installBtn').hidden = true;
+  });
+  window.addEventListener('appinstalled', function () { $('installBtn').hidden = true; toast(t('tInstalled')); });
+  if ('serviceWorker' in navigator && document.querySelector('link[rel="manifest"]') && /^https?:$/.test(location.protocol)) {
+    navigator.serviceWorker.register('sw.js').then(function (r) { swReg = r; }).catch(function () {});
+  }
+
+  // ---------- boot ----------
+  load();
+  applyLang();
+  applySkin();
+  rollDay();
+  creditAway();
+  if (location.hash === '#pomodoro') S.tab = 'pomo';
+  setTab(S.tab);
+  renderSwControls(); renderLaps(); paintSw();
+  renderPomo(); schedulePomo();
+  renderForest(); renderWeek();
+  intro = performance.now();
+  lastWork = Date.now();
+  renderGrow();
+  checkPomo(true);
+  kick(); syncWake();
+  save();
+})();
+</script>
+
+</body></html>
