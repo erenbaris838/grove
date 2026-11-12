@@ -8,7 +8,11 @@
 - Pomodoro (odak, kısa mola, uzun mola; ayarlanabilir süreler, ses, bildirim, otomatik başlatma)
 - Her 60 dakikalık çalışmada büyüyen ağaç (meşe, kiraz, çam, portakal, zeytin, akçaağaç)
 - Bugünkü orman ve son 7 günün özeti
-- 6 tema (Gündüz, Gece, Orman, Okyanus, Lavanta, Gün Batımı), Türkçe / İngilizce
+- Günlük hedef, 🔥 gün serisi ve tüm zamanların istatistikleri
+- Günün ormanını Grove kartı olarak paylaşma
+- Verileri yedekleme (dışa / içe aktarma)
+- 6 tema (Gündüz, Gece, Orman, Okyanus, Lavanta, Gün Batımı)
+- 10 dil: English, Türkçe, Deutsch, Español, Français, Italiano, Português, Русский, 日本語, 简体中文
 - Telefona ve bilgisayara uygulama olarak yüklenebilir (PWA), çevrimdışı çalışır
 - Klavye kısayolları: `Boşluk` başlat/durdur · `L` tur · `R` sıfırla · `1`/`2` sekme · `T` açık/koyu · `F` tam ekran
 
@@ -34,9 +38,10 @@ Depo ayarlarında **Settings → Pages → Branch: main / (root)** seçip kaydet
 | Dosya | Açıklama |
 |---|---|
 | `index.html` | Uygulamanın tamamı (HTML, CSS, JS) |
+| `lang.js` | 10 dilin arayüz metinleri |
 | `manifest.webmanifest` | PWA bilgileri |
 | `sw.js` | Çevrimdışı çalışma için service worker |
 | `icons/` | Uygulama ikonları |
 | `fonts/` | Azeret Mono ve Instrument Sans yazı tipleri (SIL Open Font License) |
 
-Sürüm 1.1.0
+Sürüm 1.2.0

@@ -1,8 +1,9 @@
 // Grove service worker: caches the app so it works offline.
-const CACHE = 'grove-v1.1.0';
+const CACHE = 'grove-v1.2.0';
 const ASSETS = [
   './',
   'index.html',
+  'lang.js',
   'manifest.webmanifest',
   'icons/icon.svg',
   'icons/icon-192.png',

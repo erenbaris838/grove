@@ -1,19 +1,78 @@
 {
-  "name": "Grove — Focus Timer",
+  "id": "/grove/",
+  "name": "Grove – Focus & Pomodoro",
   "short_name": "Grove",
-  "description": "Stopwatch and Pomodoro focus timer. Every hour of focus grows a tree.",
+  "description": "A calm focus timer with stopwatch and Pomodoro. Every hour of focus grows a tree. Daily goals, streaks, 10 languages, no ads, no account.",
+  "lang": "en",
+  "dir": "ltr",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
+  "display_override": [
+    "standalone",
+    "minimal-ui"
+  ],
+  "orientation": "any",
   "background_color": "#F1F4F2",
   "theme_color": "#F1F4F2",
+  "categories": [
+    "productivity",
+    "education",
+    "utilities"
+  ],
   "icons": [
-    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
-    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
-    { "src": "icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
-    { "src": "icons/icon.svg", "sizes": "any", "type": "image/svg+xml" }
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
   ],
   "shortcuts": [
-    { "name": "Pomodoro", "url": "./#pomodoro" }
+    {
+      "name": "Stopwatch",
+      "short_name": "Stopwatch",
+      "url": "./",
+      "icons": [
+        {
+          "src": "icons/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Pomodoro",
+      "short_name": "Pomodoro",
+      "url": "./#pomodoro",
+      "icons": [
+        {
+          "src": "icons/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ],
+  "prefer_related_applications": false,
+  "related_applications": [
+    {
+      "platform": "windows",
+      "url": "https://apps.microsoft.com/detail/9MWG4Q53LX9T",
+      "id": "9MWG4Q53LX9T"
+    }
   ]
 }

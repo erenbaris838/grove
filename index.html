@@ -116,6 +116,7 @@ button:focus-visible, summary:focus-visible, input:focus-visible { outline: 3px 
   width: 290px; padding: 14px; border-radius: 16px;
   background: var(--bg); border: 1px solid var(--line);
   box-shadow: 0 18px 40px -12px rgb(0 0 0 / .35);
+  max-height: calc(100vh - 90px); overflow-y: auto;
 }
 .menu-title { margin: 0 0 10px; font-size: .74rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
 .skins { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
@@ -267,6 +268,33 @@ button:focus-visible, summary:focus-visible, input:focus-visible { outline: 3px 
 .wday { font-size: .72rem; color: var(--muted); }
 .wcol.is-today .wday { color: var(--fg); font-weight: 600; }
 
+/* garden actions, rating card, statistics */
+.garden-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.act-btn { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 12px; border-radius: 12px; border: 1px solid var(--line); background: var(--bg); color: var(--fg); font-weight: 600; font-size: .88rem; cursor: pointer; text-align: center; line-height: 1.2; }
+.act-btn:hover { background: var(--surface); }
+.act-btn svg { width: 17px; height: 17px; flex: none; }
+.rate-card { border: 1px solid color-mix(in srgb, var(--go) 40%, var(--line)); background: color-mix(in srgb, var(--go) 8%, var(--bg)); border-radius: 14px; padding: 12px 14px; font-size: .88rem; line-height: 1.45; }
+.rate-card p { margin: 0; }
+.rate-actions { display: flex; justify-content: flex-end; align-items: center; gap: 6px; margin-top: 8px; }
+.btn-small { text-decoration: none; display: inline-flex; align-items: center; justify-content: center; color: var(--fg); font-size: .88rem; }
+.btn-small.primary { background: var(--go); color: var(--go-fg); border-color: transparent; }
+#treeCount.done { color: var(--go); }
+.streak { white-space: nowrap; font-weight: 600; }
+.stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 16px; }
+.stat { border: 1px solid var(--line); border-radius: 14px; padding: 12px; min-width: 0; }
+.stat span { display: block; font-size: .76rem; color: var(--muted); font-weight: 600; }
+.stat b { display: block; font-family: var(--font-digits); font-weight: 500; font-size: 1.2rem; margin-top: 3px; overflow-wrap: anywhere; }
+.stat small { display: block; color: var(--muted); font-size: .74rem; margin-top: 2px; }
+.goal-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 12px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 14px; font-weight: 600; }
+.goal-row .ctl { display: flex; align-items: center; gap: 8px; }
+.goal-row button { width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--line); background: transparent; cursor: pointer; font-size: 1.05rem; line-height: 1; }
+.goal-row button:hover { background: var(--surface); }
+.goal-row output { min-width: 5.5ch; text-align: center; }
+.sheet { max-height: calc(100vh - 32px); overflow-y: auto; }
+.sheet h2.plain { margin: 0; font-size: 1.4rem; }
+.sheet .row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+.about-links { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 16px; }
+
 /* tree + sky classes (colors follow the theme) */
 .gr { fill: var(--ground); }
 .tr { fill: var(--trunk); }
@@ -304,7 +332,7 @@ kbd { font-family: var(--font-digits); font-size: .72rem; padding: 2px 6px; marg
 .toast {
   position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); z-index: 30;
   transform: translate(-50%, 20px); opacity: 0; pointer-events: none;
-  max-width: calc(100% - 32px); padding: 12px 18px; border-radius: 999px;
+  width: max-content; max-width: min(560px, calc(100% - 32px)); padding: 12px 18px; border-radius: 18px; text-align: center; line-height: 1.4;
   background: var(--fg); color: var(--bg); font-weight: 600; font-size: .92rem;
   transition: opacity .25s, transform .25s;
 }
@@ -375,10 +403,7 @@ kbd { font-family: var(--font-digits); font-size: .72rem; padding: 2px 6px; marg
           <p class="menu-title" data-i18n="menuTheme">Choose a theme</p>
           <div class="skins" id="skins" role="radiogroup"></div>
           <p class="menu-title menu-gap" data-i18n="menuLang">Language</p>
-          <div class="langs" role="radiogroup">
-            <button class="lang" role="radio" data-lang="en" type="button">English</button>
-            <button class="lang" role="radio" data-lang="tr" type="button">Türkçe</button>
-          </div>
+          <div class="langs" id="langs" role="radiogroup"></div>
         </div>
       </div>
       <button id="aboutBtn" class="icon-btn" type="button" data-i18n-title="about" data-i18n-aria="about" title="About" aria-label="About">
@@ -469,6 +494,17 @@ kbd { font-family: var(--font-digits); font-size: .72rem; padding: 2px 6px; marg
         <div class="sec-head flush"><span data-i18n="last7">Last 7 days</span><span id="weekTotal">0 trees</span></div>
         <div class="week" id="week"></div>
       </div>
+      <div class="rate-card" id="rateCard" hidden>
+        <p><b data-i18n="rateQ">Enjoying Grove?</b> <span data-i18n="rateText">A quick rating helps others find it.</span></p>
+        <div class="rate-actions">
+          <button id="rateLater" class="link-btn" type="button" data-i18n="later">Later</button>
+          <a id="rateGo" class="btn-small primary" href="#" data-i18n="rateBtn">Rate</a>
+        </div>
+      </div>
+      <div class="garden-actions">
+        <button id="statsBtn" class="act-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"></path></svg><span data-i18n="stats">Statistics</span></button>
+        <button id="shareBtn" class="act-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V3M7 8l5-5 5 5M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"></path></svg><span data-i18n="shareForest">Share your forest</span></button>
+      </div>
     </aside>
   </div>
 
@@ -486,9 +522,12 @@ kbd { font-family: var(--font-digits); font-size: .72rem; padding: 2px 6px; marg
   <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="aboutTitle">
     <div class="sheet-head">
       <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="13" fill="none" stroke="var(--go)" stroke-width="2.6"></circle><path d="M16 23v-8" stroke="var(--trunk)" stroke-width="2.4" stroke-linecap="round"></path><path d="M16 16c-1-4-4-5.5-7-5 0 3.4 2.6 5.6 7 5z" fill="var(--leaf)"></path><path d="M16 14.5c.6-4.2 3.6-6.2 7-6-.2 3.8-3 6.2-7 6z" fill="var(--leaf2)"></path></svg>
-      <div><h2 id="aboutTitle">Grove</h2><p class="ver" data-i18n="aboutVer">Focus timer · Version 1.1.0</p></div>
+      <div><h2 id="aboutTitle">Grove</h2><p class="ver" data-i18n="aboutVer">Focus timer · Version 1.2.0</p></div>
     </div>
     <p data-i18n="aboutText">Work with a stopwatch or Pomodoro.</p>
+    <div class="about-links">
+      <a id="rateAbout" class="btn-small primary" href="#" data-i18n="rateAbout">Rate Grove</a>
+    </div>
     <p class="menu-title" data-i18n="privacy">Privacy</p>
     <p data-i18n="privacyText">Grove collects no personal data.</p>
     <div class="sheet-actions">
@@ -497,104 +536,52 @@ kbd { font-family: var(--font-digits); font-size: .72rem; padding: 2px 6px; marg
     </div>
   </div>
 </div>
+<div class="overlay" id="stats" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="statsTitle">
+    <h2 class="plain" id="statsTitle" data-i18n="stats">Statistics</h2>
+    <p class="ver" id="statsSince"></p>
+    <div class="stat-grid" id="statGrid"></div>
+    <div class="goal-row">
+      <span data-i18n="goal">Daily goal</span>
+      <div class="ctl"><button id="goalLess" type="button" data-i18n-aria="aLess" aria-label="Less">−</button><output id="goalVal">4</output><button id="goalMore" type="button" data-i18n-aria="aMore" aria-label="More">+</button></div>
+    </div>
+    <p class="menu-title" data-i18n="backup">Backup</p>
+    <div class="row">
+      <button id="exportBtn" class="btn-small" type="button" data-i18n="exportBtn">Export data</button>
+      <button id="importBtn" class="btn-small" type="button" data-i18n="importBtn">Import data</button>
+      <input type="file" id="importFile" accept="application/json,.json" hidden>
+    </div>
+    <div class="sheet-actions"><span></span><button id="statsClose" class="btn-small" type="button" data-i18n="close">Close</button></div>
+  </div>
+</div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
+<script src="lang.js"></script>
 <script>
 (function () {
   'use strict';
   var HOUR = 3600000;
   var KEY = 'grove-v1', OLD_KEYS = ['filiz-v1', 'barisin-saati-v2'];
 
-  // ---------- strings ----------
-  function pl(one, many) { return function (n) { return n === 1 ? one.replace('{n}', n) : many.replace('{n}', n); }; }
-  var T = {
-    en: {
-      aTabs: 'Tabs', tabSw: 'Stopwatch', tabPomo: 'Pomodoro', install: 'Install',
-      tMode: 'Light / dark (T)', toLight: 'Switch to light theme', toDark: 'Switch to dark theme',
-      tThemes: 'Theme and language', menuTheme: 'Choose a theme', menuLang: 'Language', about: 'About',
-      fs: 'Full screen (F)', fsExit: 'Exit full screen (F)',
-      ready: 'Ready', running: 'Running', paused: 'Paused',
-      start: 'Start', stop: 'Stop', resume: 'Resume', reset: 'Reset', pause: 'Pause', skip: 'Skip', lap: 'Lap',
-      laps: 'Laps', copy: 'Copy', copied: 'Copied', copyFail: 'Couldn’t copy',
-      colLap: 'Lap', colSplit: 'Lap time', colTotal: 'Total', lapN: 'Lap {n}',
-      lapEmpty: 'Press <b>Lap</b> while the stopwatch runs to record a split.',
-      fastest: 'fastest', slowest: 'slowest', aElapsed: 'Elapsed time',
-      aPomoMode: 'Pomodoro mode', mFocus: 'Focus', mShort: 'Short break', mLong: 'Long break', focusLabel: 'Focus',
-      pomoCount: pl('1 pomodoro today', '{n} pomodoros today'),
-      settings: 'Settings', minutes: 'minutes', aLess: 'Less', aMore: 'More',
-      optSound: 'Play a sound when time is up', optAuto: 'Start the next session automatically', optNotify: 'Notify me when the window is in the background',
-      aGarden: 'Garden', growing: 'Growing tree', watch: 'Watch it grow', forest: 'Today’s forest', last7: 'Last 7 days', today: 'Today',
-      trees: pl('1 tree', '{n} trees'),
-      forestEmpty: 'Every 60 minutes of work grows a tree. Time counts while the stopwatch or a Pomodoro focus session is running.',
-      kSpace: 'Space', kStart: 'start / stop', kLap: 'lap', kReset: 'reset', kTabs: 'tabs', kTheme: 'light / dark', kFs: 'full screen',
-      aboutVer: 'Focus timer · Version 1.1.0',
-      aboutText: 'Work with the stopwatch or a Pomodoro. Every hour of focus grows a tree, and over the day you gather a small forest.',
-      privacy: 'Privacy',
-      privacyText: 'Grove collects no personal data. Your sessions, trees and settings stay on this device and are never sent anywhere.',
-      wipe: 'Delete all data', wipeSure: 'Are you sure? Press again', close: 'Close',
-      sGrowing: 'growing', sWaiting: 'waiting', sPreview: 'preview',
-      growText: '{m} / 60 min',
-      worked: 'You’ve focused for <b>{d}</b> today', workedPomo: ' · <b>{n}</b> pomodoros', keepGoing: ' Keep going and your tree will keep growing.',
-      workingStart: 'You’re working. The seed has started to sprout.',
-      notStarted: 'You haven’t started today. Start the stopwatch or a Pomodoro and the seed will sprout.',
-      dur: function (h, m) { return h ? h + ' h ' + m + ' min' : m + ' min'; },
-      tFocusDone: 'Focus session done. Take a short break.', tLongBreak: 'Great, 4 pomodoros done. Take a long break.', tBreakDone: 'Break’s over. Focus when you’re ready.',
-      tNewTree: pl('A new tree has grown! 1 tree today.', 'A new tree has grown! {n} trees today.'),
-      tAway: pl('1 tree grew while you were away.', '{n} trees grew while you were away.'),
-      tNotifyDenied: 'Notifications weren’t allowed. You can turn them on in your browser settings.', tInstalled: 'Grove is installed.',
-      treeTip: 'Tree {i} · {name}', weekTip: '{date}: {trees}, {dur}',
-      stages: ['Seed', 'Sprout', 'Sapling', 'Young tree', 'Tree'],
-      variants: { mese: 'Oak', kiraz: 'Cherry', cam: 'Pine', portakal: 'Orange', zeytin: 'Olive', akcaagac: 'Maple' },
-      skins: { gunduz: 'Day', gece: 'Night', orman: 'Forest', okyanus: 'Ocean', lavanta: 'Lavender', gunbatimi: 'Sunset' }
-    },
-    tr: {
-      aTabs: 'Sekmeler', tabSw: 'Kronometre', tabPomo: 'Pomodoro', install: 'Yükle',
-      tMode: 'Açık / koyu (T)', toLight: 'Açık temaya geç', toDark: 'Koyu temaya geç',
-      tThemes: 'Tema ve dil', menuTheme: 'Tema seç', menuLang: 'Dil', about: 'Hakkında',
-      fs: 'Tam ekran (F)', fsExit: 'Tam ekrandan çık (F)',
-      ready: 'Hazır', running: 'Çalışıyor', paused: 'Duraklatıldı',
-      start: 'Başlat', stop: 'Durdur', resume: 'Devam', reset: 'Sıfırla', pause: 'Duraklat', skip: 'Atla', lap: 'Tur',
-      laps: 'Turlar', copy: 'Kopyala', copied: 'Kopyalandı', copyFail: 'Kopyalanamadı',
-      colLap: 'Tur', colSplit: 'Tur süresi', colTotal: 'Toplam', lapN: 'Tur {n}',
-      lapEmpty: 'Kronometre çalışırken <b>Tur</b>’a basarak ara süre kaydedin.',
-      fastest: 'en hızlı', slowest: 'en yavaş', aElapsed: 'Geçen süre',
-      aPomoMode: 'Pomodoro modu', mFocus: 'Odak', mShort: 'Kısa mola', mLong: 'Uzun mola', focusLabel: 'Odaklan',
-      pomoCount: pl('Bugün {n} pomodoro', 'Bugün {n} pomodoro'),
-      settings: 'Ayarlar', minutes: 'dakika', aLess: 'Azalt', aMore: 'Artır',
-      optSound: 'Süre bitince ses çal', optAuto: 'Sonraki oturumu otomatik başlat', optNotify: 'Pencere arkadayken bildirim göster',
-      aGarden: 'Bahçe', growing: 'Büyüyen ağaç', watch: 'Büyümeyi izle', forest: 'Bugünkü ormanın', last7: 'Son 7 gün', today: 'Bugün',
-      trees: pl('{n} ağaç', '{n} ağaç'),
-      forestEmpty: 'Her 60 dakikalık çalışma bir ağaç büyütür. Kronometre ya da Pomodoro odak süresi çalışırken sayılır.',
-      kSpace: 'Boşluk', kStart: 'başlat / durdur', kLap: 'tur', kReset: 'sıfırla', kTabs: 'sekme', kTheme: 'açık / koyu', kFs: 'tam ekran',
-      aboutVer: 'Odak saati · Sürüm 1.1.0',
-      aboutText: 'Kronometre ya da Pomodoro ile çalış. Her saatlik odaklanman bir ağaç büyütür, gün boyunca küçük bir orman toplarsın.',
-      privacy: 'Gizlilik',
-      privacyText: 'Grove hiçbir kişisel veri toplamaz. Süreler, ağaçlar ve ayarlar yalnızca bu cihazda saklanır ve hiçbir yere gönderilmez.',
-      wipe: 'Tüm verileri sil', wipeSure: 'Emin misin? Tekrar bas', close: 'Kapat',
-      sGrowing: 'büyüyor', sWaiting: 'bekliyor', sPreview: 'önizleme',
-      growText: '{m} / 60 dk',
-      worked: 'Bugün <b>{d}</b> odaklandın', workedPomo: ' · <b>{n}</b> pomodoro', keepGoing: ' Devam edince ağacın büyümeyi sürdürür.',
-      workingStart: 'Çalışıyorsun, tohum filizlenmeye başladı.',
-      notStarted: 'Bugün henüz başlamadın. Kronometreyi ya da Pomodoro’yu başlat, tohum filizlensin.',
-      dur: function (h, m) { return h ? h + ' sa ' + m + ' dk' : m + ' dk'; },
-      tFocusDone: 'Odak bitti. Biraz mola ver.', tLongBreak: 'Harika, 4 pomodoro bitti. Uzun bir mola ver.', tBreakDone: 'Mola bitti. Hazır olunca odaklan.',
-      tNewTree: pl('Yeni bir ağaç büyüdü! Bugün {n} ağacın var.', 'Yeni bir ağaç büyüdü! Bugün {n} ağacın var.'),
-      tAway: pl('Sen yokken {n} ağaç büyüdü.', 'Sen yokken {n} ağaç büyüdü.'),
-      tNotifyDenied: 'Bildirim izni verilmedi. Tarayıcı ayarlarından açabilirsin.', tInstalled: 'Grove yüklendi.',
-      treeTip: '{i}. ağaç · {name}', weekTip: '{date}: {trees}, {dur}',
-      stages: ['Tohum', 'Filiz', 'Fidan', 'Genç ağaç', 'Ağaç'],
-      variants: { mese: 'Meşe', kiraz: 'Kiraz', cam: 'Çam', portakal: 'Portakal', zeytin: 'Zeytin', akcaagac: 'Akçaağaç' },
-      skins: { gunduz: 'Gündüz', gece: 'Gece', orman: 'Orman', okyanus: 'Okyanus', lavanta: 'Lavanta', gunbatimi: 'Gün Batımı' }
-    }
-  };
-  var L = 'en';
+  // ---------- strings (see lang.js) ----------
+  var VERSION = '1.2.0';
+  var T = window.GROVE_LANGS || {};
+  var LANGS = Object.keys(T);
+  var L = 'en', plural = null;
+  function raw(k) { var v = T[L] && T[L][k]; return v !== undefined ? v : T.en[k]; }
   function t(k, a) {
-    var v = (T[L] && T[L][k] !== undefined) ? T[L][k] : T.en[k];
-    if (typeof v === 'function') return v(a);
-    if (a && typeof v === 'string') v = v.replace(/\{(\w+)\}/g, function (_, x) { return a[x] !== undefined ? a[x] : ''; });
+    var v = raw(k);
+    if (a === undefined) a = { v: VERSION };
+    if (v && typeof v === 'object' && !Array.isArray(v) && v.other !== undefined) {
+      var n = typeof a === 'number' ? a : a.n, cat = 'other';
+      try { cat = plural.select(n); } catch (e) {}
+      v = v[cat] !== undefined ? v[cat] : v.other;
+      if (typeof a === 'number') a = { n: a };
+    }
+    if (typeof v === 'string') v = v.replace(/\{(\w+)\}/g, function (m, x) { return a[x] !== undefined ? a[x] : m; });
     return v;
   }
-  function locale() { return L === 'tr' ? 'tr-TR' : 'en-US'; }
+  function locale() { return raw('_locale') || 'en-US'; }
 
   var SKINS = [
     { id: 'gunduz', dark: false, c: ['#F1F4F2', '#1E6B57', '#3F8F5A'] },
@@ -619,10 +606,14 @@ kbd { font-family: var(--font-digits); font-size: .72rem; padding: 2px 6px; marg
     tab: 'sw', skin: null, lang: null, lastSeen: 0,
     sw: { running: false, startAt: 0, acc: 0, laps: [] },
     pomo: { mode: 'focus', running: false, endAt: 0, remaining: 25 * 60000, cycle: 0 },
-    settings: { focus: 25, short: 5, long: 15, sound: true, auto: false, notify: false },
-    work: { date: todayKey(), ms: 0, trees: [], pomos: 0 },
-    history: []
+    settings: { focus: 25, short: 5, long: 15, sound: true, auto: false, notify: false, goal: 4 },
+    work: { date: todayKey(), ms: 0, trees: [], pomos: 0, goalHit: false },
+    history: [],
+    totals: null,                 // all-time: { trees, ms, pomos, since, bestStreak, bestDay: { date, ms } }
+    rate: { later: 0, done: false },
+    seen: ''                      // last version whose "what's new" was shown
   };
+  var HISTORY_DAYS = 400;
   var wiping = false;
 
   // ---------- storage ----------
@@ -635,7 +626,7 @@ kbd { font-family: var(--font-digits); font-size: .72rem; padding: 2px 6px; marg
     if (!o || typeof o !== 'object') return;
     if (o.tab === 'pomo') S.tab = 'pomo';
     if (typeof o.skin === 'string') S.skin = o.skin;
-    if (o.lang === 'en' || o.lang === 'tr') S.lang = o.lang;
+    if (typeof o.lang === 'string' && T[o.lang]) S.lang = o.lang;
     S.lastSeen = num(o.lastSeen, 0);
     if (o.settings) {
       S.settings.focus = clamp(num(o.settings.focus, 25), 1, 120);
@@ -644,6 +635,7 @@ kbd { font-family: var(--font-digits); font-size: .72rem; padding: 2px 6px; marg
       S.settings.sound = o.settings.sound !== false;
       S.settings.auto = !!o.settings.auto;
       S.settings.notify = !!o.settings.notify;
+      S.settings.goal = clamp(num(o.settings.goal, 4), 1, 12);
     }
     if (o.sw && Array.isArray(o.sw.laps)) {
       S.sw = { running: !!o.sw.running, startAt: num(o.sw.startAt, 0), acc: Math.max(0, num(o.sw.acc, 0)),
@@ -656,14 +648,23 @@ kbd { font-family: var(--font-digits); font-size: .72rem; padding: 2px 6px; marg
     if (o.work && typeof o.work.date === 'string') {
       S.work = { date: o.work.date, ms: Math.max(0, num(o.work.ms, 0)),
         trees: Array.isArray(o.work.trees) ? o.work.trees.filter(function (x) { return x && typeof x.v === 'string'; }) : [],
-        pomos: Math.max(0, num(o.work.pomos, 0)) };
+        pomos: Math.max(0, num(o.work.pomos, 0)), goalHit: !!o.work.goalHit };
     }
-    if (Array.isArray(o.history)) S.history = o.history.filter(function (h) { return h && typeof h.date === 'string'; }).slice(0, 30);
+    if (Array.isArray(o.history)) S.history = o.history.filter(function (h) { return h && typeof h.date === 'string'; }).slice(0, HISTORY_DAYS);
+    if (o.totals && typeof o.totals === 'object') {
+      var bd = o.totals.bestDay || {};
+      S.totals = { trees: Math.max(0, num(o.totals.trees, 0)), ms: Math.max(0, num(o.totals.ms, 0)), pomos: Math.max(0, num(o.totals.pomos, 0)),
+        since: typeof o.totals.since === 'string' ? o.totals.since : todayKey(), bestStreak: Math.max(0, num(o.totals.bestStreak, 0)),
+        bestDay: { date: typeof bd.date === 'string' ? bd.date : '', ms: Math.max(0, num(bd.ms, 0)) } };
+    }
+    if (o.rate && typeof o.rate === 'object') S.rate = { later: num(o.rate.later, 0), done: !!o.rate.done };
+    if (typeof o.seen === 'string') S.seen = o.seen;
+    S.hadData = true;
   }
   function save() {
     if (wiping) return;
     S.lastSeen = Date.now();
-    try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {}
+    try { localStorage.setItem(KEY, JSON.stringify(S, function (k, v) { return k === 'hadData' ? undefined : v; })); } catch (e) {}
   }
 
   // ---------- formatting ----------
@@ -674,13 +675,13 @@ kbd { font-family: var(--font-digits); font-size: .72rem; padding: 2px 6px; marg
   }
   function fmt(ms) { var p = parts(ms); return p.main + p.frac; }
   function fmtClock(ms) { var x = Math.ceil(Math.max(0, ms) / 1000); var h = Math.floor(x / 3600), m = Math.floor(x / 60) % 60, s = x % 60; return h ? h + ':' + p2(m) + ':' + p2(s) : p2(m) + ':' + p2(s); }
-  function fmtDur(ms) { var m = Math.floor(ms / 60000), h = Math.floor(m / 60); return T[L].dur(h, m % 60); }
+  function fmtDur(ms) { var m = Math.floor(ms / 60000), h = Math.floor(m / 60); return h ? t('durH', { h: h, m: m % 60 }) : t('durM', { m: m }); }
 
   // ---------- toast, sound, notifications ----------
   var toastT = 0;
-  function toast(msg) {
+  function toast(msg, ms) {
     var el = $('toast'); el.textContent = msg; el.classList.add('show');
-    clearTimeout(toastT); toastT = setTimeout(function () { el.classList.remove('show'); }, 3400);
+    clearTimeout(toastT); toastT = setTimeout(function () { el.classList.remove('show'); }, ms || 3400);
   }
   var actx = null;
   function ensureAudio() {
@@ -717,26 +718,35 @@ kbd { font-family: var(--font-digits); font-size: .72rem; padding: 2px 6px; marg
   // ---------- language ----------
   function defaultLang() {
     var langs = (navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || 'en']);
-    return String(langs[0] || 'en').toLowerCase().indexOf('tr') === 0 ? 'tr' : 'en';
+    for (var i = 0; i < langs.length; i++) { var c = String(langs[i] || '').toLowerCase().slice(0, 2); if (T[c]) return c; }
+    return 'en';
   }
   function applyLang() {
-    L = S.lang || defaultLang();
+    L = S.lang && T[S.lang] ? S.lang : defaultLang();
+    try { plural = new Intl.PluralRules(locale()); } catch (e) { plural = null; }
     document.documentElement.setAttribute('lang', L);
     qsa('[data-i18n]').forEach(function (el) { el.textContent = t(el.getAttribute('data-i18n')); });
     qsa('[data-i18n-html]').forEach(function (el) { el.innerHTML = t(el.getAttribute('data-i18n-html')); });
     qsa('[data-i18n-aria]').forEach(function (el) { el.setAttribute('aria-label', t(el.getAttribute('data-i18n-aria'))); });
     qsa('[data-i18n-title]').forEach(function (el) { el.setAttribute('title', t(el.getAttribute('data-i18n-title'))); });
     qsa('.lang').forEach(function (b) { b.setAttribute('aria-checked', b.getAttribute('data-lang') === L ? 'true' : 'false'); });
-    qsa('.skin').forEach(function (b) { b.lastChild.textContent = T[L].skins[b.getAttribute('data-skin')]; });
+    qsa('.skin').forEach(function (b) { b.lastChild.textContent = raw('skins')[b.getAttribute('data-skin')]; });
     $('wipeBtn').textContent = t('wipe');
     updateFsLabel(); updateModeLabel();
   }
   function setLang(l) {
     S.lang = l; applyLang();
     renderSwControls(); renderLaps(); renderPomo(); shownTrees = -1; renderForest(); shownWeek = ''; renderWeek(); renderGrow();
+    renderRate(); if (!$('stats').hidden) renderStats();
     save();
   }
-  qsa('.lang').forEach(function (b) { b.addEventListener('click', function () { setLang(b.getAttribute('data-lang')); }); });
+  LANGS.forEach(function (code) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'lang'; b.setAttribute('role', 'radio'); b.setAttribute('data-lang', code);
+    b.setAttribute('lang', code); b.textContent = T[code]._name;
+    b.addEventListener('click', function () { setLang(code); });
+    $('langs').appendChild(b);
+  });
 
   // ---------- themes ----------
   function skinById(id) { for (var i = 0; i < SKINS.length; i++) if (SKINS[i].id === id) return SKINS[i]; return null; }
@@ -968,7 +978,7 @@ kbd { font-family: var(--font-digits); font-size: .72rem; padding: 2px 6px; marg
     var was = S.pomo.mode, msg;
     S.pomo.running = false;
     if (was === 'focus') {
-      S.pomo.cycle += 1; S.work.pomos += 1;
+      S.pomo.cycle += 1; S.work.pomos += 1; ensureTotals().pomos += 1;
       var next = S.pomo.cycle % 4 === 0 ? 'long' : 'short';
       S.pomo.mode = next; S.pomo.remaining = dur(next);
       msg = next === 'long' ? t('tLongBreak') : t('tFocusDone');
@@ -1012,8 +1022,8 @@ kbd { font-family: var(--font-digits); font-size: .72rem; padding: 2px 6px; marg
   function isWorking() { return S.sw.running || (S.pomo.running && S.pomo.mode === 'focus'); }
   function hashStr(s) { var h = 0; for (var i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0; return h; }
   function variantFor(i) { return VARIANTS[(hashStr(S.work.date) + i) % VARIANTS.length]; }
-  function vName(id) { return T[L].variants[id] || T[L].variants.mese; }
-  function stageName(p) { for (var i = 0; i < STAGE_AT.length; i++) if (p < STAGE_AT[i]) return T[L].stages[i]; return T[L].stages[4]; }
+  function vName(id) { var v = raw('variants'); return v[id] || v.mese; }
+  function stageName(p) { var st = raw('stages'); for (var i = 0; i < STAGE_AT.length; i++) if (p < STAGE_AT[i]) return st[i]; return st[4]; }
   function ss(a, b, x) { var k = Math.min(1, Math.max(0, (x - a) / (b - a))); return k * k * (3 - 2 * k); }
   function f1(n) { return Math.round(n * 10) / 10; }
 
@@ -1108,8 +1118,10 @@ kbd { font-family: var(--font-digits); font-size: .72rem; padding: 2px 6px; marg
     var working = isWorking();
     $('growName').textContent = demo ? vName(demo.variant) + ' · ' + t('sPreview') : vName(growing) + (working ? ' · ' + t('sGrowing') : (S.work.ms % HOUR > 0 ? ' · ' + t('sWaiting') : ''));
     $('todayText').innerHTML = S.work.ms >= 60000
-      ? t('worked', { d: fmtDur(S.work.ms) }) + (S.work.pomos ? t('workedPomo', { n: S.work.pomos }) : '') + '.' + (working ? '' : t('keepGoing'))
+      ? t('worked', { d: fmtDur(S.work.ms) }) + (S.work.pomos ? t('workedPomo', { n: S.work.pomos }) : '') + (raw('_dot') || '.') + (working ? '' : t('keepGoing'))
       : (working ? t('workingStart') : t('notStarted'));
+    var st = currentStreak();
+    if (st >= 2) $('todayText').insertAdjacentHTML('beforeend', ' <span class="streak">🔥 ' + t('streak', st) + '</span>');
     if (demo || intro) requestAnimationFrame(renderGrow);
   }
   function celebrate() {
@@ -1143,7 +1155,10 @@ kbd { font-family: var(--font-digits); font-size: .72rem; padding: 2px 6px; marg
     });
     box.hidden = trees.length === 0;
     $('forestEmpty').hidden = trees.length > 0;
-    $('treeCount').textContent = t('trees', trees.length);
+    var g = S.settings.goal, tc = $('treeCount');
+    tc.textContent = trees.length + ' / ' + g + (trees.length >= g ? ' ✓' : '');
+    tc.title = t('goalTip', g);
+    tc.classList.toggle('done', trees.length >= g);
   }
   var shownWeek = '';
   function renderWeek() {
@@ -1171,17 +1186,27 @@ kbd { font-family: var(--font-digits); font-size: .72rem; padding: 2px 6px; marg
     var k = todayKey();
     if (S.work.date === k) return false;
     if (S.work.ms > 0) S.history.unshift({ date: S.work.date, trees: S.work.trees.length, ms: S.work.ms, pomos: S.work.pomos });
-    S.history = S.history.slice(0, 30);
-    S.work = { date: k, ms: 0, trees: [], pomos: 0 };
+    S.history = S.history.slice(0, HISTORY_DAYS);
+    S.work = { date: k, ms: 0, trees: [], pomos: 0, goalHit: false };
     S.pomo.cycle = 0;
     renderForest(); renderWeek(); renderPomo();
     return true;
   }
   function addWork(d, quiet) {
     S.work.ms += d;
+    var T0 = ensureTotals();
+    T0.ms += d;
+    if (S.work.ms > T0.bestDay.ms) T0.bestDay = { date: S.work.date, ms: S.work.ms };
     var should = Math.floor(S.work.ms / HOUR), grew = 0, n = Date.now();
     while (S.work.trees.length < should) { S.work.trees.push({ v: variantFor(S.work.trees.length), at: n }); grew++; }
     if (grew) {
+      T0.trees += grew;
+      updateStreak();
+      if (!S.work.goalHit && S.work.trees.length >= S.settings.goal) {
+        S.work.goalHit = true;
+        if (!quiet) setTimeout(function () { toast(t('tGoal'), 4200); }, 3600);
+      }
+      renderRate();
       renderForest(S.work.trees.length - 1);
       if (!quiet) {
         celebrate();
@@ -1239,8 +1264,8 @@ kbd { font-family: var(--font-digits); font-size: .72rem; padding: 2px 6px; marg
     ensureAudio();
     if (e.metaKey || e.ctrlKey || e.altKey) return;
     var tag = e.target && e.target.tagName, k = e.key, c = e.code;
-    if (k === 'Escape') { openMenu(false); if (!$('about').hidden) openAbout(false); return; }
-    if (!$('about').hidden) return;
+    if (k === 'Escape') { openMenu(false); if (!$('about').hidden) openAbout(false); if (!$('stats').hidden) openStats(false); return; }
+    if (!$('about').hidden || !$('stats').hidden) return;
     if (tag === 'INPUT' || tag === 'TEXTAREA') return;
     var onBtn = tag === 'BUTTON' || tag === 'SUMMARY';
     if (e.repeat) { if (k === ' ') e.preventDefault(); return; }
@@ -1304,12 +1329,226 @@ kbd { font-family: var(--font-digits); font-size: .72rem; padding: 2px 6px; marg
     navigator.serviceWorker.register('sw.js').then(function (r) { swReg = r; }).catch(function () {});
   }
 
+
+  // =====================================================
+  // Streaks, totals, statistics, sharing, rating, backup
+  // =====================================================
+  var STORE_ID = '9MWG4Q53LX9T', SITE_URL = 'https://apps.microsoft.com/detail/9MWG4Q53LX9T';
+  function treeDays() {
+    var m = {};
+    S.history.forEach(function (h) { if (h.trees > 0) m[h.date] = 1; });
+    if (S.work.trees.length) m[S.work.date] = 1;
+    return m;
+  }
+  function currentStreak() {
+    var m = treeDays(), d = new Date(), n = 0;
+    if (!m[todayKey(d)]) d.setDate(d.getDate() - 1);
+    while (m[todayKey(d)]) { n++; d.setDate(d.getDate() - 1); }
+    return n;
+  }
+  function ensureTotals() {
+    if (S.totals) return S.totals;
+    var all = S.history.concat([{ date: S.work.date, trees: S.work.trees.length, ms: S.work.ms, pomos: S.work.pomos }]);
+    var tt = { trees: 0, ms: 0, pomos: 0, since: S.work.date, bestStreak: 0, bestDay: { date: '', ms: 0 } };
+    all.forEach(function (h) {
+      tt.trees += h.trees || 0; tt.ms += h.ms || 0; tt.pomos += h.pomos || 0;
+      if (h.date < tt.since) tt.since = h.date;
+      if ((h.ms || 0) > tt.bestDay.ms) tt.bestDay = { date: h.date, ms: h.ms };
+    });
+    S.totals = tt;
+    tt.bestStreak = currentStreak();
+    return tt;
+  }
+  function updateStreak() { var n = currentStreak(), tt = ensureTotals(); if (n > tt.bestStreak) tt.bestStreak = n; return n; }
+  function dateLabel(key, opts) {
+    var p = key.split('-');
+    return new Date(+p[0], +p[1] - 1, +p[2]).toLocaleDateString(locale(), opts || { day: 'numeric', month: 'long', year: 'numeric' });
+  }
+
+  // ---------- statistics sheet ----------
+  function renderStats() {
+    var tt = ensureTotals(), streak = updateStreak();
+    var week = 0, now = new Date();
+    for (var i = 0; i < 7; i++) {
+      var k = todayKey(new Date(now.getFullYear(), now.getMonth(), now.getDate() - i));
+      if (k === S.work.date) week += S.work.ms;
+      else S.history.forEach(function (h) { if (h.date === k) week += h.ms || 0; });
+    }
+    var items = [
+      [t('stTrees'), String(tt.trees)],
+      [t('stTime'), fmtDur(tt.ms)],
+      [t('stPomos'), String(tt.pomos)],
+      [t('stAvg'), fmtDur(week / 7)],
+      [t('stStreak'), t('days', streak)],
+      [t('stBest'), t('days', tt.bestStreak)],
+      [t('stBestDay'), tt.bestDay.ms ? fmtDur(tt.bestDay.ms) : '–', tt.bestDay.ms ? dateLabel(tt.bestDay.date) : '']
+    ];
+    var box = $('statGrid'); box.textContent = '';
+    items.forEach(function (it) {
+      var d = document.createElement('div'); d.className = 'stat';
+      var a = document.createElement('span'); a.textContent = it[0];
+      var b = document.createElement('b'); b.textContent = it[1];
+      d.appendChild(a); d.appendChild(b);
+      if (it[2]) { var c = document.createElement('small'); c.textContent = it[2]; d.appendChild(c); }
+      box.appendChild(d);
+    });
+    $('statsSince').textContent = t('stSince', { date: dateLabel(tt.since) });
+    $('goalVal').textContent = t('trees', S.settings.goal);
+  }
+  function openStats(open) {
+    $('stats').hidden = !open;
+    if (open) { renderStats(); $('statsClose').focus(); }
+  }
+  $('statsBtn').addEventListener('click', function () { openStats(true); });
+  $('statsClose').addEventListener('click', function () { openStats(false); });
+  $('stats').addEventListener('click', function (e) { if (e.target === this) openStats(false); });
+  function setGoal(d) {
+    S.settings.goal = clamp(S.settings.goal + d, 1, 12);
+    if (S.work.trees.length >= S.settings.goal) S.work.goalHit = true;
+    shownTrees = -1; renderForest(); renderStats(); save();
+  }
+  $('goalLess').addEventListener('click', function () { setGoal(-1); });
+  $('goalMore').addEventListener('click', function () { setGoal(1); });
+
+  // ---------- backup ----------
+  function downloadBlob(blob, name) {
+    var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function () { URL.revokeObjectURL(a.href); }, 4000);
+  }
+  $('exportBtn').addEventListener('click', function () {
+    save();
+    var data = null; try { data = localStorage.getItem(KEY); } catch (e) {}
+    downloadBlob(new Blob([data || JSON.stringify(S)], { type: 'application/json' }), 'grove-backup-' + todayKey() + '.json');
+  });
+  $('importBtn').addEventListener('click', function () { $('importFile').click(); });
+  $('importFile').addEventListener('change', function () {
+    var f = this.files && this.files[0]; this.value = '';
+    if (!f) return;
+    var rd = new FileReader();
+    rd.onload = function () {
+      try {
+        var o = JSON.parse(rd.result);
+        if (!o || typeof o !== 'object' || !o.work || typeof o.work.date !== 'string') throw new Error('bad');
+        wiping = true;
+        localStorage.setItem(KEY, rd.result);
+        toast(t('imported'));
+        setTimeout(function () { location.reload(); }, 800);
+      } catch (e) { toast(t('importFail')); }
+    };
+    rd.onerror = function () { toast(t('importFail')); };
+    rd.readAsText(f);
+  });
+
+  // ---------- rating ----------
+  var IS_WIN = /Windows/i.test(navigator.userAgent);
+  var RATE_URL = IS_WIN ? 'ms-windows-store://review/?ProductId=' + STORE_ID : 'https://apps.microsoft.com/detail/' + STORE_ID;
+  [$('rateGo'), $('rateAbout')].forEach(function (a) {
+    a.href = RATE_URL;
+    if (!IS_WIN) { a.target = '_blank'; a.rel = 'noopener'; }
+    a.addEventListener('click', function () { S.rate.done = true; renderRate(); save(); });
+  });
+  function renderRate() {
+    var tt = S.totals;
+    $('rateCard').hidden = !(tt && tt.trees >= 3 && !S.rate.done && Date.now() - S.rate.later > 7 * 864e5);
+  }
+  $('rateLater').addEventListener('click', function () { S.rate.later = Date.now(); renderRate(); save(); });
+
+  // ---------- share card: today's forest as a Grove-branded image ----------
+  var CARD_CSS = '.gr{fill:var(--ground)}.tr{fill:var(--trunk)}.trs{fill:none;stroke:var(--trunk);stroke-linecap:round}' +
+    '.grass{fill:none;stroke:var(--leaf2);stroke-width:2;stroke-linecap:round}.lf{fill:var(--leaf)}.lf2{fill:var(--leaf2)}' +
+    '.bl{fill:var(--blossom)}.bl2{fill:color-mix(in srgb,var(--blossom) 62%,#fff)}.ol{fill:color-mix(in srgb,var(--leaf) 50%,#a3ad8f)}' +
+    '.ol2{fill:color-mix(in srgb,var(--leaf2) 55%,#7d8b6c)}.au{fill:color-mix(in srgb,var(--fruit) 80%,#d9452b)}' +
+    '.au2{fill:color-mix(in srgb,var(--fruit) 50%,#b5301d)}.fr{fill:var(--fruit)}.olv{fill:#3d3550}.fl{fill:#fff;opacity:.85}';
+  var LOGO_SVG = '<circle cx="16" cy="16" r="13" fill="none" stroke="var(--go)" stroke-width="2.6"/><path d="M16 23v-8" stroke="var(--trunk)" stroke-width="2.4" stroke-linecap="round"/><path d="M16 16c-1-4-4-5.5-7-5 0 3.4 2.6 5.6 7 5z" fill="var(--leaf)"/><path d="M16 14.5c.6-4.2 3.6-6.2 7-6-.2 3.8-3 6.2-7 6z" fill="var(--leaf2)"/>';
+  function cssVars() {
+    var cs = getComputedStyle(document.documentElement);
+    return ['--bg', '--surface', '--line', '--fg', '--muted', '--go', '--leaf', '--leaf2', '--trunk', '--ground', '--blossom', '--fruit', '--sky']
+      .map(function (v) { return v + ':' + cs.getPropertyValue(v).trim(); }).join(';');
+  }
+  function cardSvg(W, H, footX) {
+    var trees = S.work.trees.slice(0, 24), n = trees.length, inner = '';
+    var fx = 60, fy = 560, fw = W - 120, fh = 560;
+    if (n) {
+      var cols = n <= 3 ? n : n <= 8 ? 4 : 6, rows = Math.ceil(n / cols);
+      var cell = Math.min(fw / cols, fh / rows), ox = fx + (fw - cell * cols) / 2, oy = fy + (fh - cell * rows) / 2 + (rows === 1 ? fh * .12 : 0);
+      trees.forEach(function (tr, i) {
+        var c = i % cols, r = Math.floor(i / cols);
+        inner += '<svg x="' + f1(ox + c * cell) + '" y="' + f1(oy + r * cell) + '" width="' + f1(cell) + '" height="' + f1(cell) + '" viewBox="0 0 200 200">' + drawTree(tr.v, 1, false, true) + '</svg>';
+      });
+    } else {
+      var p = Math.max(0.06, (S.work.ms % HOUR) / HOUR);
+      inner = '<svg x="' + (W / 2 - 260) + '" y="' + fy + '" width="520" height="540" viewBox="12 12 176 182">' + drawTree(variantFor(0), p, false) + '</svg>';
+    }
+    return '<svg xmlns="http://www.w3.org/2000/svg" width="' + W + '" height="' + H + '" viewBox="0 0 ' + W + ' ' + H + '">' +
+      '<style>:root,svg{' + cssVars() + '}' + CARD_CSS + '</style>' +
+      '<defs><radialGradient id="bgG" cx="50%" cy="38%" r="75%"><stop offset="0" stop-color="var(--surface)"/><stop offset="1" stop-color="var(--bg)"/></radialGradient>' +
+      '<linearGradient id="gnd" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--ground)" stop-opacity="0"/><stop offset="1" stop-color="var(--ground)" stop-opacity=".9"/></linearGradient></defs>' +
+      '<rect width="100%" height="100%" fill="url(#bgG)"/><rect x="0" y="' + (fy + fh * .55) + '" width="' + W + '" height="' + (H - fy - fh * .55) + '" fill="url(#gnd)"/>' +
+      '<svg x="60" y="64" width="64" height="64" viewBox="0 0 32 32">' + LOGO_SVG + '</svg>' +
+      '<svg x="' + f1(footX) + '" y="' + (H - 128) + '" width="44" height="44" viewBox="0 0 32 32">' + LOGO_SVG + '</svg>' +
+      inner + '</svg>';
+  }
+  function fitText(ctx, text, max, size, weight) {
+    var s = size;
+    do { ctx.font = weight + ' ' + s + 'px "Instrument Sans", "Segoe UI", system-ui, sans-serif'; s -= 2; } while (ctx.measureText(text).width > max && s > 16);
+  }
+  function makeCard() {
+    var W = 1080, H = 1350, img = new Image(), svg = '', footX = 0, footW = 0;
+    var cv = document.createElement('canvas'); cv.width = W; cv.height = H;
+    var ctx = cv.getContext('2d');
+    var ready = (document.fonts && document.fonts.load) ? Promise.all([document.fonts.load('700 40px "Instrument Sans"'), document.fonts.load('500 40px "Instrument Sans"')]).catch(function () {}) : Promise.resolve();
+    return ready.then(function () {
+      fitText(ctx, t('shareFoot'), 560, 38, 700); footW = ctx.measureText(t('shareFoot')).width;
+      footX = (W - footW - 58) / 2;
+      svg = cardSvg(W, H, footX);
+      return new Promise(function (res, rej) { img.onload = res; img.onerror = rej; img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg); });
+    }).then(function () {
+      var cs = getComputedStyle(document.documentElement);
+      var fg = cs.getPropertyValue('--fg').trim(), muted = cs.getPropertyValue('--muted').trim(), go = cs.getPropertyValue('--go').trim();
+      ctx.drawImage(img, 0, 0);
+      ctx.textBaseline = 'alphabetic'; ctx.textAlign = 'left';
+      ctx.fillStyle = fg; fitText(ctx, 'Grove', 400, 54, 700); ctx.fillText('Grove', 140, 114);
+      var date = new Date().toLocaleDateString(locale(), { weekday: 'long', day: 'numeric', month: 'long' });
+      ctx.fillStyle = muted; fitText(ctx, date, W - 120, 36, 500); ctx.fillText(date, 60, 236);
+      var big = fmtDur(S.work.ms);
+      ctx.fillStyle = fg; fitText(ctx, big, W - 120, 132, 700); ctx.fillText(big, 60, 376);
+      ctx.fillStyle = go; fitText(ctx, t('shareFocus'), W - 120, 46, 700); ctx.fillText(t('shareFocus'), 60, 440);
+      var line = t('trees', S.work.trees.length) + (S.work.pomos ? '  ·  ' + t('pomoCount', S.work.pomos) : '');
+      var st = currentStreak(); if (st >= 2) line += '  ·  🔥 ' + t('streak', st);
+      ctx.fillStyle = muted; fitText(ctx, line, W - 120, 34, 500); ctx.fillText(line, 60, 500);
+      ctx.fillStyle = fg; fitText(ctx, t('shareFoot'), 560, 38, 700); ctx.fillText(t('shareFoot'), footX + 58, H - 94);
+      ctx.textAlign = 'center'; ctx.fillStyle = muted; fitText(ctx, 'Microsoft Store', W - 120, 28, 500); ctx.fillText('Microsoft Store', W / 2, H - 46);
+      return new Promise(function (res) { cv.toBlob(res, 'image/png'); });
+    });
+  }
+  var sharing = false;
+  $('shareBtn').addEventListener('click', function () {
+    if (sharing) return; sharing = true;
+    makeCard().then(function (blob) {
+      if (!blob) throw new Error('no blob');
+      var name = 'grove-' + todayKey() + '.png', file = null;
+      try { file = new File([blob], name, { type: 'image/png' }); } catch (e) {}
+      if (file && navigator.canShare && navigator.canShare({ files: [file] })) {
+        return navigator.share({ files: [file], title: 'Grove', text: t('shareFoot') + ' 🌱 ' + SITE_URL }).catch(function (e) {
+          if (e && e.name !== 'AbortError') { downloadBlob(blob, name); toast(t('shareSaved')); }
+        });
+      }
+      downloadBlob(blob, name); toast(t('shareSaved'));
+    }).catch(function () { toast(t('shareFail')); }).then(function () { sharing = false; });
+  });
+  window.__groveCard = makeCard;  // used by tests
+
   // ---------- boot ----------
   load();
   applyLang();
   applySkin();
   rollDay();
   creditAway();
+  ensureTotals(); updateStreak();
+  renderRate();
+  if (S.hadData && S.seen !== VERSION) setTimeout(function () { toast(t('whatsNew'), 6000); }, 1400);
+  S.seen = VERSION;
   if (location.hash === '#pomodoro') S.tab = 'pomo';
   setTab(S.tab);
   renderSwControls(); renderLaps(); paintSw();
