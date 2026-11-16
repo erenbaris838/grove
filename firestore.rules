@@ -9,6 +9,8 @@ service cloud.firestore {
         return week.matches('^[0-9]{4}-W[0-9]{2}$')
           && d.keys().hasOnly(['name', 'ms', 'trees', 'updatedAt', 'expireAt'])
           && d.name is string && d.name.size() >= 2 && d.name.size() <= 20
+          && d.name.matches('^[\\p{L}\\p{N} ._-]{2,20}$')
+          && !d.name.lower().matches('.*(orospu|siktir|yarrak|pezevenk|amcik|aminakoy|fuck|nigger|faggot|hurensohn|vaffanculo|caralho|пизд|хуй).*')
           && d.ms is int && d.ms >= 0 && d.ms <= 403200000          // at most 16 h a day for a week
           && d.trees is int && d.trees >= 0 && d.trees <= 500
           && d.updatedAt == request.time

@@ -13,71 +13,71 @@
       backQ: 'Back at your desk? 🌱', backText: 'Don’t forget to start the timer.', startNow: 'Start', notNow: 'Not now', backNotif: 'Looks like you’re back. Start your focus timer?',
       hereQ: 'Are you there? 👋', hereText: 'Answer within {s} so your time keeps counting.', here: 'I’m here', pausedAway: 'We didn’t hear from you, so the timer was stopped at {time}.', hereNotif: 'Are you there? Tap to keep your focus time counting.',
       rank: 'Leaderboard', rankWeek: 'This week', rankJoin: 'Join', rankNick: 'Nickname', rankNickBad: 'Use 2–20 letters, numbers, spaces, dots or dashes.', rankInfo: 'Fair play: only focus time while Grove is open counts, and “Are you there?” checks must be answered. The server rejects more time than has really passed.', rankLeave: 'Leave the leaderboard', rankYou: 'you', rankEmpty: 'No one here yet. Be the first!', rankSoon: 'The leaderboard is opening soon.', rankErr: 'Couldn’t connect. Please try again later.', rankJoined: 'You joined this week’s leaderboard.', rankPrivacy: 'Joining shares your nickname and this week’s focus time. Nothing else.', rankLeft: 'You left the leaderboard.', rankRefresh: 'Refresh',
-      sceneAbout: 'About this picture', sceneBy: 'Grove illustration',
-      scenes: { gunduz: ['Green hills', 'Spring meadows under a soft, open sky.'], gece: ['Mountain night', 'A quiet ridge beneath the moon and stars.'], orman: ['Misty forest', 'Pine woods in the first light of morning.'], okyanus: ['Open sea', 'Calm waves and distant islands at midday.'], lavanta: ['Lavender fields', 'Purple rows stretching to the hills.'], gunbatimi: ['Desert sunset', 'Dunes glowing as the sun goes down.'] } },
+      sceneAbout: 'About this picture', photoBy: 'Photo:',
+      scenes: { gunduz: ['Green hills', 'Rolling meadows under a bright summer sky.'], gece: ['Starry peaks', 'Snowy mountains beneath the Milky Way.'], orman: ['Misty forest', 'Pine trees disappearing into the morning fog.'], okyanus: ['Calm sea', 'A still horizon where the sea meets the sky.'], lavanta: ['Valensole, France', 'Rows of lavender in Provence.'], gunbatimi: ['Desert dunes', 'Sand ridges in the last light of the day.'] } },
     tr: { secTimer: 'Pomodoro', secBreak: 'Molalar', secFocus: 'Odak yardımcıları', secLook: 'Görünüm', optGame: 'Mola başlayınca 2048 oyununu aç', optReturn: 'Döndüğümde süreyi başlatmayı hatırlat', optPresence: 'Uzun oturumlarda “Burada mısın?” diye sor', optIdle: 'Bilgisayardan uzaklaştığımı fark et', optScene: 'Temalarda arka plan resmi', idleDenied: 'İzin verilmedi. Tarayıcı ayarlarından açabilirsin.',
       game: 'Mola oyunu', gameGoal: 'Hedef: 32’ye ulaş', gameScore: 'Puan', gameBest: 'En iyi', gameNew: 'Yeni oyun', gameWin: 'Tebrikler, 32’ye ulaştın! 🎉 Şimdi gerçekten molaya çıkabilirsin: kalk, biraz esne, su iç.', gameKeep: 'Oynamaya devam', gameOver: 'Hamle kalmadı. Yeni oyuna başla!', gameHint: 'Ok tuşları ya da kaydır', breakLeft: 'Mola: {t} kaldı', startBreak: 'Molayı başlat', breakOver: 'Mola bitti! Burada mısın?', startFocus: 'Odaklanmaya başla', playBtn: '🎮 Mola oyunu',
       backQ: 'Döndün mü? 🌱', backText: 'Süreyi başlatmayı unutma.', startNow: 'Başlat', notNow: 'Şimdi değil', backNotif: 'Masaya döndün gibi görünüyor. Odak süresini başlatalım mı?',
       hereQ: 'Burada mısın? 👋', hereText: 'Sürenin saymaya devam etmesi için {s} içinde cevap ver.', here: 'Buradayım', pausedAway: 'Senden ses çıkmadı, bu yüzden süreyi {time}’de durdurduk.', hereNotif: 'Burada mısın? Süren saymaya devam etsin diye dokun.',
       rank: 'Sıralama', rankWeek: 'Bu hafta', rankJoin: 'Katıl', rankNick: 'Takma ad', rankNickBad: '2–20 harf, rakam, boşluk, nokta ya da tire kullan.', rankInfo: 'Adil oyun: sadece Grove açıkken geçen odak süresi sayılır ve “Burada mısın?” sorularına cevap vermek gerekir. Sunucu, gerçekte geçen süreden fazlasını kabul etmez.', rankLeave: 'Sıralamadan ayrıl', rankYou: 'sen', rankEmpty: 'Henüz kimse yok. İlk sen ol!', rankSoon: 'Sıralama çok yakında açılıyor.', rankErr: 'Bağlanılamadı. Biraz sonra tekrar dene.', rankJoined: 'Bu haftanın sıralamasına katıldın.', rankPrivacy: 'Katılınca sadece takma adın ve bu haftaki odak süren paylaşılır.', rankLeft: 'Sıralamadan ayrıldın.', rankRefresh: 'Yenile',
-      sceneAbout: 'Bu resim hakkında', sceneBy: 'Grove illüstrasyonu',
-      scenes: { gunduz: ['Yeşil tepeler', 'Açık bir gökyüzü altında bahar çayırları.'], gece: ['Dağda gece', 'Ay ve yıldızların altında sessiz bir sırt.'], orman: ['Sisli orman', 'Sabahın ilk ışığında çam ormanı.'], okyanus: ['Açık deniz', 'Öğle vakti sakin dalgalar ve uzak adalar.'], lavanta: ['Lavanta tarlaları', 'Tepelere uzanan mor sıralar.'], gunbatimi: ['Çölde gün batımı', 'Güneş batarken parlayan kum tepeleri.'] } },
+      sceneAbout: 'Bu resim hakkında', photoBy: 'Fotoğraf:',
+      scenes: { gunduz: ['Yeşil tepeler', 'Parlak bir yaz göğü altında dalgalı çayırlar.'], gece: ['Yıldızlı zirveler', 'Samanyolu’nun altında karlı dağlar.'], orman: ['Sisli orman', 'Sabah sisinde kaybolan çam ağaçları.'], okyanus: ['Sakin deniz', 'Denizin gökyüzüne kavuştuğu durgun ufuk.'], lavanta: ['Valensole, Fransa', 'Provence’ta sıra sıra lavantalar.'], gunbatimi: ['Çöl kumulları', 'Günün son ışığında kum tepeleri.'] } },
     de: { secTimer: 'Pomodoro', secBreak: 'Pausen', secFocus: 'Fokus-Helfer', secLook: 'Aussehen', optGame: '2048 öffnen, wenn eine Pause beginnt', optReturn: 'Erinnern, den Timer zu starten, wenn ich zurück bin', optPresence: 'In langen Sitzungen „Bist du da?“ fragen', optIdle: 'Bemerken, wenn ich vom Computer weg bin', optScene: 'Hintergrundbilder für Designs', idleDenied: 'Keine Berechtigung erteilt. Du kannst sie in den Browsereinstellungen erlauben.',
       game: 'Pausenspiel', gameGoal: 'Ziel: 32 erreichen', gameScore: 'Punkte', gameBest: 'Bestwert', gameNew: 'Neues Spiel', gameWin: 'Glückwunsch, du hast 32 erreicht! 🎉 Jetzt mach wirklich Pause: aufstehen, strecken, etwas trinken.', gameKeep: 'Weiterspielen', gameOver: 'Keine Züge mehr. Starte ein neues Spiel!', gameHint: 'Pfeiltasten oder wischen', breakLeft: 'Pause: noch {t}', startBreak: 'Pause starten', breakOver: 'Pause vorbei! Bist du da?', startFocus: 'Fokus starten', playBtn: '🎮 Pausenspiel',
       backQ: 'Wieder am Platz? 🌱', backText: 'Vergiss nicht, den Timer zu starten.', startNow: 'Starten', notNow: 'Nicht jetzt', backNotif: 'Du scheinst zurück zu sein. Fokus-Timer starten?',
       hereQ: 'Bist du da? 👋', hereText: 'Antworte innerhalb von {s}, damit deine Zeit weiterläuft.', here: 'Ich bin da', pausedAway: 'Keine Antwort, daher wurde der Timer um {time} gestoppt.', hereNotif: 'Bist du da? Tippe, damit deine Fokuszeit weiterläuft.',
       rank: 'Rangliste', rankWeek: 'Diese Woche', rankJoin: 'Mitmachen', rankNick: 'Spitzname', rankNickBad: '2–20 Buchstaben, Zahlen, Leerzeichen, Punkte oder Bindestriche.', rankInfo: 'Fair Play: Es zählt nur Fokuszeit, während Grove offen ist, und „Bist du da?“-Fragen müssen beantwortet werden. Der Server lehnt mehr Zeit ab, als wirklich vergangen ist.', rankLeave: 'Rangliste verlassen', rankYou: 'du', rankEmpty: 'Noch niemand da. Sei die oder der Erste!', rankSoon: 'Die Rangliste startet bald.', rankErr: 'Keine Verbindung. Bitte später erneut versuchen.', rankJoined: 'Du bist der Rangliste dieser Woche beigetreten.', rankPrivacy: 'Beim Mitmachen werden nur dein Spitzname und deine Fokuszeit dieser Woche geteilt.', rankLeft: 'Du hast die Rangliste verlassen.', rankRefresh: 'Aktualisieren',
-      sceneAbout: 'Über dieses Bild', sceneBy: 'Grove-Illustration',
-      scenes: { gunduz: ['Grüne Hügel', 'Frühlingswiesen unter weitem Himmel.'], gece: ['Bergnacht', 'Ein stiller Grat unter Mond und Sternen.'], orman: ['Nebelwald', 'Kiefernwald im ersten Morgenlicht.'], okyanus: ['Offenes Meer', 'Ruhige Wellen und ferne Inseln am Mittag.'], lavanta: ['Lavendelfelder', 'Lila Reihen bis zu den Hügeln.'], gunbatimi: ['Wüstenabend', 'Dünen, die im Sonnenuntergang leuchten.'] } },
+      sceneAbout: 'Über dieses Bild', photoBy: 'Foto:',
+      scenes: { gunduz: ['Grüne Hügel', 'Sanfte Wiesen unter hellem Sommerhimmel.'], gece: ['Sternengipfel', 'Verschneite Berge unter der Milchstraße.'], orman: ['Nebelwald', 'Kiefern, die im Morgennebel verschwinden.'], okyanus: ['Ruhige See', 'Ein stiller Horizont, wo Meer und Himmel sich treffen.'], lavanta: ['Valensole, Frankreich', 'Lavendelreihen in der Provence.'], gunbatimi: ['Wüstendünen', 'Sandkämme im letzten Licht des Tages.'] } },
     es: { secTimer: 'Pomodoro', secBreak: 'Descansos', secFocus: 'Ayudas de enfoque', secLook: 'Apariencia', optGame: 'Abrir 2048 cuando empiece un descanso', optReturn: 'Recordarme iniciar el temporizador al volver', optPresence: 'Preguntar “¿Sigues ahí?” en sesiones largas', optIdle: 'Detectar cuando me alejo del ordenador', optScene: 'Imágenes de fondo en los temas', idleDenied: 'No se dio el permiso. Puedes permitirlo en los ajustes del navegador.',
       game: 'Juego de descanso', gameGoal: 'Meta: llegar a 32', gameScore: 'Puntos', gameBest: 'Récord', gameNew: 'Nuevo juego', gameWin: '¡Enhorabuena, llegaste a 32! 🎉 Ahora descansa de verdad: levántate, estírate y bebe agua.', gameKeep: 'Seguir jugando', gameOver: 'No quedan movimientos. ¡Empieza otro juego!', gameHint: 'Flechas o desliza', breakLeft: 'Descanso: quedan {t}', startBreak: 'Iniciar descanso', breakOver: '¡Se acabó el descanso! ¿Sigues ahí?', startFocus: 'Empezar a enfocarme', playBtn: '🎮 Juego de descanso',
       backQ: '¿Has vuelto? 🌱', backText: 'No olvides iniciar el temporizador.', startNow: 'Iniciar', notNow: 'Ahora no', backNotif: 'Parece que has vuelto. ¿Iniciamos el temporizador?',
       hereQ: '¿Sigues ahí? 👋', hereText: 'Responde en {s} para que tu tiempo siga contando.', here: 'Aquí estoy', pausedAway: 'No respondiste, así que el temporizador se detuvo a las {time}.', hereNotif: '¿Sigues ahí? Toca para que tu tiempo siga contando.',
       rank: 'Clasificación', rankWeek: 'Esta semana', rankJoin: 'Unirme', rankNick: 'Apodo', rankNickBad: 'Usa 2–20 letras, números, espacios, puntos o guiones.', rankInfo: 'Juego limpio: solo cuenta el tiempo con Grove abierto y hay que responder a “¿Sigues ahí?”. El servidor rechaza más tiempo del que realmente ha pasado.', rankLeave: 'Salir de la clasificación', rankYou: 'tú', rankEmpty: 'Aún no hay nadie. ¡Sé el primero!', rankSoon: 'La clasificación abrirá pronto.', rankErr: 'No se pudo conectar. Inténtalo más tarde.', rankJoined: 'Te uniste a la clasificación de esta semana.', rankPrivacy: 'Al unirte solo se comparten tu apodo y tu tiempo de enfoque de esta semana.', rankLeft: 'Saliste de la clasificación.', rankRefresh: 'Actualizar',
-      sceneAbout: 'Sobre esta imagen', sceneBy: 'Ilustración de Grove',
-      scenes: { gunduz: ['Colinas verdes', 'Prados de primavera bajo un cielo abierto.'], gece: ['Noche en la montaña', 'Una cresta tranquila bajo la luna y las estrellas.'], orman: ['Bosque con niebla', 'Pinar con la primera luz de la mañana.'], okyanus: ['Mar abierto', 'Olas tranquilas e islas lejanas al mediodía.'], lavanta: ['Campos de lavanda', 'Hileras moradas hasta las colinas.'], gunbatimi: ['Atardecer en el desierto', 'Dunas que brillan al ponerse el sol.'] } },
+      sceneAbout: 'Sobre esta imagen', photoBy: 'Foto:',
+      scenes: { gunduz: ['Colinas verdes', 'Prados ondulados bajo un cielo de verano.'], gece: ['Cumbres estrelladas', 'Montañas nevadas bajo la Vía Láctea.'], orman: ['Bosque con niebla', 'Pinos que desaparecen en la niebla de la mañana.'], okyanus: ['Mar en calma', 'Un horizonte quieto donde el mar se une al cielo.'], lavanta: ['Valensole, Francia', 'Hileras de lavanda en la Provenza.'], gunbatimi: ['Dunas del desierto', 'Crestas de arena con la última luz del día.'] } },
     fr: { secTimer: 'Pomodoro', secBreak: 'Pauses', secFocus: 'Aides à la concentration', secLook: 'Apparence', optGame: 'Ouvrir 2048 quand une pause commence', optReturn: 'Me rappeler de lancer le minuteur à mon retour', optPresence: 'Demander « Tu es là ? » pendant les longues sessions', optIdle: 'Détecter quand je m’éloigne de l’ordinateur', optScene: 'Images de fond pour les thèmes', idleDenied: 'Autorisation refusée. Tu peux l’autoriser dans les réglages du navigateur.',
       game: 'Jeu de pause', gameGoal: 'Objectif : atteindre 32', gameScore: 'Score', gameBest: 'Record', gameNew: 'Nouvelle partie', gameWin: 'Bravo, tu as atteint 32 ! 🎉 Maintenant, fais vraiment une pause : lève-toi, étire-toi, bois de l’eau.', gameKeep: 'Continuer', gameOver: 'Plus de coups possibles. Lance une nouvelle partie !', gameHint: 'Flèches ou glisser', breakLeft: 'Pause : encore {t}', startBreak: 'Lancer la pause', breakOver: 'Pause terminée ! Tu es là ?', startFocus: 'Me concentrer', playBtn: '🎮 Jeu de pause',
       backQ: 'De retour ? 🌱', backText: 'N’oublie pas de lancer le minuteur.', startNow: 'Lancer', notNow: 'Pas maintenant', backNotif: 'On dirait que tu es de retour. Lancer le minuteur ?',
       hereQ: 'Tu es là ? 👋', hereText: 'Réponds dans les {s} pour que ton temps continue de compter.', here: 'Je suis là', pausedAway: 'Pas de réponse, le minuteur a donc été arrêté à {time}.', hereNotif: 'Tu es là ? Touche pour que ton temps continue de compter.',
       rank: 'Classement', rankWeek: 'Cette semaine', rankJoin: 'Rejoindre', rankNick: 'Pseudo', rankNickBad: 'Utilise 2 à 20 lettres, chiffres, espaces, points ou tirets.', rankInfo: 'Fair-play : seul le temps passé avec Grove ouvert compte, et il faut répondre aux « Tu es là ? ». Le serveur refuse plus de temps qu’il ne s’en est réellement écoulé.', rankLeave: 'Quitter le classement', rankYou: 'toi', rankEmpty: 'Personne pour l’instant. Sois le premier !', rankSoon: 'Le classement ouvre bientôt.', rankErr: 'Connexion impossible. Réessaie plus tard.', rankJoined: 'Tu as rejoint le classement de la semaine.', rankPrivacy: 'En rejoignant, seuls ton pseudo et ton temps de concentration de la semaine sont partagés.', rankLeft: 'Tu as quitté le classement.', rankRefresh: 'Actualiser',
-      sceneAbout: 'À propos de cette image', sceneBy: 'Illustration Grove',
-      scenes: { gunduz: ['Collines vertes', 'Prairies de printemps sous un ciel dégagé.'], gece: ['Nuit en montagne', 'Une crête paisible sous la lune et les étoiles.'], orman: ['Forêt brumeuse', 'Pinède aux premières lueurs du matin.'], okyanus: ['Pleine mer', 'Vagues calmes et îles lointaines à midi.'], lavanta: ['Champs de lavande', 'Rangs violets jusqu’aux collines.'], gunbatimi: ['Coucher de soleil sur le désert', 'Des dunes qui brillent au soleil couchant.'] } },
+      sceneAbout: 'À propos de cette image', photoBy: 'Photo :',
+      scenes: { gunduz: ['Collines vertes', 'Prairies ondulées sous un ciel d’été lumineux.'], gece: ['Sommets étoilés', 'Montagnes enneigées sous la Voie lactée.'], orman: ['Forêt brumeuse', 'Des pins qui disparaissent dans la brume du matin.'], okyanus: ['Mer calme', 'Un horizon immobile où la mer rejoint le ciel.'], lavanta: ['Valensole, France', 'Rangs de lavande en Provence.'], gunbatimi: ['Dunes du désert', 'Crêtes de sable dans la dernière lumière du jour.'] } },
     it: { secTimer: 'Pomodoro', secBreak: 'Pause', secFocus: 'Aiuti alla concentrazione', secLook: 'Aspetto', optGame: 'Apri 2048 quando inizia una pausa', optReturn: 'Ricordami di avviare il timer quando torno', optPresence: 'Chiedi “Ci sei?” nelle sessioni lunghe', optIdle: 'Accorgiti quando mi allontano dal computer', optScene: 'Immagini di sfondo per i temi', idleDenied: 'Permesso non concesso. Puoi abilitarlo nelle impostazioni del browser.',
       game: 'Gioco della pausa', gameGoal: 'Obiettivo: arrivare a 32', gameScore: 'Punti', gameBest: 'Record', gameNew: 'Nuova partita', gameWin: 'Complimenti, sei arrivato a 32! 🎉 Ora fai davvero pausa: alzati, stirati e bevi un po’ d’acqua.', gameKeep: 'Continua a giocare', gameOver: 'Nessuna mossa rimasta. Inizia una nuova partita!', gameHint: 'Frecce o scorri', breakLeft: 'Pausa: mancano {t}', startBreak: 'Avvia la pausa', breakOver: 'Pausa finita! Ci sei?', startFocus: 'Inizia a concentrarti', playBtn: '🎮 Gioco della pausa',
       backQ: 'Sei tornato? 🌱', backText: 'Non dimenticare di avviare il timer.', startNow: 'Avvia', notNow: 'Non ora', backNotif: 'Sembra che tu sia tornato. Avviamo il timer?',
       hereQ: 'Ci sei? 👋', hereText: 'Rispondi entro {s} perché il tempo continui a contare.', here: 'Ci sono', pausedAway: 'Nessuna risposta, quindi il timer è stato fermato alle {time}.', hereNotif: 'Ci sei? Tocca perché il tuo tempo continui a contare.',
       rank: 'Classifica', rankWeek: 'Questa settimana', rankJoin: 'Partecipa', rankNick: 'Soprannome', rankNickBad: 'Usa 2–20 lettere, numeri, spazi, punti o trattini.', rankInfo: 'Fair play: conta solo il tempo con Grove aperto e bisogna rispondere ai “Ci sei?”. Il server rifiuta più tempo di quello realmente trascorso.', rankLeave: 'Esci dalla classifica', rankYou: 'tu', rankEmpty: 'Ancora nessuno. Sii il primo!', rankSoon: 'La classifica apre presto.', rankErr: 'Connessione non riuscita. Riprova più tardi.', rankJoined: 'Sei entrato nella classifica di questa settimana.', rankPrivacy: 'Partecipando condividi solo il soprannome e il tempo di concentrazione della settimana.', rankLeft: 'Sei uscito dalla classifica.', rankRefresh: 'Aggiorna',
-      sceneAbout: 'Informazioni sull’immagine', sceneBy: 'Illustrazione di Grove',
-      scenes: { gunduz: ['Colline verdi', 'Prati primaverili sotto un cielo aperto.'], gece: ['Notte in montagna', 'Un crinale silenzioso sotto luna e stelle.'], orman: ['Bosco nella nebbia', 'Pineta alle prime luci del mattino.'], okyanus: ['Mare aperto', 'Onde calme e isole lontane a mezzogiorno.'], lavanta: ['Campi di lavanda', 'Filari viola fino alle colline.'], gunbatimi: ['Tramonto nel deserto', 'Dune che brillano al calar del sole.'] } },
+      sceneAbout: 'Informazioni sull’immagine', photoBy: 'Foto:',
+      scenes: { gunduz: ['Colline verdi', 'Prati ondulati sotto un luminoso cielo d’estate.'], gece: ['Vette stellate', 'Montagne innevate sotto la Via Lattea.'], orman: ['Bosco nella nebbia', 'Pini che scompaiono nella nebbia del mattino.'], okyanus: ['Mare calmo', 'Un orizzonte immobile dove il mare incontra il cielo.'], lavanta: ['Valensole, Francia', 'Filari di lavanda in Provenza.'], gunbatimi: ['Dune del deserto', 'Creste di sabbia nell’ultima luce del giorno.'] } },
     pt: { secTimer: 'Pomodoro', secBreak: 'Pausas', secFocus: 'Ajudas de foco', secLook: 'Aparência', optGame: 'Abrir o 2048 quando uma pausa começar', optReturn: 'Lembrar de iniciar o timer quando eu voltar', optPresence: 'Perguntar “Você está aí?” em sessões longas', optIdle: 'Perceber quando eu me afasto do computador', optScene: 'Imagens de fundo nos temas', idleDenied: 'A permissão não foi dada. Você pode permitir nas configurações do navegador.',
       game: 'Jogo da pausa', gameGoal: 'Meta: chegar a 32', gameScore: 'Pontos', gameBest: 'Recorde', gameNew: 'Novo jogo', gameWin: 'Parabéns, você chegou a 32! 🎉 Agora faça a pausa de verdade: levante, alongue-se e beba água.', gameKeep: 'Continuar jogando', gameOver: 'Sem jogadas. Comece um novo jogo!', gameHint: 'Setas ou deslize', breakLeft: 'Pausa: faltam {t}', startBreak: 'Iniciar pausa', breakOver: 'A pausa acabou! Você está aí?', startFocus: 'Começar a focar', playBtn: '🎮 Jogo da pausa',
       backQ: 'Voltou? 🌱', backText: 'Não esqueça de iniciar o timer.', startNow: 'Iniciar', notNow: 'Agora não', backNotif: 'Parece que você voltou. Vamos iniciar o timer?',
       hereQ: 'Você está aí? 👋', hereText: 'Responda em {s} para seu tempo continuar contando.', here: 'Estou aqui', pausedAway: 'Sem resposta, então o timer foi parado às {time}.', hereNotif: 'Você está aí? Toque para seu tempo continuar contando.',
       rank: 'Ranking', rankWeek: 'Esta semana', rankJoin: 'Participar', rankNick: 'Apelido', rankNickBad: 'Use 2–20 letras, números, espaços, pontos ou hífens.', rankInfo: 'Jogo limpo: só conta o tempo com o Grove aberto e é preciso responder aos “Você está aí?”. O servidor recusa mais tempo do que realmente passou.', rankLeave: 'Sair do ranking', rankYou: 'você', rankEmpty: 'Ninguém ainda. Seja o primeiro!', rankSoon: 'O ranking abre em breve.', rankErr: 'Não foi possível conectar. Tente mais tarde.', rankJoined: 'Você entrou no ranking desta semana.', rankPrivacy: 'Ao participar, só seu apelido e seu tempo de foco da semana são compartilhados.', rankLeft: 'Você saiu do ranking.', rankRefresh: 'Atualizar',
-      sceneAbout: 'Sobre esta imagem', sceneBy: 'Ilustração do Grove',
-      scenes: { gunduz: ['Colinas verdes', 'Campos de primavera sob um céu aberto.'], gece: ['Noite na montanha', 'Uma serra tranquila sob a lua e as estrelas.'], orman: ['Floresta na névoa', 'Pinheiral na primeira luz da manhã.'], okyanus: ['Mar aberto', 'Ondas calmas e ilhas distantes ao meio-dia.'], lavanta: ['Campos de lavanda', 'Fileiras roxas até as colinas.'], gunbatimi: ['Pôr do sol no deserto', 'Dunas brilhando ao entardecer.'] } },
+      sceneAbout: 'Sobre esta imagem', photoBy: 'Foto:',
+      scenes: { gunduz: ['Colinas verdes', 'Campos ondulados sob um céu claro de verão.'], gece: ['Picos estrelados', 'Montanhas nevadas sob a Via Láctea.'], orman: ['Floresta na névoa', 'Pinheiros que somem na névoa da manhã.'], okyanus: ['Mar calmo', 'Um horizonte parado onde o mar encontra o céu.'], lavanta: ['Valensole, França', 'Fileiras de lavanda na Provença.'], gunbatimi: ['Dunas do deserto', 'Cristas de areia na última luz do dia.'] } },
     ru: { secTimer: 'Помодоро', secBreak: 'Перерывы', secFocus: 'Помощь в фокусе', secLook: 'Внешний вид', optGame: 'Открывать 2048, когда начинается перерыв', optReturn: 'Напоминать запустить таймер, когда я вернусь', optPresence: 'Спрашивать «Вы здесь?» в долгих сессиях', optIdle: 'Замечать, когда я отхожу от компьютера', optScene: 'Фоновые картинки для тем', idleDenied: 'Разрешение не выдано. Его можно включить в настройках браузера.',
       game: 'Игра на перерыв', gameGoal: 'Цель: дойти до 32', gameScore: 'Очки', gameBest: 'Рекорд', gameNew: 'Новая игра', gameWin: 'Поздравляем, вы дошли до 32! 🎉 Теперь отдохните по-настоящему: встаньте, потянитесь, выпейте воды.', gameKeep: 'Играть дальше', gameOver: 'Ходов больше нет. Начните новую игру!', gameHint: 'Стрелки или свайп', breakLeft: 'Перерыв: осталось {t}', startBreak: 'Начать перерыв', breakOver: 'Перерыв окончен! Вы здесь?', startFocus: 'Начать фокус', playBtn: '🎮 Игра на перерыв',
       backQ: 'Вернулись? 🌱', backText: 'Не забудьте запустить таймер.', startNow: 'Старт', notNow: 'Не сейчас', backNotif: 'Похоже, вы вернулись. Запустить таймер?',
       hereQ: 'Вы здесь? 👋', hereText: 'Ответьте в течение {s}, чтобы время продолжало считаться.', here: 'Я здесь', pausedAway: 'Ответа не было, поэтому таймер остановлен в {time}.', hereNotif: 'Вы здесь? Нажмите, чтобы время продолжало считаться.',
       rank: 'Рейтинг', rankWeek: 'Эта неделя', rankJoin: 'Участвовать', rankNick: 'Ник', rankNickBad: 'Используйте 2–20 букв, цифр, пробелов, точек или дефисов.', rankInfo: 'Честная игра: считается только время, когда Grove открыт, и нужно отвечать на «Вы здесь?». Сервер не примет больше времени, чем прошло на самом деле.', rankLeave: 'Выйти из рейтинга', rankYou: 'вы', rankEmpty: 'Пока никого. Будьте первым!', rankSoon: 'Рейтинг скоро откроется.', rankErr: 'Не удалось подключиться. Попробуйте позже.', rankJoined: 'Вы участвуете в рейтинге этой недели.', rankPrivacy: 'При участии публикуются только ваш ник и время фокуса за неделю.', rankLeft: 'Вы вышли из рейтинга.', rankRefresh: 'Обновить',
-      sceneAbout: 'Об этой картинке', sceneBy: 'Иллюстрация Grove',
-      scenes: { gunduz: ['Зелёные холмы', 'Весенние луга под ясным небом.'], gece: ['Ночь в горах', 'Тихий хребет под луной и звёздами.'], orman: ['Туманный лес', 'Сосновый бор в первых лучах утра.'], okyanus: ['Открытое море', 'Спокойные волны и далёкие острова в полдень.'], lavanta: ['Лавандовые поля', 'Фиолетовые ряды до самых холмов.'], gunbatimi: ['Закат в пустыне', 'Дюны, сияющие на закате.'] } },
+      sceneAbout: 'Об этой картинке', photoBy: 'Фото:',
+      scenes: { gunduz: ['Зелёные холмы', 'Луга под ярким летним небом.'], gece: ['Звёздные вершины', 'Снежные горы под Млечным Путём.'], orman: ['Туманный лес', 'Сосны, исчезающие в утреннем тумане.'], okyanus: ['Спокойное море', 'Тихий горизонт, где море встречается с небом.'], lavanta: ['Валансоль, Франция', 'Ряды лаванды в Провансе.'], gunbatimi: ['Пустынные дюны', 'Песчаные гребни в последних лучах дня.'] } },
     ja: { secTimer: 'ポモドーロ', secBreak: '休憩', secFocus: '集中サポート', secLook: '見た目', optGame: '休憩が始まったら2048を開く', optReturn: '戻ってきたらタイマー開始をお知らせ', optPresence: '長いセッション中に「いますか？」と確認', optIdle: 'パソコンから離れたことを検知', optScene: 'テーマの背景画像', idleDenied: '許可されませんでした。ブラウザの設定で許可できます。',
       game: '休憩ゲーム', gameGoal: '目標：32を作る', gameScore: 'スコア', gameBest: 'ベスト', gameNew: '新しいゲーム', gameWin: 'おめでとう、32に到達しました！🎉 さあ本当に休憩しましょう。立ち上がって伸びをして、水を飲みましょう。', gameKeep: '続ける', gameOver: 'もう動かせません。新しいゲームを始めましょう！', gameHint: '矢印キーまたはスワイプ', breakLeft: '休憩：残り{t}', startBreak: '休憩を始める', breakOver: '休憩終了！いますか？', startFocus: '集中を始める', playBtn: '🎮 休憩ゲーム',
       backQ: 'おかえりなさい 🌱', backText: 'タイマーを始めるのを忘れずに。', startNow: '開始', notNow: '今はしない', backNotif: '戻ってきたようです。集中タイマーを始めますか？',
       hereQ: 'いますか？👋', hereText: '{s}以内に応答すると時間が引き続きカウントされます。', here: 'います', pausedAway: '応答がなかったため、{time}でタイマーを止めました。', hereNotif: 'いますか？タップすると集中時間のカウントが続きます。',
       rank: 'ランキング', rankWeek: '今週', rankJoin: '参加する', rankNick: 'ニックネーム', rankNickBad: '2〜20文字の文字・数字・スペース・ピリオド・ハイフンを使ってください。', rankInfo: 'フェアプレー：Grove を開いている間の集中時間だけが数えられ、「いますか？」に答える必要があります。サーバーは実際に経過した以上の時間を受け付けません。', rankLeave: 'ランキングから抜ける', rankYou: 'あなた', rankEmpty: 'まだ誰もいません。一番乗りしましょう！', rankSoon: 'ランキングはまもなく公開されます。', rankErr: '接続できませんでした。後でもう一度お試しください。', rankJoined: '今週のランキングに参加しました。', rankPrivacy: '参加すると、ニックネームと今週の集中時間だけが共有されます。', rankLeft: 'ランキングから抜けました。', rankRefresh: '更新',
-      sceneAbout: 'この画像について', sceneBy: 'Grove のイラスト',
-      scenes: { gunduz: ['緑の丘', '広い空の下の春の草原。'], gece: ['山の夜', '月と星の下の静かな稜線。'], orman: ['霧の森', '朝の最初の光に包まれた松林。'], okyanus: ['大海原', '昼下がりの穏やかな波と遠くの島々。'], lavanta: ['ラベンダー畑', '丘まで続く紫の列。'], gunbatimi: ['砂漠の夕日', '夕日に輝く砂丘。'] } },
+      sceneAbout: 'この画像について', photoBy: '写真：',
+      scenes: { gunduz: ['緑の丘', '明るい夏空の下に広がる草原。'], gece: ['星空の山々', '天の川の下の雪山。'], orman: ['霧の森', '朝霧に消えていく松の木々。'], okyanus: ['穏やかな海', '海と空が出会う静かな水平線。'], lavanta: ['ヴァランソル（フランス）', 'プロヴァンスのラベンダー畑。'], gunbatimi: ['砂漠の砂丘', '一日の最後の光に照らされた砂の稜線。'] } },
     zh: { secTimer: '番茄钟', secBreak: '休息', secFocus: '专注助手', secLook: '外观', optGame: '休息开始时打开 2048', optReturn: '回来时提醒我开始计时', optPresence: '长时间专注时询问“你还在吗？”', optIdle: '察觉我离开电脑', optScene: '主题背景图片', idleDenied: '未获得权限。你可以在浏览器设置中允许。',
       game: '休息小游戏', gameGoal: '目标：合成 32', gameScore: '得分', gameBest: '最高', gameNew: '新游戏', gameWin: '恭喜，你合成了 32！🎉 现在真的去休息吧：站起来，伸个懒腰，喝点水。', gameKeep: '继续玩', gameOver: '没有可走的步了，开始新游戏吧！', gameHint: '方向键或滑动', breakLeft: '休息：还剩 {t}', startBreak: '开始休息', breakOver: '休息结束！你还在吗？', startFocus: '开始专注', playBtn: '🎮 休息小游戏',
       backQ: '回来了吗？🌱', backText: '别忘了开始计时。', startNow: '开始', notNow: '暂不', backNotif: '你好像回来了。要开始专注计时吗？',
       hereQ: '你还在吗？👋', hereText: '请在 {s} 内回应，时间才会继续计算。', here: '我在', pausedAway: '没有收到回应，计时已在 {time} 停止。', hereNotif: '你还在吗？点按以继续计算专注时间。',
       rank: '排行榜', rankWeek: '本周', rankJoin: '加入', rankNick: '昵称', rankNickBad: '请使用 2–20 个字母、数字、空格、点或连字符。', rankInfo: '公平竞赛：只计算 Grove 打开时的专注时间，并且需要回应“你还在吗？”。服务器不会接受超过实际经过的时间。', rankLeave: '退出排行榜', rankYou: '你', rankEmpty: '还没有人，来做第一个吧！', rankSoon: '排行榜即将开放。', rankErr: '无法连接，请稍后再试。', rankJoined: '你已加入本周排行榜。', rankPrivacy: '加入后只会分享你的昵称和本周专注时间。', rankLeft: '你已退出排行榜。', rankRefresh: '刷新',
-      sceneAbout: '关于这张图片', sceneBy: 'Grove 插画',
-      scenes: { gunduz: ['绿色山丘', '开阔天空下的春日草地。'], gece: ['山中夜色', '月亮和星空下宁静的山脊。'], orman: ['雾中森林', '清晨第一缕阳光中的松林。'], okyanus: ['辽阔大海', '正午平静的海浪和远处的小岛。'], lavanta: ['薰衣草田', '一直延伸到山丘的紫色花垄。'], gunbatimi: ['沙漠日落', '夕阳下发光的沙丘。'] } }
+      sceneAbout: '关于这张图片', photoBy: '摄影：',
+      scenes: { gunduz: ['绿色山丘', '明亮夏日天空下起伏的草地。'], gece: ['星空山峰', '银河下的雪山。'], orman: ['雾中森林', '消失在晨雾中的松树。'], okyanus: ['平静的海', '海天相接的宁静地平线。'], lavanta: ['瓦朗索勒，法国', '普罗旺斯的一排排薰衣草。'], gunbatimi: ['沙漠沙丘', '一天最后的光线中的沙脊。'] } }
   };
   var WN = { en: 'New in Grove: a 2048 break game, theme scenery and a settings panel 🌱', tr: 'Grove’da yeni: 2048 mola oyunu, tema manzaraları ve ayarlar paneli 🌱', de: 'Neu in Grove: 2048-Pausenspiel, Landschaften zu den Designs und Einstellungen 🌱', es: 'Novedades en Grove: juego 2048 para descansos, paisajes en los temas y panel de ajustes 🌱', fr: 'Nouveau dans Grove : jeu 2048 pour les pauses, paysages et panneau de réglages 🌱', it: 'Novità in Grove: gioco 2048 per le pause, paesaggi nei temi e pannello impostazioni 🌱', pt: 'Novidades no Grove: jogo 2048 nas pausas, paisagens nos temas e painel de configurações 🌱', ru: 'Новое в Grove: игра 2048 на перерыв, пейзажи для тем и панель настроек 🌱', ja: 'Grove の新機能：休憩用2048ゲーム、テーマの風景、設定パネル 🌱', zh: 'Grove 新功能：休息小游戏 2048、主题风景和设置面板 🌱' };
   Object.keys(WN).forEach(function (c) { X[c].whatsNew = WN[c]; });
@@ -100,16 +100,17 @@
 
   // ---------------------------------------------------------------- styles
   var css = '' +
-    '.scene{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0;transition:opacity .6s}' +
-    '.scene.on{opacity:1}.scene svg{width:100%;height:100%;display:block}' +
-    '.scene::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,color-mix(in srgb,var(--bg) 62%,transparent),transparent 42%),color-mix(in srgb,var(--bg) 14%,transparent)}' +
+    '.scene{position:fixed;inset:0;z-index:0;pointer-events:none;visibility:hidden;background:var(--bg)}' +
+    '.scene.on{visibility:visible}.scene img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}' +
+    '.scene::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,color-mix(in srgb,var(--bg) 70%,transparent),transparent 45%),color-mix(in srgb,var(--bg) var(--veil,26%),transparent)}' +
+    ':root[data-skin="gece"],:root[data-skin="orman"],:root[data-skin="gunbatimi"]{--veil:40%}' +
     'html.has-scene body{background:var(--bg)}html.has-scene .app{position:relative;z-index:1}' +
     'html.has-scene .keys span{background:color-mix(in srgb,var(--bg) 72%,transparent);padding:2px 8px;border-radius:8px}' +
     'html.has-scene .tabs{box-shadow:0 1px 0 rgb(0 0 0/.04)}html.has-scene .icon-btn{background:color-mix(in srgb,var(--bg) 70%,transparent)}' +
     '.scene-info{position:fixed;right:14px;bottom:12px;z-index:5;display:flex;flex-direction:column;align-items:flex-end;gap:6px;font-size:.78rem;max-width:280px}' +
     '.scene-info button{display:inline-flex;align-items:center;gap:6px;border:0;border-radius:999px;padding:6px 11px;background:color-mix(in srgb,var(--bg) 78%,transparent);color:var(--fg);font-weight:600;cursor:pointer;backdrop-filter:blur(6px)}' +
     '.scene-info .card{background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border:1px solid var(--line);border-radius:14px;padding:10px 12px;line-height:1.4;box-shadow:0 10px 30px -12px rgb(0 0 0/.4)}' +
-    '.scene-info .card b{display:block;font-size:.88rem}.scene-info .card small{display:block;color:var(--muted);margin-top:4px}' +
+    '.scene-info .card b{display:block;font-size:.88rem}.scene-info .card small{display:block;color:var(--muted);margin-top:6px}.scene-info .card a{color:var(--fg);font-weight:600}' +
     '.set-sec{margin-top:18px}.set-sec:first-of-type{margin-top:14px}.set-sec .menu-title{margin:0 0 8px}' +
     '.sw-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid var(--line);font-size:.9rem;cursor:pointer}' +
     '.sw-row:last-child{border-bottom:0}.sw-row input{appearance:none;-webkit-appearance:none;flex:none;width:40px;height:23px;border-radius:999px;background:var(--line);position:relative;cursor:pointer;transition:background .2s;margin:0}' +
@@ -137,8 +138,8 @@
     '.rk-list .tm{font-family:var(--font-digits)}.rk-list li:nth-child(1) .n::before{content:"🥇"}.rk-list li:nth-child(2) .n::before{content:"🥈"}.rk-list li:nth-child(3) .n::before{content:"🥉"}' +
     '.rk-list li:nth-child(-n+3) .n{font-size:0}.rk-list li:nth-child(-n+3) .n::before{font-size:1.1rem}' +
     '.rk-form{display:flex;gap:8px;margin-top:12px}.rk-form input{flex:1;min-width:0;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--fg);font:inherit}' +
-    '.rk-note{color:var(--muted);font-size:.8rem;line-height:1.45;margin-top:10px}#rankBtn{grid-column:1/-1}' +
-    '#gameBtn{margin-top:-4px}@media (max-width:520px){.scene-info{display:none}}';
+    '.rk-note{color:var(--muted);font-size:.8rem;line-height:1.45;margin-top:10px}' +
+    '#gameBtn{margin-top:-4px}@media (max-width:520px){.scene-info{right:10px;bottom:10px;max-width:calc(100% - 20px)}.scene-info button{padding:8px;opacity:.85}.scene-info button .t{display:none}}';
   document.head.appendChild(el('style', null, css));
 
   // ---------------------------------------------------------------- helpers: sheets
@@ -219,92 +220,60 @@
   }
 
   // ---------------------------------------------------------------- scenery
-  function rng(seed) { return function () { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; }; }
-  function pines(y, h, color, count, seed, W) {
-    var r = rng(seed), d = '';
-    for (var i = 0; i < count; i++) {
-      var x = (i + r() * .8) * (W / count), hh = h * (.65 + r() * .55), w = hh * (.32 + r() * .1), base = y + r() * 18;
-      for (var k = 0; k < 3; k++) {
-        var top = base - hh + k * hh * .22, bw = w * (.55 + k * .25), bot = base - hh * (.45 - k * .2);
-        d += 'M' + (x).toFixed(1) + ' ' + top.toFixed(1) + 'L' + (x + bw).toFixed(1) + ' ' + bot.toFixed(1) + 'L' + (x - bw).toFixed(1) + ' ' + bot.toFixed(1) + 'Z';
-      }
-    }
-    return '<path fill="' + color + '" d="' + d + '"/><rect x="0" y="' + (y + 10) + '" width="' + W + '" height="400" fill="' + color + '"/>';
-  }
-  function ridge(y, amp, color, seed, W, steps) {
-    var r = rng(seed), d = 'M0 ' + y, n = steps || 9;
-    for (var i = 1; i <= n; i++) { var x = i * W / n, yy = y - r() * amp; d += 'Q' + (x - W / n / 2).toFixed(0) + ' ' + (yy - amp * .4).toFixed(0) + ' ' + x.toFixed(0) + ' ' + yy.toFixed(0); }
-    return '<path fill="' + color + '" d="' + d + 'V900H0Z"/>';
-  }
-  function hills(y, amp, color, seed, W) {
-    var r = rng(seed), d = 'M0 ' + y, n = 4;
-    for (var i = 1; i <= n; i++) { var x = i * W / n; d += 'C' + (x - W / n * .7).toFixed(0) + ' ' + (y - amp * (0.4 + r())).toFixed(0) + ' ' + (x - W / n * .3).toFixed(0) + ' ' + (y - amp * (0.2 + r() * .6)).toFixed(0) + ' ' + x.toFixed(0) + ' ' + (y + (r() - .5) * amp * .5).toFixed(0); }
-    return '<path fill="' + color + '" d="' + d + 'V900H0Z"/>';
-  }
-  function stars(n, seed, W, H) { var r = rng(seed), s = ''; for (var i = 0; i < n; i++) s += '<circle cx="' + (r() * W).toFixed(0) + '" cy="' + (r() * H).toFixed(0) + '" r="' + (r() * 1.4 + .4).toFixed(1) + '" fill="#fff" opacity="' + (r() * .6 + .3).toFixed(2) + '"/>'; return s; }
-  function cloud(x, y, s, o) { return '<g fill="#fff" opacity="' + o + '"><ellipse cx="' + x + '" cy="' + y + '" rx="' + 70 * s + '" ry="' + 22 * s + '"/><ellipse cx="' + (x + 30 * s) + '" cy="' + (y - 16 * s) + '" rx="' + 44 * s + '" ry="' + 26 * s + '"/><ellipse cx="' + (x - 34 * s) + '" cy="' + (y - 8 * s) + '" rx="' + 34 * s + '" ry="' + 18 * s + '"/></g>'; }
-  function sky(id, stops) { return '<linearGradient id="' + id + '" x1="0" y1="0" x2="0" y2="1">' + stops.map(function (s) { return '<stop offset="' + s[0] + '" stop-color="' + s[1] + '"/>'; }).join('') + '</linearGradient>'; }
-  function sceneSvg(id) {
-    var W = 1600, o = '';
-    if (id === 'gunduz') {
-      o = '<defs>' + sky('sk', [[0, '#BFE0F1'], [.55, '#E4F2EC'], [1, '#F1F4F2']]) + '</defs><rect width="1600" height="900" fill="url(#sk)"/>' +
-        '<circle cx="1260" cy="190" r="70" fill="#FFF3C4"/><circle cx="1260" cy="190" r="120" fill="#FFF3C4" opacity=".25"/>' + cloud(330, 170, 1.1, .8) + cloud(900, 120, .8, .7) + cloud(1450, 300, .7, .6) +
-        hills(640, 120, '#B9DDB2', 3, W) + hills(700, 110, '#93C998', 7, W) + hills(770, 90, '#6DB27C', 11, W) + hills(840, 60, '#4E9A66', 17, W);
-    } else if (id === 'gece') {
-      o = '<defs>' + sky('sk', [[0, '#070C1C'], [.6, '#142342'], [1, '#22355A']]) + '<radialGradient id="au" cx="30%" cy="35%" r="50%"><stop offset="0" stop-color="#3FD3A0" stop-opacity=".22"/><stop offset="1" stop-color="#3FD3A0" stop-opacity="0"/></radialGradient></defs>' +
-        '<rect width="1600" height="900" fill="url(#sk)"/><rect width="1600" height="700" fill="url(#au)"/>' + stars(170, 5, W, 560) +
-        '<circle cx="1220" cy="170" r="46" fill="#F4F1DE"/><circle cx="1240" cy="158" r="44" fill="#142342"/>' +
-        ridge(620, 220, '#26385A', 21, W, 7) + ridge(700, 170, '#1A2A46', 33, W, 9) + ridge(790, 110, '#101C31', 45, W, 11);
-    } else if (id === 'orman') {
-      o = '<defs>' + sky('sk', [[0, '#16271D'], [.5, '#3B5944'], [.8, '#728F75'], [1, '#93AB91']]) + '<linearGradient id="mist" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E6EFE0" stop-opacity="0"/><stop offset="1" stop-color="#E6EFE0" stop-opacity=".55"/></linearGradient></defs>' +
-        '<rect width="1600" height="900" fill="url(#sk)"/><circle cx="1150" cy="420" r="90" fill="#F6E7B8" opacity=".6"/><circle cx="1150" cy="420" r="200" fill="#F6E7B8" opacity=".1"/>' +
-        pines(600, 230, '#5F7D65', 26, 3, W) + '<rect y="450" width="1600" height="250" fill="url(#mist)" opacity=".6"/>' + pines(700, 300, '#3D5A46', 20, 9, W) + '<rect y="560" width="1600" height="200" fill="url(#mist)" opacity=".4"/>' + pines(820, 420, '#1C3526', 14, 15, W) + pines(885, 480, '#0E2018', 9, 27, W);
-    } else if (id === 'okyanus') {
-      o = '<defs>' + sky('sk', [[0, '#9FD0EA'], [.6, '#DDEFF7'], [1, '#EDF3F7']]) + sky('sea', [[0, '#7FB8D4'], [1, '#2F6E92']]) + '</defs>' +
-        '<rect width="1600" height="900" fill="url(#sk)"/><circle cx="800" cy="120" r="52" fill="#FFF4CF"/><circle cx="800" cy="120" r="110" fill="#FFF4CF" opacity=".25"/>' + cloud(300, 170, 1, .75) + cloud(1420, 260, .7, .6) +
-        '<path fill="#9DB6C4" d="M980 600 Q1080 520 1180 560 Q1260 530 1330 600Z"/><path fill="#B5C9D4" d="M120 600 Q200 560 290 590 Q330 575 380 600Z"/>' +
-        '<rect y="598" width="1600" height="302" fill="url(#sea)"/>' +
-        (function () { var s = '', r = rng(41); for (var i = 0; i < 46; i++) { var y = 615 + i * 6.3 + r() * 4, x = r() * 1600, w = 30 + r() * 90 + i * 2; s += '<path d="M' + x.toFixed(0) + ' ' + y.toFixed(0) + 'q' + (w / 2).toFixed(0) + ' -5 ' + w.toFixed(0) + ' 0" stroke="#fff" stroke-opacity="' + (.15 + r() * .3).toFixed(2) + '" stroke-width="2" fill="none" stroke-linecap="round"/>'; } return s; })() +
-        '<path d="M930 250 q12 -10 24 0 q12 -10 24 0" stroke="#41627A" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M1000 290 q9 -8 18 0 q9 -8 18 0" stroke="#41627A" stroke-width="2.5" fill="none" stroke-linecap="round"/>';
-    } else if (id === 'lavanta') {
-      o = '<defs>' + sky('sk', [[0, '#D9CCF0'], [.55, '#F2EBF8'], [1, '#F4F1F8']]) + '</defs><rect width="1600" height="900" fill="url(#sk)"/>' +
-        '<circle cx="1180" cy="230" r="60" fill="#FFF0D6"/>' + cloud(420, 190, .9, .7) + hills(600, 80, '#C9BFDF', 5, W) + hills(650, 60, '#B6CDA8', 9, W) +
-        '<rect y="660" width="1600" height="240" fill="#8A6CC0"/>' +
-        (function () { var s = ''; for (var i = -10; i <= 22; i++) { var xb = i * 110, xt = 800 + (i - 6) * 14; s += '<path d="M' + xt + ' 662 L' + (xb - 34) + ' 900 L' + (xb + 34) + ' 900 Z" fill="' + (i % 2 ? '#8064B8' : '#977CCB') + '"/>'; } return s; })() +
-        '<path d="M0 650 L1600 650 L1600 668 L0 668Z" fill="#A3BF95"/>';
-    } else {
-      o = '<defs>' + sky('sk', [[0, '#1E1230'], [.45, '#6B2E5A'], [.75, '#E0734F'], [1, '#F6B26B']]) + '</defs><rect width="1600" height="900" fill="url(#sk)"/>' + stars(40, 9, W, 260) +
-        '<circle cx="800" cy="640" r="150" fill="#FFC27A"/><circle cx="800" cy="640" r="260" fill="#FFC27A" opacity=".18"/>' +
-        hills(650, 70, '#7A3550', 13, W) + hills(720, 80, '#55243F', 19, W) + hills(800, 70, '#371830', 23, W) + hills(870, 40, '#22101F', 29, W);
-    }
-    return '<svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">' + o + '</svg>';
-  }
+  // Real photos (free Unsplash licence), loaded from Unsplash's image CDN at exactly the size this screen needs.
+  var PHOTOS = {
+    gunduz: { id: 'photo-1634664125468-6583a2cda747', by: 'Tali Despins', page: 'a-green-field-with-a-few-clouds-in-the-sky-FQkQxgO9Kh8' },
+    gece: { id: 'photo-1519681393784-d120267933ba', by: 'Benjamin Voros', page: 'snow-mountain-under-stars-phIFdC6lA4E' },
+    orman: { id: 'photo-1506452305024-9d3f02d1c9b5', by: 'Kyle Glenn', page: 'green-leafed-pine-trees-SrASYZZpyjw' },
+    okyanus: { id: 'photo-1468581264429-2548ef9eb732', by: 'Thomas Vimare', page: 'body-of-water-under-blue-and-white-sky-at-daytime-IZ01rjX0XQA' },
+    lavanta: { id: 'photo-1600759487717-62bbb608106e', by: 'Antony BEC', page: 'lavender-fields-in-valensole-france-nD9tEn63suc' },
+    gunbatimi: { id: 'photo-1548272475-4a32d90e4f91', by: 'Mikk Tõnissoo', page: 'black-textile-PWf-Dr2qpOo' }
+  };
+  var UTM = '?utm_source=grove&utm_medium=referral';
   var sceneEl = el('div', 'scene'); sceneEl.setAttribute('aria-hidden', 'true'); document.body.insertBefore(sceneEl, document.body.firstChild);
+  var sceneImg = el('img'); sceneImg.alt = ''; sceneImg.decoding = 'async'; sceneImg.crossOrigin = 'anonymous'; sceneImg.referrerPolicy = 'no-referrer';
+  try { sceneImg.fetchPriority = 'low'; } catch (e) {}
+  sceneEl.appendChild(sceneImg);
+  function photoUrl(sk) {   // the exact crop this window needs (rounded so the browser cache is reused), capped at 2× density
+    var dpr = Math.min(window.devicePixelRatio || 1, 2), up = function (v) { return Math.min(2400, Math.max(400, Math.ceil(v * dpr / 200) * 200)); };
+    return 'https://images.unsplash.com/' + (PHOTOS[sk] || PHOTOS.gunduz).id + '?auto=format&fit=crop&q=68&w=' + up(window.innerWidth) + '&h=' + up(window.innerHeight);
+  }
+  sceneImg.addEventListener('load', function () { sceneEl.classList.add('on'); });
+  sceneImg.addEventListener('error', function () { sceneEl.classList.remove('on'); });
   var infoEl = el('div', 'scene-info'); document.body.appendChild(infoEl);
   var infoBtn = el('button', null); infoBtn.type = 'button'; infoEl.appendChild(infoBtn);
   var infoCard = el('div', 'card'); infoCard.hidden = true; infoEl.insertBefore(infoCard, infoBtn);
-  infoBtn.addEventListener('click', function () { infoCard.hidden = !infoCard.hidden; });
+  infoBtn.addEventListener('click', function () { infoCard.hidden = !infoCard.hidden; infoBtn.setAttribute('aria-expanded', infoCard.hidden ? 'false' : 'true'); });
   var shownScene = '';
   function curSkin() { return document.documentElement.getAttribute('data-skin') || 'gunduz'; }
   function renderScene() {
     var on = S.x.scene, sk = curSkin();
     document.documentElement.classList.toggle('has-scene', on);
     infoEl.hidden = !on;
-    if (!on) { sceneEl.classList.remove('on'); return; }
-    if (shownScene !== sk) { sceneEl.innerHTML = sceneSvg(sk); shownScene = sk; }
-    sceneEl.classList.add('on');
+    if (!on) { sceneEl.classList.remove('on'); document.documentElement.classList.remove('photo-on'); return; }
+    if (shownScene !== sk) { sceneEl.classList.remove('on'); document.documentElement.classList.remove('photo-on'); sceneImg.src = photoUrl(sk); shownScene = sk; }
+    else if (sceneImg.complete && sceneImg.naturalWidth) { sceneEl.classList.add('on'); document.documentElement.classList.add('photo-on'); }
     renderSceneInfo();
   }
+  function link(text, href) { var a = el('a'); a.href = href; a.target = '_blank'; a.rel = 'noopener'; a.textContent = text; return a; }
   function renderSceneInfo() {
-    var sc = (raw('scenes') || {})[curSkin()] || ['', ''];
+    var sk = curSkin(), sc = (raw('scenes') || {})[sk] || ['', ''], ph = PHOTOS[sk] || PHOTOS.gunduz;
     infoBtn.innerHTML = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v5"></path><circle cx="12" cy="7.8" r="1" fill="currentColor"></circle></svg>';
-    infoBtn.appendChild(document.createTextNode(sc[0]));
-    infoBtn.title = t('sceneAbout');
+    var tx = el('span', 't'); tx.textContent = sc[0]; infoBtn.appendChild(tx);
+    infoBtn.title = t('sceneAbout'); infoBtn.setAttribute('aria-label', sc[0] + ' – ' + t('sceneAbout')); infoBtn.setAttribute('aria-expanded', infoCard.hidden ? 'false' : 'true');
     infoCard.innerHTML = '';
-    var b = el('b'); b.textContent = sc[0]; var p = el('span'); p.textContent = sc[1]; var sm = el('small'); sm.textContent = t('sceneBy');
+    var b = el('b'); b.textContent = sc[0]; var p = el('span'); p.textContent = sc[1];
+    var sm = el('small'); sm.appendChild(document.createTextNode(t('photoBy') + ' '));
+    sm.appendChild(link(ph.by, 'https://unsplash.com/photos/' + ph.page + UTM)); sm.appendChild(document.createTextNode(' · '));
+    sm.appendChild(link('Unsplash', 'https://unsplash.com/' + UTM));
     infoCard.appendChild(b); infoCard.appendChild(p); infoCard.appendChild(sm);
   }
   document.addEventListener('grove:skin', renderScene);
+  var rsT = 0, lastSize = innerWidth + 'x' + innerHeight;
+  window.addEventListener('resize', function () { clearTimeout(rsT); rsT = setTimeout(function () {
+    var sz = innerWidth + 'x' + innerHeight; if (sz === lastSize || !S.x.scene) return; lastSize = sz;
+    var u = photoUrl(curSkin()); if (u !== sceneImg.src) { var pre = new Image(); pre.crossOrigin = 'anonymous'; pre.referrerPolicy = 'no-referrer'; pre.onload = function () { sceneImg.src = u; }; pre.src = u; }
+  }, 600); });
 
   // ---------------------------------------------------------------- 2048 break game
   var game = { locked: false, msg: null, fresh: -1, merged: [] };
@@ -530,7 +499,7 @@
   }, 1000);
 
   // ---------------------------------------------------------------- leaderboard (Firebase, opt-in)
-  var FB = { apiKey: '', projectId: '' };   // filled in when the Firebase project is ready
+  var FB = { apiKey: 'AIzaSyAIF3uojWiF7VWqIM5YR4XZOuFCHShPwGc', projectId: 'grove-cd0f3' };   // public web config (access is limited by the security rules)
   var LB_ON = !!(FB.apiKey && FB.projectId);
   var lbState = { lastSync: 0, dirty: false, list: null, err: false, busy: false };
   function isoWeek(d) {
@@ -552,11 +521,12 @@
     if (l.idToken && l.exp > Date.now() + 60000) return Promise.resolve(l.idToken);
     var req = l.refresh
       ? fetch('https://securetoken.googleapis.com/v1/token?key=' + FB.apiKey, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: 'grant_type=refresh_token&refresh_token=' + encodeURIComponent(l.refresh) })
-          .then(function (r) { if (!r.ok) throw new Error('refresh'); return r.json(); })
+          .then(function (r) { if (!r.ok) { l.refresh = ''; l.idToken = ''; throw new Error('refresh'); } return r.json(); })
           .then(function (j) { return { idToken: j.id_token, refreshToken: j.refresh_token, localId: j.user_id, expiresIn: j.expires_in }; })
       : fetch('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' + FB.apiKey, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{"returnSecureToken":true}' })
           .then(function (r) { if (!r.ok) throw new Error('signup'); return r.json(); });
-    return req.then(function (j) { l.idToken = j.idToken; l.refresh = j.refreshToken; l.uid = j.localId; l.exp = Date.now() + (+j.expiresIn || 3600) * 1000; A.save(); return l.idToken; });
+    return req.catch(function (e) { if (e.message === 'refresh') return token().then(function () { return { idToken: l.idToken, refreshToken: l.refresh, localId: l.uid, expiresIn: (l.exp - Date.now()) / 1000 }; }); throw e; })
+      .then(function (j) { l.idToken = j.idToken; l.refresh = j.refreshToken; l.uid = j.localId; l.exp = Date.now() + (+j.expiresIn || 3600) * 1000; A.save(); return l.idToken; });
   }
   function api(path, opts) {
     return token().then(function (tk) {
@@ -606,6 +576,7 @@
       f.addEventListener('submit', function (e) {
         e.preventDefault(); var n = inp.value.trim().replace(/\s+/g, ' ');
         if (!NICK.test(n)) { A.toast(t('rankNickBad')); return; }
+        if (isBad(n)) { A.toast(t('rankNickRude')); return; }
         var l = lb(); l.name = n; l.joined = true; l.ms = 0; lbState.dirty = true; A.save();
         lbSync().then(function () { A.toast(t('rankJoined')); lbLoad(); }).catch(function () { A.toast(t('rankErr')); });
         renderRank();
@@ -640,6 +611,128 @@
   document.querySelector('.garden-actions').appendChild(rankBtn);
   rankBtn.addEventListener('click', function () { $('rankSheet').hidden = false; renderRank(); if (LB_ON) lbLoad(); });
   window.addEventListener('pagehide', function () { if (lbState.dirty) lbSync(); });
+
+  // ---------------------------------------------------------------- more strings (background, schedule, nickname)
+  var X2 = {
+    en: { bgTitle: 'Background', bgPlain: 'Plain', bgPhoto: 'Photo', tt: 'Schedule', ttEmpty: 'Nothing planned for this day.', ttAdd: 'Add', ttSubject: 'Subject', ttNow: 'now', ttNext: 'next', ttBad: 'Pick a subject and an end time after the start time.', ttDel: 'Delete', rankNickRude: 'Please choose a friendlier nickname.' },
+    tr: { bgTitle: 'Arka plan', bgPlain: 'Sade', bgPhoto: 'Fotoğraf', tt: 'Ders programı', ttEmpty: 'Bu gün için plan yok.', ttAdd: 'Ekle', ttSubject: 'Ders', ttNow: 'şimdi', ttNext: 'sıradaki', ttBad: 'Bir ders adı yaz ve bitişi başlangıçtan sonra seç.', ttDel: 'Sil', rankNickRude: 'Lütfen daha uygun bir takma ad seç.' },
+    de: { bgTitle: 'Hintergrund', bgPlain: 'Schlicht', bgPhoto: 'Foto', tt: 'Stundenplan', ttEmpty: 'Für diesen Tag ist nichts geplant.', ttAdd: 'Hinzufügen', ttSubject: 'Fach', ttNow: 'jetzt', ttNext: 'als Nächstes', ttBad: 'Gib ein Fach ein und wähle ein Ende nach dem Beginn.', ttDel: 'Löschen', rankNickRude: 'Bitte wähle einen freundlicheren Spitznamen.' },
+    es: { bgTitle: 'Fondo', bgPlain: 'Liso', bgPhoto: 'Foto', tt: 'Horario', ttEmpty: 'Nada planeado para este día.', ttAdd: 'Añadir', ttSubject: 'Asignatura', ttNow: 'ahora', ttNext: 'siguiente', ttBad: 'Escribe una asignatura y elige un final posterior al inicio.', ttDel: 'Eliminar', rankNickRude: 'Elige un apodo más amable, por favor.' },
+    fr: { bgTitle: 'Arrière-plan', bgPlain: 'Uni', bgPhoto: 'Photo', tt: 'Emploi du temps', ttEmpty: 'Rien de prévu ce jour-là.', ttAdd: 'Ajouter', ttSubject: 'Matière', ttNow: 'en cours', ttNext: 'ensuite', ttBad: 'Indique une matière et une fin après le début.', ttDel: 'Supprimer', rankNickRude: 'Choisis un pseudo plus sympathique, s’il te plaît.' },
+    it: { bgTitle: 'Sfondo', bgPlain: 'Semplice', bgPhoto: 'Foto', tt: 'Orario', ttEmpty: 'Niente in programma per questo giorno.', ttAdd: 'Aggiungi', ttSubject: 'Materia', ttNow: 'ora', ttNext: 'dopo', ttBad: 'Scrivi una materia e scegli una fine dopo l’inizio.', ttDel: 'Elimina', rankNickRude: 'Scegli un soprannome più gentile, per favore.' },
+    pt: { bgTitle: 'Fundo', bgPlain: 'Simples', bgPhoto: 'Foto', tt: 'Horário', ttEmpty: 'Nada planejado para este dia.', ttAdd: 'Adicionar', ttSubject: 'Matéria', ttNow: 'agora', ttNext: 'próxima', ttBad: 'Escreva uma matéria e escolha um fim depois do início.', ttDel: 'Excluir', rankNickRude: 'Escolha um apelido mais gentil, por favor.' },
+    ru: { bgTitle: 'Фон', bgPlain: 'Простой', bgPhoto: 'Фото', tt: 'Расписание', ttEmpty: 'На этот день ничего не запланировано.', ttAdd: 'Добавить', ttSubject: 'Предмет', ttNow: 'сейчас', ttNext: 'далее', ttBad: 'Укажите предмет и время окончания позже начала.', ttDel: 'Удалить', rankNickRude: 'Пожалуйста, выберите более дружелюбный ник.' },
+    ja: { bgTitle: '背景', bgPlain: 'シンプル', bgPhoto: '写真', tt: '時間割', ttEmpty: 'この日の予定はありません。', ttAdd: '追加', ttSubject: '科目', ttNow: '今', ttNext: '次', ttBad: '科目名を入力し、終了時刻を開始より後にしてください。', ttDel: '削除', rankNickRude: 'もっと感じのよいニックネームにしてください。' },
+    zh: { bgTitle: '背景', bgPlain: '简洁', bgPhoto: '照片', tt: '课程表', ttEmpty: '这一天没有安排。', ttAdd: '添加', ttSubject: '科目', ttNow: '进行中', ttNext: '下一节', ttBad: '请输入科目，并让结束时间晚于开始时间。', ttDel: '删除', rankNickRude: '请换一个更友好的昵称。' }
+  };
+  Object.keys(X2).forEach(function (c) { if (LANGS[c]) Object.keys(X2[c]).forEach(function (k) { LANGS[c][k] = X2[c][k]; }); });
+
+  document.head.appendChild(el('style', null,
+    '.bgsel{display:grid;grid-template-columns:1fr 1fr;gap:6px}' +
+    '.bgsel button{border:1px solid var(--line);background:var(--bg);color:var(--fg);border-radius:10px;padding:8px 10px;font:inherit;font-size:.84rem;font-weight:600;cursor:pointer}' +
+    '.bgsel button[aria-checked="true"]{border-color:var(--go);box-shadow:inset 0 0 0 1px var(--go)}' +
+    /* clock on photos: a light, lock-screen style face in a colour picked from each photo */
+    'html.photo-on .readout,html.photo-on .pomo-time{font-family:var(--font-ui);font-weight:300;letter-spacing:-.035em;color:var(--clock);text-shadow:0 2px 28px var(--clock-glow)}' +
+    'html.photo-on .readout .frac{color:var(--clock);opacity:.72}html.photo-on .status,html.photo-on .keys{text-shadow:0 1px 8px var(--clock-glow)}' +
+    ':root[data-skin="gunduz"]{--clock:#103B2C;--clock-glow:rgb(255 255 255/.6)}:root[data-skin="okyanus"]{--clock:#0D3550;--clock-glow:rgb(255 255 255/.6)}' +
+    ':root[data-skin="lavanta"]{--clock:#3A2368;--clock-glow:rgb(255 255 255/.55)}:root[data-skin="gece"]{--clock:#F3F0FF;--clock-glow:rgb(20 10 60/.6)}' +
+    ':root[data-skin="orman"]{--clock:#EEF4EA;--clock-glow:rgb(5 20 10/.7)}:root[data-skin="gunbatimi"]{--clock:#FFF2E4;--clock-glow:rgb(60 20 10/.55)}' +
+    '.tt-days{display:flex;gap:4px;margin-top:14px;overflow-x:auto;padding-bottom:2px}' +
+    '.tt-days button{flex:1 0 auto;min-width:44px;border:1px solid var(--line);background:var(--bg);color:var(--fg);border-radius:999px;padding:6px 8px;font:inherit;font-size:.8rem;font-weight:600;cursor:pointer}' +
+    '.tt-days button[aria-pressed="true"]{background:var(--go);color:var(--go-fg);border-color:transparent}.tt-days button.today{border-color:var(--go)}' +
+    '.tt-list{list-style:none;margin:12px 0 0;padding:0;max-height:min(40vh,320px);overflow:auto}' +
+    '.tt-list li{display:grid;grid-template-columns:auto 1fr auto auto;gap:10px;align-items:center;padding:9px 4px;border-bottom:1px solid var(--line);font-size:.92rem}' +
+    '.tt-list .tm{font-family:var(--font-digits);font-size:.82rem;color:var(--muted)}.tt-list .tag{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--go)}' +
+    '.tt-list li.now{background:color-mix(in srgb,var(--go) 12%,transparent);border-radius:10px}.tt-list .x{border:0;background:transparent;color:var(--muted);font-size:1.1rem;cursor:pointer;padding:2px 6px;border-radius:6px}' +
+    '.tt-form{display:grid;grid-template-columns:1fr 1fr auto;gap:6px;margin-top:12px;align-items:center}.tt-form .sub{grid-column:1/-1}' +
+    '.tt-form input{min-width:0;padding:9px 10px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--fg);font:inherit;font-size:.88rem}' +
+    '@media (max-width:520px){.tt-form{grid-template-columns:1fr 1fr}.tt-form button{grid-column:1/-1}}'));
+
+  // ---------------------------------------------------------------- background picker in the theme menu
+  var bgWrap = el('div'); var bgT = el('p', 'menu-title menu-gap'); bgT.setAttribute('data-x', 'bgTitle'); bgWrap.appendChild(bgT);
+  var bgSel = el('div', 'bgsel'); bgSel.setAttribute('role', 'radiogroup'); bgWrap.appendChild(bgSel);
+  ['plain', 'photo'].forEach(function (v) {
+    var b = el('button'); b.type = 'button'; b.setAttribute('role', 'radio'); b.setAttribute('data-bg', v); b.setAttribute('data-x', v === 'plain' ? 'bgPlain' : 'bgPhoto');
+    b.addEventListener('click', function () { S.x.scene = v === 'photo'; A.save(); if (rows.scene) rows.scene.input.checked = S.x.scene; renderScene(); renderBgSel(); });
+    bgSel.appendChild(b);
+  });
+  var langTitle = document.querySelector('#themeMenu [data-i18n="menuLang"]');
+  langTitle.parentNode.insertBefore(bgWrap, langTitle);
+  function renderBgSel() { bgSel.querySelectorAll('button').forEach(function (b) { b.setAttribute('aria-checked', (b.getAttribute('data-bg') === 'photo') === !!S.x.scene ? 'true' : 'false'); }); }
+  rows.scene.input.addEventListener('change', renderBgSel);
+  sceneImg.addEventListener('load', function () { document.documentElement.classList.toggle('photo-on', !!S.x.scene); });
+  sceneImg.addEventListener('error', function () { document.documentElement.classList.remove('photo-on'); });
+  document.addEventListener('grove:skin', function () { if (!sceneEl.classList.contains('on')) document.documentElement.classList.remove('photo-on'); });
+
+  // ---------------------------------------------------------------- weekly schedule (kept on this device)
+  if (!S.x.tt || typeof S.x.tt !== 'object') S.x.tt = {};
+  var ttDay = ((new Date().getDay() + 6) % 7) + 1;   // 1 = Monday … 7 = Sunday
+  var ttSh = sheet('ttSheet');
+  function hm(s) { var p = String(s || '').split(':'); return (+p[0]) * 60 + (+p[1] || 0); }
+  function dayName(d) { var base = new Date(2024, 0, d); return base.toLocaleDateString(A.locale(), { weekday: 'short' }); }   // 2024-01-01 was a Monday
+  function renderTT() {
+    ttSh.innerHTML = '';
+    var head = el('div', 'g-head'), h2 = el('h2'); h2.textContent = t('tt'); head.appendChild(h2); ttSh.appendChild(head);
+    var days = el('div', 'tt-days'), today = ((new Date().getDay() + 6) % 7) + 1;
+    for (var d = 1; d <= 7; d++) (function (d) {
+      var b = el('button', d === today ? 'today' : ''); b.type = 'button'; b.textContent = dayName(d); b.setAttribute('aria-pressed', d === ttDay ? 'true' : 'false');
+      b.addEventListener('click', function () { ttDay = d; renderTT(); }); days.appendChild(b);
+    })(d);
+    ttSh.appendChild(days);
+    var list = (S.x.tt[ttDay] || []).slice().sort(function (a, b) { return hm(a.s) - hm(b.s); });
+    if (!list.length) { var e = el('p', 'rk-note'); e.textContent = t('ttEmpty'); ttSh.appendChild(e); }
+    else {
+      var now = new Date(), mins = now.getHours() * 60 + now.getMinutes(), isToday = ttDay === today, nextDone = false;
+      var ul = el('ul', 'tt-list');
+      list.forEach(function (it) {
+        var cur = isToday && hm(it.s) <= mins && mins < hm(it.e), nxt = isToday && !cur && !nextDone && hm(it.s) > mins;
+        if (nxt) nextDone = true;
+        var li = el('li', cur ? 'now' : ''), tm = el('span', 'tm'), nm = el('span'), tag = el('span', 'tag'), x = el('button', 'x');
+        tm.textContent = it.s + '–' + it.e; nm.textContent = it.n; tag.textContent = cur ? t('ttNow') : nxt ? t('ttNext') : '';
+        x.type = 'button'; x.textContent = '×'; x.setAttribute('aria-label', t('ttDel') + ': ' + it.n);
+        x.addEventListener('click', function () { var arr = S.x.tt[ttDay] || []; var i = arr.indexOf(it); if (i >= 0) arr.splice(i, 1); A.save(); renderTT(); });
+        li.appendChild(tm); li.appendChild(nm); li.appendChild(tag); li.appendChild(x); ul.appendChild(li);
+      });
+      ttSh.appendChild(ul);
+    }
+    var f = el('form', 'tt-form'), s1 = el('input'), s2 = el('input'), sub = el('input', 'sub');
+    s1.type = 'time'; s2.type = 'time'; s1.required = s2.required = true; sub.maxLength = 40; sub.placeholder = t('ttSubject'); sub.setAttribute('aria-label', t('ttSubject'));
+    var last = list.length ? list[list.length - 1].e : '09:00'; s1.value = last; s2.value = (function () { var m = Math.min(hm(last) + 40, 23 * 60 + 59); return ('0' + Math.floor(m / 60)).slice(-2) + ':' + ('0' + m % 60).slice(-2); })();
+    f.appendChild(sub); f.appendChild(s1); f.appendChild(s2); var ab = btn(t('ttAdd'), null, 'primary'); ab.type = 'submit'; f.appendChild(ab);
+    f.addEventListener('submit', function (e) {
+      e.preventDefault(); var n = sub.value.trim().replace(/\s+/g, ' ');
+      if (!n || !s1.value || !s2.value || hm(s2.value) <= hm(s1.value)) { A.toast(t('ttBad')); return; }
+      (S.x.tt[ttDay] = S.x.tt[ttDay] || []).push({ s: s1.value, e: s2.value, n: n.slice(0, 40) }); A.save(); renderTT();
+      var ni = ttSh.querySelector('.tt-form .sub'); if (ni) ni.focus();
+    });
+    ttSh.appendChild(f);
+    var act = el('div', 'sheet-actions'); act.appendChild(el('span')); act.appendChild(btn(t('close'), function () { $('ttSheet').hidden = true; })); ttSh.appendChild(act);
+  }
+  var ttBtn = el('button', 'act-btn', '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M3 10h18M8 3v4M16 3v4"></path></svg><span></span>');
+  ttBtn.type = 'button'; ttBtn.id = 'ttBtn';
+  document.querySelector('.garden-actions').insertBefore(ttBtn, rankBtn);
+  ttBtn.addEventListener('click', function () { $('ttSheet').hidden = false; renderTT(); });
+  window.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !$('ttSheet').hidden) { $('ttSheet').hidden = true; e.stopImmediatePropagation(); } }, true);
+  function applyText2() { ttBtn.lastChild.textContent = t('tt'); renderBgSel(); if (!$('ttSheet').hidden) renderTT(); }
+  document.addEventListener('grove:lang', applyText2);
+
+  // ---------------------------------------------------------------- nickname filter (also enforced by the server rules)
+  var BAD_SUB = ['orospu', 'siktir', 'sikerim', 'sikeyim', 'sikis', 'yarrak', 'pezevenk', 'kahpe', 'gavat', 'amcik', 'aminako', 'aminakoy', 'ananisik', 'anasinisik', 'gotveren', 'kaltak', 'serefsiz', 'yavsak', 'gerizekali', 'fuck', 'bitch', 'nigger', 'nigga', 'faggot', 'whore', 'slut', 'asshole', 'pussy', 'bastard', 'motherf', 'retard', 'rapist', 'hitler', 'scheisse', 'arschloch', 'hurensohn', 'fotze', 'wichser', 'schlampe', 'missgeburt', 'mierda', 'cabron', 'pendejo', 'gilipollas', 'maricon', 'chinga', 'putain', 'salope', 'connard', 'connasse', 'encule', 'cazzo', 'stronzo', 'vaffanculo', 'puttana', 'frocio', 'minchia', 'caralho', 'buceta', 'arrombado', 'хуй', 'хуе', 'хуё', 'пизд', 'ебат', 'ебан', 'ебал', 'бляд', 'мудак', 'пидор', 'пидар', 'залуп', 'гандон', 'まんこ', 'ちんこ', '死ね', '操你', '傻逼', '他妈', '妈的', '屄', '鸡巴'];
+  var BAD_TOKEN = ['ibne', 'nazi', 'shit', 'cunt', 'сука', 'sik', 'sikik', 'am', 'amk', 'aq', 'oc', 'pic', 'got', 'puta', 'puto', 'merde', 'porra', 'foda', 'viado', 'troia', 'verga', 'cono', 'nique', 'batard', 'dick', 'cock', 'fag', 'cum', 'tits', 'ass', 'admin', 'moderator', 'yonetici'];
+  var LEET = { '0': 'o', '1': 'i', '3': 'e', '4': 'a', '5': 's', '7': 't', '8': 'b', '@': 'a', '$': 's', '!': 'i' };
+  var TRMAP = { 'ı': 'i', 'İ': 'i', 'ğ': 'g', 'ü': 'u', 'ş': 's', 'ö': 'o', 'ç': 'c', 'â': 'a', 'î': 'i', 'û': 'u', 'ñ': 'n', 'ß': 'ss' };
+  function normNick(s) {
+    s = String(s).toLowerCase().replace(/[ıİğüşöçâîûñß]/g, function (c) { return TRMAP[c] || c; });
+    s = s.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[0134578@$!]/g, function (c) { return LEET[c] || c; });
+    return s;
+  }
+  function isBad(name) {
+    var n = normNick(name), tokens = n.split(/[^\p{L}\p{N}]+/u).filter(Boolean);
+    var joined = tokens.join('').replace(/(.)\1+/g, '$1'), joinedRaw = tokens.join('');
+    if (BAD_SUB.some(function (w) { var ww = w.replace(/(.)\1+/g, '$1'); return joined.indexOf(ww) >= 0 || joinedRaw.indexOf(w) >= 0; })) return true;
+    return tokens.some(function (tk) { var c = tk.replace(/(.)\1+/g, '$1'); return BAD_TOKEN.indexOf(tk) >= 0 || BAD_TOKEN.indexOf(c) >= 0; });
+  }
+  window.__groveNickBad = isBad;
 
   // ---------------------------------------------------------------- boot
   applyText(); renderScene(); renderGameBtn();
