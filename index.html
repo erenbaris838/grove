@@ -522,7 +522,7 @@ kbd { font-family: var(--font-digits); font-size: .72rem; padding: 2px 6px; marg
   <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="aboutTitle">
     <div class="sheet-head">
       <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="13" fill="none" stroke="var(--go)" stroke-width="2.6"></circle><path d="M16 23v-8" stroke="var(--trunk)" stroke-width="2.4" stroke-linecap="round"></path><path d="M16 16c-1-4-4-5.5-7-5 0 3.4 2.6 5.6 7 5z" fill="var(--leaf)"></path><path d="M16 14.5c.6-4.2 3.6-6.2 7-6-.2 3.8-3 6.2-7 6z" fill="var(--leaf2)"></path></svg>
-      <div><h2 id="aboutTitle">Grove</h2><p class="ver" data-i18n="aboutVer">Focus timer · Version 1.2.0</p></div>
+      <div><h2 id="aboutTitle">Grove</h2><p class="ver" data-i18n="aboutVer">Focus timer · Version 1.3.0</p></div>
     </div>
     <p data-i18n="aboutText">Work with a stopwatch or Pomodoro.</p>
     <div class="about-links">
@@ -564,7 +564,7 @@ kbd { font-family: var(--font-digits); font-size: .72rem; padding: 2px 6px; marg
   var KEY = 'grove-v1', OLD_KEYS = ['filiz-v1', 'barisin-saati-v2'];
 
   // ---------- strings (see lang.js) ----------
-  var VERSION = '1.2.0';
+  var VERSION = '1.3.0';
   var T = window.GROVE_LANGS || {};
   var LANGS = Object.keys(T);
   var L = 'en', plural = null;
@@ -582,6 +582,7 @@ kbd { font-family: var(--font-digits); font-size: .72rem; padding: 2px 6px; marg
     return v;
   }
   function locale() { return raw('_locale') || 'en-US'; }
+  function emit(name, detail) { try { document.dispatchEvent(new CustomEvent('grove:' + name, { detail: detail })); } catch (e) {} }
 
   var SKINS = [
     { id: 'gunduz', dark: false, c: ['#F1F4F2', '#1E6B57', '#3F8F5A'] },
@@ -659,6 +660,7 @@ kbd { font-family: var(--font-digits); font-size: .72rem; padding: 2px 6px; marg
     }
     if (o.rate && typeof o.rate === 'object') S.rate = { later: num(o.rate.later, 0), done: !!o.rate.done };
     if (typeof o.seen === 'string') S.seen = o.seen;
+    if (o.x && typeof o.x === 'object') S.x = o.x;   // settings and state owned by extras.js
     S.hadData = true;
   }
   function save() {
@@ -737,7 +739,7 @@ kbd { font-family: var(--font-digits); font-size: .72rem; padding: 2px 6px; marg
   function setLang(l) {
     S.lang = l; applyLang();
     renderSwControls(); renderLaps(); renderPomo(); shownTrees = -1; renderForest(); shownWeek = ''; renderWeek(); renderGrow();
-    renderRate(); if (!$('stats').hidden) renderStats();
+    renderRate(); if (!$('stats').hidden) renderStats(); emit('lang');
     save();
   }
   LANGS.forEach(function (code) {
@@ -769,7 +771,7 @@ kbd { font-family: var(--font-digits); font-size: .72rem; padding: 2px 6px; marg
     $('modeIcon').innerHTML = sk.dark ? SUN : MOON;
     updateModeLabel();
     qsa('.skin').forEach(function (b) { b.setAttribute('aria-checked', b.getAttribute('data-skin') === sk.id ? 'true' : 'false'); });
-    shownKey = ''; renderGrow();
+    shownKey = ''; renderGrow(); emit('skin', sk);
   }
   function setSkin(id) { S.skin = id; applySkin(); save(); }
   function toggleLightDark() { var sk = skinById(S.skin); setSkin(sk && sk.dark ? 'gunduz' : 'gece'); }
@@ -885,7 +887,7 @@ kbd { font-family: var(--font-digits); font-size: .72rem; padding: 2px 6px; marg
     workTick();
     if (S.sw.running) { S.sw.acc = swElapsed(); S.sw.running = false; }
     else { S.sw.startAt = Date.now(); S.sw.running = true; }
-    save(); renderSwControls(); kick(); syncWake(); renderGrow();
+    save(); renderSwControls(); kick(); syncWake(); renderGrow(); emit('timer');
   }
   function swLap() {
     if (!S.sw.running) return;
@@ -895,7 +897,7 @@ kbd { font-family: var(--font-digits); font-size: .72rem; padding: 2px 6px; marg
   function swReset() {
     workTick();
     S.sw = { running: false, startAt: 0, acc: 0, laps: [] };
-    save(); renderSwControls(); renderLaps(); paintSw(); syncWake(); renderGrow();
+    save(); renderSwControls(); renderLaps(); paintSw(); syncWake(); renderGrow(); emit('timer');
   }
   $('swMainBtn').addEventListener('click', swToggle);
   $('swSec').addEventListener('click', function () { if (S.sw.running) swLap(); else swReset(); });
@@ -959,13 +961,13 @@ kbd { font-family: var(--font-digits); font-size: .72rem; padding: 2px 6px; marg
   function setMode(m) {
     workTick();
     S.pomo.mode = m; S.pomo.running = false; S.pomo.remaining = dur(m);
-    save(); renderPomo(); schedulePomo(); syncWake(); renderGrow();
+    save(); renderPomo(); schedulePomo(); syncWake(); renderGrow(); emit('timer');
   }
   function pomoToggle() {
     workTick();
     if (S.pomo.running) { S.pomo.remaining = pomoLeft(); S.pomo.running = false; }
     else startPomo();
-    save(); renderPomo(); schedulePomo(); kick(); syncWake(); renderGrow();
+    save(); renderPomo(); schedulePomo(); kick(); syncWake(); renderGrow(); emit('timer');
   }
   function pomoReset() { setMode(S.pomo.mode); }
   function pomoSkip() {
@@ -989,6 +991,7 @@ kbd { font-family: var(--font-digits); font-size: .72rem; padding: 2px 6px; marg
     if (S.settings.auto && silent !== true) startPomo();
     if (silent !== true) { toast(msg); chime(); notify(msg); }
     save(); renderPomo(); schedulePomo(); syncWake(); kick(); renderGrow();
+    emit('pomo', { from: was, to: S.pomo.mode, running: S.pomo.running, silent: silent === true });
   }
   $('pomoMain').addEventListener('click', pomoToggle);
   $('pomoReset').addEventListener('click', pomoReset);
@@ -1193,6 +1196,7 @@ kbd { font-family: var(--font-digits); font-size: .72rem; padding: 2px 6px; marg
     return true;
   }
   function addWork(d, quiet) {
+    emit('work', { d: d, quiet: !!quiet });
     S.work.ms += d;
     var T0 = ensureTotals();
     T0.ms += d;
@@ -1235,7 +1239,7 @@ kbd { font-family: var(--font-digits); font-size: .72rem; padding: 2px 6px; marg
     var gap = now - seen, credit = 0;
     if (S.sw.running) credit = gap;
     if (S.pomo.running && S.pomo.mode === 'focus' && S.pomo.endAt > seen) credit = Math.max(credit, Math.min(gap, S.pomo.endAt - seen));
-    credit = Math.min(credit, 12 * HOUR);
+    credit = Math.min(credit, 3 * HOUR);
     if (credit < 1000) return;
     var grew = addWork(credit, true);
     if (grew) setTimeout(function () { toast(t('tAway', grew)); celebrate(); }, 900);
@@ -1265,7 +1269,7 @@ kbd { font-family: var(--font-digits); font-size: .72rem; padding: 2px 6px; marg
     if (e.metaKey || e.ctrlKey || e.altKey) return;
     var tag = e.target && e.target.tagName, k = e.key, c = e.code;
     if (k === 'Escape') { openMenu(false); if (!$('about').hidden) openAbout(false); if (!$('stats').hidden) openStats(false); return; }
-    if (!$('about').hidden || !$('stats').hidden) return;
+    if (document.querySelector('.overlay:not([hidden])')) return;
     if (tag === 'INPUT' || tag === 'TEXTAREA') return;
     var onBtn = tag === 'BUTTON' || tag === 'SUMMARY';
     if (e.repeat) { if (k === ' ') e.preventDefault(); return; }
@@ -1560,7 +1564,29 @@ kbd { font-family: var(--font-digits); font-size: .72rem; padding: 2px 6px; marg
   checkPomo(true);
   kick(); syncWake();
   save();
+
+  // Remove the last `ms` of counted focus time and stop running timers (used by "Are you there?" checks).
+  function rewind(ms) {
+    workTick();
+    if (S.sw.running) { S.sw.acc = Math.max(0, swElapsed() - ms); S.sw.running = false; }
+    if (S.pomo.running) { S.pomo.remaining = Math.min(dur(S.pomo.mode), pomoLeft() + (S.pomo.mode === 'focus' ? ms : 0)); S.pomo.running = false; }
+    var take = Math.min(ms, S.work.ms), tt = ensureTotals();
+    S.work.ms -= take; tt.ms = Math.max(0, tt.ms - take);
+    var keep = Math.floor(S.work.ms / HOUR);
+    while (S.work.trees.length > keep) { S.work.trees.pop(); tt.trees = Math.max(0, tt.trees - 1); }
+    lastWork = Date.now(); shownTrees = -1;
+    renderForest(); renderSwControls(); renderLaps(); renderPomo(); schedulePomo(); syncWake(); renderGrow(); renderWeek(); save();
+    emit('timer'); emit('rewind', { ms: take });
+    return take;
+  }
+  window.GroveApp = {
+    S: S, save: save, t: t, raw: raw, locale: locale, fmtDur: fmtDur, fmtClock: fmtClock, toast: toast, chime: chime, notify: notify,
+    ensureAudio: ensureAudio, isWorking: isWorking, swToggle: swToggle, pomoToggle: pomoToggle, setMode: setMode, setTab: setTab,
+    pomoLeft: pomoLeft, swElapsed: swElapsed, rewind: rewind, todayKey: todayKey, version: VERSION, canNotify: canNotify
+  };
+  emit('ready');
 })();
 </script>
+<script src="extras.js"></script>
 
 </body></html>

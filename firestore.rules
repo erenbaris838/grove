@@ -1,0 +1,27 @@
+rules_version = '2';
+// Grove weekly leaderboard. Each player can only write their own entry, and the
+// server refuses more focus time than has really passed since the last update.
+service cloud.firestore {
+  match /databases/{db}/documents {
+    match /lb/{week}/players/{uid} {
+      function valid() {
+        let d = request.resource.data;
+        return week.matches('^[0-9]{4}-W[0-9]{2}$')
+          && d.keys().hasOnly(['name', 'ms', 'trees', 'updatedAt', 'expireAt'])
+          && d.name is string && d.name.size() >= 2 && d.name.size() <= 20
+          && d.ms is int && d.ms >= 0 && d.ms <= 403200000          // at most 16 h a day for a week
+          && d.trees is int && d.trees >= 0 && d.trees <= 500
+          && d.updatedAt == request.time
+          && d.expireAt is timestamp;
+      }
+      allow read: if true;
+      allow create: if request.auth != null && request.auth.uid == uid
+        && valid() && request.resource.data.ms <= 600000;
+      allow update: if request.auth != null && request.auth.uid == uid
+        && valid()
+        && request.resource.data.ms <= resource.data.ms
+             + (request.time.toMillis() - resource.data.updatedAt.toMillis()) + 120000;
+      allow delete: if request.auth != null && request.auth.uid == uid;
+    }
+  }
+}
