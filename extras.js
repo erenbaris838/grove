@@ -715,6 +715,7 @@
   window.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !$('ttSheet').hidden) { $('ttSheet').hidden = true; e.stopImmediatePropagation(); } }, true);
   function applyText2() { ttBtn.lastChild.textContent = t('tt'); renderBgSel(); if (!$('ttSheet').hidden) renderTT(); }
   document.addEventListener('grove:lang', applyText2);
+  applyText2();
 
   // ---------------------------------------------------------------- nickname filter (also enforced by the server rules)
   var BAD_SUB = ['orospu', 'siktir', 'sikerim', 'sikeyim', 'sikis', 'yarrak', 'pezevenk', 'kahpe', 'gavat', 'amcik', 'aminako', 'aminakoy', 'ananisik', 'anasinisik', 'gotveren', 'kaltak', 'serefsiz', 'yavsak', 'gerizekali', 'fuck', 'bitch', 'nigger', 'nigga', 'faggot', 'whore', 'slut', 'asshole', 'pussy', 'bastard', 'motherf', 'retard', 'rapist', 'hitler', 'scheisse', 'arschloch', 'hurensohn', 'fotze', 'wichser', 'schlampe', 'missgeburt', 'mierda', 'cabron', 'pendejo', 'gilipollas', 'maricon', 'chinga', 'putain', 'salope', 'connard', 'connasse', 'encule', 'cazzo', 'stronzo', 'vaffanculo', 'puttana', 'frocio', 'minchia', 'caralho', 'buceta', 'arrombado', 'хуй', 'хуе', 'хуё', 'пизд', 'ебат', 'ебан', 'ебал', 'бляд', 'мудак', 'пидор', 'пидар', 'залуп', 'гандон', 'まんこ', 'ちんこ', '死ね', '操你', '傻逼', '他妈', '妈的', '屄', '鸡巴'];
