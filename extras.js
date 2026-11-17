@@ -79,7 +79,7 @@
       sceneAbout: '关于这张图片', photoBy: '摄影：',
       scenes: { gunduz: ['绿色山丘', '明亮夏日天空下起伏的草地。'], gece: ['星空山峰', '银河下的雪山。'], orman: ['雾中森林', '消失在晨雾中的松树。'], okyanus: ['平静的海', '海天相接的宁静地平线。'], lavanta: ['瓦朗索勒，法国', '普罗旺斯的一排排薰衣草。'], gunbatimi: ['沙漠沙丘', '一天最后的光线中的沙脊。'] } }
   };
-  var WN = { en: 'New in Grove: a 2048 break game, theme scenery and a settings panel 🌱', tr: 'Grove’da yeni: 2048 mola oyunu, tema manzaraları ve ayarlar paneli 🌱', de: 'Neu in Grove: 2048-Pausenspiel, Landschaften zu den Designs und Einstellungen 🌱', es: 'Novedades en Grove: juego 2048 para descansos, paisajes en los temas y panel de ajustes 🌱', fr: 'Nouveau dans Grove : jeu 2048 pour les pauses, paysages et panneau de réglages 🌱', it: 'Novità in Grove: gioco 2048 per le pause, paesaggi nei temi e pannello impostazioni 🌱', pt: 'Novidades no Grove: jogo 2048 nas pausas, paisagens nos temas e painel de configurações 🌱', ru: 'Новое в Grove: игра 2048 на перерыв, пейзажи для тем и панель настроек 🌱', ja: 'Grove の新機能：休憩用2048ゲーム、テーマの風景、設定パネル 🌱', zh: 'Grove 新功能：休息小游戏 2048、主题风景和设置面板 🌱' };
+  var WN = { en: 'New in Grove: real photo themes, a tree that grows in 8 stages, a work plan and a history calendar 🌱', tr: 'Grove’da yeni: gerçek fotoğraflı temalar, 8 aşamada büyüyen ağaç, çalışma programı ve geçmiş takvimi 🌱', de: 'Neu in Grove: echte Fotos, ein Baum mit 8 Stufen, Arbeitsplan und Verlaufskalender 🌱', es: 'Novedades en Grove: fotos reales, un árbol en 8 etapas, plan de trabajo y calendario de historial 🌱', fr: 'Nouveau dans Grove : vraies photos, un arbre en 8 étapes, planning et calendrier d’historique 🌱', it: 'Novità in Grove: foto vere, un albero in 8 fasi, piano di lavoro e calendario della cronologia 🌱', pt: 'Novidades no Grove: fotos reais, uma árvore em 8 etapas, plano de trabalho e calendário de histórico 🌱', ru: 'Новое в Grove: настоящие фото, дерево с 8 стадиями, план работы и календарь истории 🌱', ja: 'Grove の新機能：本物の写真、8段階で育つ木、作業スケジュール、履歴カレンダー 🌱', zh: 'Grove 新功能：真实照片、八个阶段成长的树、工作计划和历史日历 🌱' };
   Object.keys(WN).forEach(function (c) { X[c].whatsNew = WN[c]; });
   var LANGS = window.GROVE_LANGS || {};
   Object.keys(X).forEach(function (c) { if (LANGS[c]) Object.keys(X[c]).forEach(function (k) { LANGS[c][k] = X[c][k]; }); });
@@ -116,7 +116,12 @@
     '.sw-row:last-child{border-bottom:0}.sw-row input{appearance:none;-webkit-appearance:none;flex:none;width:40px;height:23px;border-radius:999px;background:var(--line);position:relative;cursor:pointer;transition:background .2s;margin:0}' +
     '.sw-row input::after{content:"";position:absolute;top:3px;left:3px;width:17px;height:17px;border-radius:50%;background:#fff;transition:transform .2s;box-shadow:0 1px 2px rgb(0 0 0/.3)}' +
     '.sw-row input:checked{background:var(--go)}.sw-row input:checked::after{transform:translateX(17px)}' +
-    '#setSheet .set-grid{padding:0}#setSheet .checks{display:none}' +
+    '#setSheet .checks{display:none}' +
+    '.pomo-set{width:min(100%,380px);padding:0;gap:8px}.pomo-set .stepper{position:relative;padding:6px 4px 7px;gap:3px;border-radius:12px;transition:border-color .2s,background .2s}' +
+    '.pomo-set .stepper .lbl{font-size:.72rem}.pomo-set .stepper .lbl:last-child{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}' +
+    '.pomo-set .stepper button{width:26px;height:26px;font-size:.95rem}.pomo-set .stepper output{font-size:.98rem}' +
+    '.pomo-set .stepper.cur{border-color:color-mix(in srgb,var(--go) 55%,var(--line));background:color-mix(in srgb,var(--go) 7%,transparent)}.pomo-set .stepper.cur .lbl{color:var(--go)}' +
+    'html.has-scene .pomo-set .stepper{background:color-mix(in srgb,var(--bg) 70%,transparent);backdrop-filter:blur(6px)}html.has-scene .pomo-set .stepper.cur{background:color-mix(in srgb,var(--bg) 82%,var(--go) 8%)}' +
     '.g-head{display:flex;align-items:center;justify-content:space-between;gap:10px}.g-head h2{margin:0;font-size:1.3rem}' +
     '.g-sub{color:var(--muted);font-size:.85rem;margin-top:2px;min-height:1.2em}' +
     '.g-scores{display:flex;gap:8px}.g-scores div{background:var(--surface);border-radius:10px;padding:4px 10px;text-align:center;min-width:64px}' +
@@ -172,7 +177,9 @@
     var h = el('div', 'g-head'); var h2 = el('h2', null, ''); h2.className = 'plain'; h2.id = 'setTitle'; h.appendChild(h2);
     setSh.appendChild(h);
     function sec(titleKey) { var d = el('div', 'set-sec'); var p = el('p', 'menu-title'); p.setAttribute('data-x', titleKey); d.appendChild(p); setSh.appendChild(d); return d; }
-    var s1 = sec('secTimer'); s1.appendChild(setGrid);
+    var s1 = sec('secTimer');
+    // the duration steppers live right under the Pomodoro clock instead
+    setGrid.classList.add('pomo-set'); var ring = document.querySelector('#pomo .ring'); ring.parentNode.insertBefore(setGrid, ring.nextSibling);
     // reuse the original checkboxes (their handlers live in the main app) as switch rows
     [['soundChk', 'optSound'], ['autoChk', 'optAuto'], ['notifyChk', 'optNotify']].forEach(function (p) {
       var inp = $(p[0]); if (!inp) return; var lab = inp.closest('label');
@@ -251,7 +258,14 @@
     document.documentElement.classList.toggle('has-scene', on);
     infoEl.hidden = !on;
     if (!on) { sceneEl.classList.remove('on'); document.documentElement.classList.remove('photo-on'); return; }
-    if (shownScene !== sk) { sceneEl.classList.remove('on'); document.documentElement.classList.remove('photo-on'); sceneImg.src = photoUrl(sk); shownScene = sk; }
+    if (shownScene !== sk) {
+      var next = photoUrl(sk), had = sceneEl.classList.contains('on'); shownScene = sk;
+      if (!had) { sceneImg.src = next; }
+      else {   // keep the current photo until the next one is decoded, so switching themes never flashes or stutters
+        var pre = new Image(); pre.crossOrigin = 'anonymous'; pre.referrerPolicy = 'no-referrer'; pre.src = next;
+        (pre.decode ? pre.decode() : Promise.resolve()).then(function () { if (shownScene === sk) sceneImg.src = next; }, function () { if (shownScene === sk) sceneImg.src = next; });
+      }
+    }
     else if (sceneImg.complete && sceneImg.naturalWidth) { sceneEl.classList.add('on'); document.documentElement.classList.add('photo-on'); }
     renderSceneInfo();
   }
@@ -483,6 +497,8 @@
     }
     wasRunning = anyRunning();
   });
+  function markCurStepper() { document.querySelectorAll('.pomo-set .stepper').forEach(function (st) { st.classList.toggle('cur', st.getAttribute('data-key') === S.pomo.mode); }); }
+  document.addEventListener('grove:timer', markCurStepper); document.addEventListener('grove:pomo', markCurStepper);
   document.addEventListener('grove:lang', applyText);
 
   setInterval(function () {
@@ -616,16 +632,16 @@
 
   // ---------------------------------------------------------------- more strings (background, schedule, nickname)
   var X2 = {
-    en: { bgTitle: 'Background', bgPlain: 'Plain', bgPhoto: 'Photo', tt: 'Schedule', ttEmpty: 'Nothing planned for this day.', ttAdd: 'Add', ttSubject: 'Subject', ttNow: 'now', ttNext: 'next', ttBad: 'Pick a subject and an end time after the start time.', ttDel: 'Delete', rankNickRude: 'Please choose a friendlier nickname.' },
-    tr: { bgTitle: 'Arka plan', bgPlain: 'Sade', bgPhoto: 'Fotoğraf', tt: 'Ders programı', ttEmpty: 'Bu gün için plan yok.', ttAdd: 'Ekle', ttSubject: 'Ders', ttNow: 'şimdi', ttNext: 'sıradaki', ttBad: 'Bir ders adı yaz ve bitişi başlangıçtan sonra seç.', ttDel: 'Sil', rankNickRude: 'Lütfen daha uygun bir takma ad seç.' },
-    de: { bgTitle: 'Hintergrund', bgPlain: 'Schlicht', bgPhoto: 'Foto', tt: 'Stundenplan', ttEmpty: 'Für diesen Tag ist nichts geplant.', ttAdd: 'Hinzufügen', ttSubject: 'Fach', ttNow: 'jetzt', ttNext: 'als Nächstes', ttBad: 'Gib ein Fach ein und wähle ein Ende nach dem Beginn.', ttDel: 'Löschen', rankNickRude: 'Bitte wähle einen freundlicheren Spitznamen.' },
-    es: { bgTitle: 'Fondo', bgPlain: 'Liso', bgPhoto: 'Foto', tt: 'Horario', ttEmpty: 'Nada planeado para este día.', ttAdd: 'Añadir', ttSubject: 'Asignatura', ttNow: 'ahora', ttNext: 'siguiente', ttBad: 'Escribe una asignatura y elige un final posterior al inicio.', ttDel: 'Eliminar', rankNickRude: 'Elige un apodo más amable, por favor.' },
-    fr: { bgTitle: 'Arrière-plan', bgPlain: 'Uni', bgPhoto: 'Photo', tt: 'Emploi du temps', ttEmpty: 'Rien de prévu ce jour-là.', ttAdd: 'Ajouter', ttSubject: 'Matière', ttNow: 'en cours', ttNext: 'ensuite', ttBad: 'Indique une matière et une fin après le début.', ttDel: 'Supprimer', rankNickRude: 'Choisis un pseudo plus sympathique, s’il te plaît.' },
-    it: { bgTitle: 'Sfondo', bgPlain: 'Semplice', bgPhoto: 'Foto', tt: 'Orario', ttEmpty: 'Niente in programma per questo giorno.', ttAdd: 'Aggiungi', ttSubject: 'Materia', ttNow: 'ora', ttNext: 'dopo', ttBad: 'Scrivi una materia e scegli una fine dopo l’inizio.', ttDel: 'Elimina', rankNickRude: 'Scegli un soprannome più gentile, per favore.' },
-    pt: { bgTitle: 'Fundo', bgPlain: 'Simples', bgPhoto: 'Foto', tt: 'Horário', ttEmpty: 'Nada planejado para este dia.', ttAdd: 'Adicionar', ttSubject: 'Matéria', ttNow: 'agora', ttNext: 'próxima', ttBad: 'Escreva uma matéria e escolha um fim depois do início.', ttDel: 'Excluir', rankNickRude: 'Escolha um apelido mais gentil, por favor.' },
-    ru: { bgTitle: 'Фон', bgPlain: 'Простой', bgPhoto: 'Фото', tt: 'Расписание', ttEmpty: 'На этот день ничего не запланировано.', ttAdd: 'Добавить', ttSubject: 'Предмет', ttNow: 'сейчас', ttNext: 'далее', ttBad: 'Укажите предмет и время окончания позже начала.', ttDel: 'Удалить', rankNickRude: 'Пожалуйста, выберите более дружелюбный ник.' },
-    ja: { bgTitle: '背景', bgPlain: 'シンプル', bgPhoto: '写真', tt: '時間割', ttEmpty: 'この日の予定はありません。', ttAdd: '追加', ttSubject: '科目', ttNow: '今', ttNext: '次', ttBad: '科目名を入力し、終了時刻を開始より後にしてください。', ttDel: '削除', rankNickRude: 'もっと感じのよいニックネームにしてください。' },
-    zh: { bgTitle: '背景', bgPlain: '简洁', bgPhoto: '照片', tt: '课程表', ttEmpty: '这一天没有安排。', ttAdd: '添加', ttSubject: '科目', ttNow: '进行中', ttNext: '下一节', ttBad: '请输入科目，并让结束时间晚于开始时间。', ttDel: '删除', rankNickRude: '请换一个更友好的昵称。' }
+    en: { ttShort: 'Plan', bgTitle: 'Background', bgPlain: 'Plain', bgPhoto: 'Photo', tt: 'Work plan', ttEmpty: 'Nothing planned for this day.', ttAdd: 'Add', ttSubject: 'Task or subject', ttNow: 'now', ttNext: 'next', ttBad: 'Write a task and pick an end time after the start time.', ttDel: 'Delete', rankNickRude: 'Please choose a friendlier nickname.' },
+    tr: { ttShort: 'Program', bgTitle: 'Arka plan', bgPlain: 'Sade', bgPhoto: 'Fotoğraf', tt: 'Çalışma programı', ttEmpty: 'Bu gün için plan yok.', ttAdd: 'Ekle', ttSubject: 'İş, ders ya da konu', ttNow: 'şimdi', ttNext: 'sıradaki', ttBad: 'Bir iş ya da konu yaz ve bitişi başlangıçtan sonra seç.', ttDel: 'Sil', rankNickRude: 'Lütfen daha uygun bir takma ad seç.' },
+    de: { ttShort: 'Plan', bgTitle: 'Hintergrund', bgPlain: 'Schlicht', bgPhoto: 'Foto', tt: 'Arbeitsplan', ttEmpty: 'Für diesen Tag ist nichts geplant.', ttAdd: 'Hinzufügen', ttSubject: 'Aufgabe oder Fach', ttNow: 'jetzt', ttNext: 'als Nächstes', ttBad: 'Gib eine Aufgabe ein und wähle ein Ende nach dem Beginn.', ttDel: 'Löschen', rankNickRude: 'Bitte wähle einen freundlicheren Spitznamen.' },
+    es: { ttShort: 'Plan', bgTitle: 'Fondo', bgPlain: 'Liso', bgPhoto: 'Foto', tt: 'Plan de trabajo', ttEmpty: 'Nada planeado para este día.', ttAdd: 'Añadir', ttSubject: 'Tarea o asignatura', ttNow: 'ahora', ttNext: 'siguiente', ttBad: 'Escribe una tarea y elige un final posterior al inicio.', ttDel: 'Eliminar', rankNickRude: 'Elige un apodo más amable, por favor.' },
+    fr: { ttShort: 'Planning', bgTitle: 'Arrière-plan', bgPlain: 'Uni', bgPhoto: 'Photo', tt: 'Planning de travail', ttEmpty: 'Rien de prévu ce jour-là.', ttAdd: 'Ajouter', ttSubject: 'Tâche ou matière', ttNow: 'en cours', ttNext: 'ensuite', ttBad: 'Indique une tâche et une fin après le début.', ttDel: 'Supprimer', rankNickRude: 'Choisis un pseudo plus sympathique, s’il te plaît.' },
+    it: { ttShort: 'Piano', bgTitle: 'Sfondo', bgPlain: 'Semplice', bgPhoto: 'Foto', tt: 'Piano di lavoro', ttEmpty: 'Niente in programma per questo giorno.', ttAdd: 'Aggiungi', ttSubject: 'Attività o materia', ttNow: 'ora', ttNext: 'dopo', ttBad: 'Scrivi un’attività e scegli una fine dopo l’inizio.', ttDel: 'Elimina', rankNickRude: 'Scegli un soprannome più gentile, per favore.' },
+    pt: { ttShort: 'Plano', bgTitle: 'Fundo', bgPlain: 'Simples', bgPhoto: 'Foto', tt: 'Plano de trabalho', ttEmpty: 'Nada planejado para este dia.', ttAdd: 'Adicionar', ttSubject: 'Tarefa ou matéria', ttNow: 'agora', ttNext: 'próxima', ttBad: 'Escreva uma tarefa e escolha um fim depois do início.', ttDel: 'Excluir', rankNickRude: 'Escolha um apelido mais gentil, por favor.' },
+    ru: { ttShort: 'План', bgTitle: 'Фон', bgPlain: 'Простой', bgPhoto: 'Фото', tt: 'План работы', ttEmpty: 'На этот день ничего не запланировано.', ttAdd: 'Добавить', ttSubject: 'Задача или предмет', ttNow: 'сейчас', ttNext: 'далее', ttBad: 'Укажите задачу и время окончания позже начала.', ttDel: 'Удалить', rankNickRude: 'Пожалуйста, выберите более дружелюбный ник.' },
+    ja: { ttShort: '予定', bgTitle: '背景', bgPlain: 'シンプル', bgPhoto: '写真', tt: '作業スケジュール', ttEmpty: 'この日の予定はありません。', ttAdd: '追加', ttSubject: '作業・科目', ttNow: '今', ttNext: '次', ttBad: '作業名を入力し、終了時刻を開始より後にしてください。', ttDel: '削除', rankNickRude: 'もっと感じのよいニックネームにしてください。' },
+    zh: { ttShort: '计划', bgTitle: '背景', bgPlain: '简洁', bgPhoto: '照片', tt: '工作计划', ttEmpty: '这一天没有安排。', ttAdd: '添加', ttSubject: '任务或科目', ttNow: '进行中', ttNext: '下一节', ttBad: '请输入任务，并让结束时间晚于开始时间。', ttDel: '删除', rankNickRude: '请换一个更友好的昵称。' }
   };
   Object.keys(X2).forEach(function (c) { if (LANGS[c]) Object.keys(X2[c]).forEach(function (k) { LANGS[c][k] = X2[c][k]; }); });
 
@@ -666,7 +682,7 @@
   sceneImg.addEventListener('error', function () { document.documentElement.classList.remove('photo-on'); });
   document.addEventListener('grove:skin', function () { if (!sceneEl.classList.contains('on')) document.documentElement.classList.remove('photo-on'); });
 
-  // ---------------------------------------------------------------- weekly schedule (kept on this device)
+  // ---------------------------------------------------------------- weekly work / study plan (kept on this device)
   if (!S.x.tt || typeof S.x.tt !== 'object') S.x.tt = {};
   var ttDay = ((new Date().getDay() + 6) % 7) + 1;   // 1 = Monday … 7 = Sunday
   var ttSh = sheet('ttSheet');
@@ -715,7 +731,7 @@
   document.querySelector('.garden-actions').insertBefore(ttBtn, rankBtn);
   ttBtn.addEventListener('click', function () { $('ttSheet').hidden = false; renderTT(); });
   window.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !$('ttSheet').hidden) { $('ttSheet').hidden = true; e.stopImmediatePropagation(); } }, true);
-  function applyText2() { ttBtn.lastChild.textContent = t('tt'); renderBgSel(); if (!$('ttSheet').hidden) renderTT(); }
+  function applyText2() { ttBtn.lastChild.textContent = t('ttShort'); ttBtn.title = t('tt'); renderBgSel(); if (!$('ttSheet').hidden) renderTT(); }
   document.addEventListener('grove:lang', applyText2);
   applyText2();
 
@@ -737,8 +753,90 @@
   }
   window.__groveNickBad = isBad;
 
+  // ---------------------------------------------------------------- history calendar (inside Statistics)
+  var X3 = {
+    en: { hist: 'History', histMonth: 'This month: {d}', histNone: 'No focus time on this day.', histPick: 'Pick a day to see its details.', histPrev: 'Previous month', histNext: 'Next month', histPomos: { one: '{n} pomodoro', other: '{n} pomodoros' } },
+    tr: { hist: 'Geçmiş', histMonth: 'Bu ay: {d}', histNone: 'Bu gün odak süresi yok.', histPick: 'Ayrıntıları görmek için bir güne dokun.', histPrev: 'Önceki ay', histNext: 'Sonraki ay', histPomos: { one: '{n} pomodoro', other: '{n} pomodoro' } },
+    de: { hist: 'Verlauf', histMonth: 'Dieser Monat: {d}', histNone: 'An diesem Tag keine Fokuszeit.', histPick: 'Wähle einen Tag, um Details zu sehen.', histPrev: 'Vorheriger Monat', histNext: 'Nächster Monat', histPomos: { one: '{n} Pomodoro', other: '{n} Pomodoros' } },
+    es: { hist: 'Historial', histMonth: 'Este mes: {d}', histNone: 'Sin tiempo de enfoque este día.', histPick: 'Elige un día para ver los detalles.', histPrev: 'Mes anterior', histNext: 'Mes siguiente', histPomos: { one: '{n} pomodoro', other: '{n} pomodoros' } },
+    fr: { hist: 'Historique', histMonth: 'Ce mois-ci : {d}', histNone: 'Aucun temps de concentration ce jour-là.', histPick: 'Choisis un jour pour voir le détail.', histPrev: 'Mois précédent', histNext: 'Mois suivant', histPomos: { one: '{n} pomodoro', other: '{n} pomodoros' } },
+    it: { hist: 'Cronologia', histMonth: 'Questo mese: {d}', histNone: 'Nessun tempo di concentrazione in questo giorno.', histPick: 'Scegli un giorno per vedere i dettagli.', histPrev: 'Mese precedente', histNext: 'Mese successivo', histPomos: { one: '{n} pomodoro', other: '{n} pomodori' } },
+    pt: { hist: 'Histórico', histMonth: 'Este mês: {d}', histNone: 'Sem tempo de foco neste dia.', histPick: 'Escolha um dia para ver os detalhes.', histPrev: 'Mês anterior', histNext: 'Próximo mês', histPomos: { one: '{n} pomodoro', other: '{n} pomodoros' } },
+    ru: { hist: 'История', histMonth: 'В этом месяце: {d}', histNone: 'В этот день не было времени фокуса.', histPick: 'Выберите день, чтобы увидеть подробности.', histPrev: 'Предыдущий месяц', histNext: 'Следующий месяц', histPomos: { one: '{n} помидор', few: '{n} помидора', many: '{n} помидоров', other: '{n} помидора' } },
+    ja: { hist: '履歴', histMonth: '今月：{d}', histNone: 'この日の集中時間はありません。', histPick: '日付を選ぶと詳細が表示されます。', histPrev: '前の月', histNext: '次の月', histPomos: { other: 'ポモドーロ {n} 回' } },
+    zh: { hist: '历史', histMonth: '本月：{d}', histNone: '这一天没有专注时间。', histPick: '选择一天查看详情。', histPrev: '上个月', histNext: '下个月', histPomos: { other: '{n} 个番茄钟' } }
+  };
+  Object.keys(X3).forEach(function (c) { if (LANGS[c]) Object.keys(X3[c]).forEach(function (k) { LANGS[c][k] = X3[c][k]; }); });
+  document.head.appendChild(el('style', null,
+    '.hist-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:18px}.hist-head .menu-title{margin:0}' +
+    '.hist-nav{display:flex;align-items:center;gap:6px;font-weight:600;font-size:.9rem}.hist-nav button{width:30px;height:30px;border-radius:50%;border:1px solid var(--line);background:transparent;color:var(--fg);cursor:pointer;font-size:1rem}' +
+    '.hist-nav button:disabled{opacity:.35;cursor:default}.hist-cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;margin-top:10px}' +
+    '.hist-cal .wd{font-size:.68rem;color:var(--muted);text-align:center;font-weight:600}' +
+    '.hist-cal button{aspect-ratio:1.35;border:0;border-radius:8px;background:var(--surface);color:var(--fg);font:inherit;font-size:.74rem;cursor:pointer;padding:0}' +
+    '.hist-cal button[data-l="1"]{background:color-mix(in srgb,var(--leaf) 30%,var(--surface))}.hist-cal button[data-l="2"]{background:color-mix(in srgb,var(--leaf) 55%,var(--surface))}' +
+    '.hist-cal button[data-l="3"]{background:var(--leaf);color:#fff}.hist-cal button[data-l="4"]{background:var(--leaf2);color:#fff}' +
+    '.hist-cal button.today{box-shadow:inset 0 0 0 2px var(--fg)}.hist-cal button[aria-pressed="true"]{box-shadow:inset 0 0 0 2px var(--go),0 0 0 2px var(--go)}.hist-cal button:disabled{opacity:.35;cursor:default}' +
+    '.hist-sum{margin-top:10px;font-size:.85rem;color:var(--muted)}.hist-day{margin-top:6px;font-size:.9rem;line-height:1.45;min-height:2.6em}.hist-day b{display:block}'));
+  var histBox = el('div'); histBox.id = 'histBox';
+  var statGrid = $('statGrid'); statGrid.parentNode.insertBefore(histBox, statGrid.nextSibling);
+  var hView = null, hSel = null;
+  function dayData() {
+    var m = {}; (S.history || []).forEach(function (h) { m[h.date] = { ms: h.ms || 0, pomos: h.pomos || 0, trees: h.trees || 0 }; });
+    m[S.work.date] = { ms: S.work.ms || 0, pomos: S.work.pomos || 0, trees: (S.work.trees || []).length };
+    return m;
+  }
+  function lvl(ms) { return !ms ? 0 : ms < 30 * 60000 ? 1 : ms < 2 * 3600000 ? 2 : ms < 4 * 3600000 ? 3 : 4; }
+  function renderHist() {
+    var data = dayData(), now = new Date(), keys = Object.keys(data).sort(), first = keys.length ? keys[0] : A.todayKey();
+    if (!hView) hView = new Date(now.getFullYear(), now.getMonth(), 1);
+    var y = hView.getFullYear(), mo = hView.getMonth(), loc = A.locale();
+    histBox.innerHTML = '';
+    var head = el('div', 'hist-head'), tt = el('p', 'menu-title'); tt.textContent = t('hist'); head.appendChild(tt);
+    var nav = el('div', 'hist-nav'), pv = el('button'), lab = el('span'), nx = el('button');
+    pv.type = nx.type = 'button'; pv.textContent = '‹'; nx.textContent = '›'; pv.setAttribute('aria-label', t('histPrev')); nx.setAttribute('aria-label', t('histNext'));
+    lab.textContent = hView.toLocaleDateString(loc, { month: 'long', year: 'numeric' });
+    var fd = new Date(first.slice(0, 4), +first.slice(5, 7) - 1, 1);
+    pv.disabled = hView <= fd; nx.disabled = y === now.getFullYear() && mo === now.getMonth();
+    pv.addEventListener('click', function () { hView = new Date(y, mo - 1, 1); hSel = null; renderHist(); });
+    nx.addEventListener('click', function () { hView = new Date(y, mo + 1, 1); hSel = null; renderHist(); });
+    nav.appendChild(pv); nav.appendChild(lab); nav.appendChild(nx); head.appendChild(nav); histBox.appendChild(head);
+    var cal = el('div', 'hist-cal');
+    for (var w = 1; w <= 7; w++) { var wd = el('span', 'wd'); wd.textContent = new Date(2024, 0, w).toLocaleDateString(loc, { weekday: 'narrow' }); cal.appendChild(wd); }
+    var lead = (new Date(y, mo, 1).getDay() + 6) % 7, days = new Date(y, mo + 1, 0).getDate(), tk = A.todayKey(), sum = { ms: 0, pomos: 0, trees: 0 };
+    for (var i = 0; i < lead; i++) cal.appendChild(el('span'));
+    for (var d = 1; d <= days; d++) (function (d) {
+      var k = y + '-' + ('0' + (mo + 1)).slice(-2) + '-' + ('0' + d).slice(-2), dd = data[k], b = el('button', k === tk ? 'today' : '');
+      b.type = 'button'; b.textContent = d; b.setAttribute('data-l', dd ? lvl(dd.ms) : 0); b.setAttribute('aria-pressed', hSel === k ? 'true' : 'false');
+      b.disabled = k > tk;
+      b.setAttribute('aria-label', new Date(y, mo, d).toLocaleDateString(loc, { day: 'numeric', month: 'long' }) + (dd && dd.ms ? ': ' + A.fmtDur(dd.ms) : ''));
+      if (dd) { sum.ms += dd.ms; sum.pomos += dd.pomos; sum.trees += dd.trees; }
+      b.addEventListener('click', function () { hSel = k; renderHist(); });
+      cal.appendChild(b);
+    })(d);
+    histBox.appendChild(cal);
+    var s = el('p', 'hist-sum'); s.textContent = t('histMonth', { d: A.fmtDur(sum.ms) }) + ' · ' + t('trees', sum.trees) + ' · ' + t('histPomos', sum.pomos); histBox.appendChild(s);
+    var det = el('p', 'hist-day');
+    if (!hSel) det.textContent = t('histPick');
+    else {
+      var x = data[hSel], bb = el('b'); bb.textContent = new Date(+hSel.slice(0, 4), +hSel.slice(5, 7) - 1, +hSel.slice(8, 10)).toLocaleDateString(loc, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+      det.appendChild(bb);
+      det.appendChild(document.createTextNode(x && x.ms ? A.fmtDur(x.ms) + ' · ' + t('histPomos', x.pomos) + ' · ' + t('trees', x.trees) : t('histNone')));
+    }
+    histBox.appendChild(det);
+  }
+  $('statsBtn').addEventListener('click', function () { hView = null; hSel = A.todayKey(); renderHist(); });
+  document.addEventListener('grove:lang', function () { if (!$('stats').hidden) renderHist(); });
+
+  // ---------------------------------------------------------------- smoother theme changes: fetch the other photos ahead of time
+  var prefetched = {};
+  $('themeBtn').addEventListener('click', function () {
+    if (!S.x.scene) return;
+    var go = function () { Object.keys(PHOTOS).forEach(function (k) { var u = photoUrl(k); if (prefetched[u]) return; prefetched[u] = 1; var im = new Image(); im.crossOrigin = 'anonymous'; im.referrerPolicy = 'no-referrer'; try { im.fetchPriority = 'low'; } catch (e) {} im.src = u; }); };
+    if (window.requestIdleCallback) requestIdleCallback(go, { timeout: 1500 }); else setTimeout(go, 300);
+  });
+
   // ---------------------------------------------------------------- boot
-  applyText(); renderScene(); renderGameBtn();
+  applyText(); renderScene(); renderGameBtn(); markCurStepper();
   if (anyRunning()) planCheck();
   window.__groveX = { openGame: openGame, move: move, askHere: askHere, maybeBack: maybeBack, setCtx: setCtx, state: function () { return { ctx: ctx, nextCheck: nextCheck, nudge: nudgeKind, cooldown: cooldown }; } };
 })();
