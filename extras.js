@@ -541,7 +541,7 @@
     var body = { writes: [{ update: { name: docName(), fields: { name: { stringValue: l.name }, ms: { integerValue: String(Math.floor(l.ms || 0)) }, trees: { integerValue: String(Math.min(500, ensureTrees())) }, expireAt: { timestampValue: new Date(Date.now() + 56 * 864e5).toISOString() } } },
       updateTransforms: [{ fieldPath: 'updatedAt', setToServerValue: 'REQUEST_TIME' }] }] };
     return token().then(function () { body.writes[0].update.name = docName(); return api(':commit', { method: 'POST', body: JSON.stringify(body) }); })
-      .then(function () { lbState.dirty = false; lbState.lastSync = Date.now(); l.synced = true; A.save(); })
+      .then(function () { lbState.dirty = false; lbState.lastSync = Date.now(); l.synced = true; l.weeks = (l.weeks || []).filter(function (w) { return w !== l.week; }).concat([l.week]).slice(-60); A.save(); })
       .catch(function (e) {
         lbState.lastSync = Date.now();
         if (e.status === 403) {   // the server refused (more time than really passed): take the server's value
@@ -601,7 +601,9 @@
     var act = el('div', 'sheet-actions');
     if (LB_ON && S.x.lb.joined) act.appendChild(btn(t('rankLeave'), function () {
       var l = S.x.lb, w = lb().week;
-      api('/lb/' + w + '/players/' + l.uid, { method: 'DELETE' }).catch(function () {}).then(function () { l.joined = false; l.ms = 0; A.save(); A.toast(t('rankLeft')); lbLoad(); renderRank(); });
+      var all = (l.weeks || []).concat([w]).filter(function (x, i, arr) { return arr.indexOf(x) === i; });   // remove every week this device has posted
+      Promise.all(all.map(function (wk) { return api('/lb/' + wk + '/players/' + l.uid, { method: 'DELETE' }).catch(function () {}); }))
+        .then(function () { l.joined = false; l.ms = 0; l.weeks = []; A.save(); A.toast(t('rankLeft')); lbLoad(); renderRank(); });
     })); else act.appendChild(el('span'));
     act.appendChild(btn(t('close'), function () { $('rankSheet').hidden = true; }));
     rkSh.appendChild(act);

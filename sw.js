@@ -1,5 +1,5 @@
 // Grove service worker: caches the app so it works offline.
-const CACHE = 'grove-v1.3.2';
+const CACHE = 'grove-v1.3.3';
 const PHOTOS = 'grove-photos';
 const ASSETS = [
   './',
